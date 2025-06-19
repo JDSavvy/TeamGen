@@ -1,0 +1,125 @@
+name: Claude Code Assistant
+
+on:
+  issue_comment:
+    types: [created, edited]
+  pull_request_review_comment:
+    types: [created, edited]
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  claude_assistant:
+    # Only run if the comment mentions @claude
+    if: contains(github.event.comment.body, '@claude') || contains(github.event.issue.body, '@claude') || contains(github.event.pull_request.body, '@claude')
+    
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Claude Code Action
+        uses: anthropics/claude-code-action@v1
+        with:
+          # Use your Anthropic API key from repository secrets
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          
+          # Trigger phrase (default is @claude)
+          trigger_phrase: "@claude"
+          
+          # Repository context
+          repository_context: true
+          
+          # Include CLAUDE.md project guidelines
+          project_guidelines: true
+          
+          # Maximum tokens for responses
+          max_tokens: 4000
+          
+          # Model to use (claude-3-5-sonnet-20241022 is latest)
+          model: "claude-3-5-sonnet-20241022"
+          
+          # Custom instructions for your project
+          system_message: |
+            You are Claude, an AI assistant integrated with the TeamGen iOS project. 
+            
+            Project Context:
+            - iOS app using SwiftUI + Clean Architecture
+            - Modern patterns: @Observable ViewModels, SwiftData
+            - Target: iOS 18.4+ with cutting-edge features
+            - Focus: Team generation for sports/recreational activities
+            
+            Your Capabilities:
+            - Code review and suggestions
+            - Bug fixes and implementation
+            - Test creation and debugging
+            - Architecture guidance
+            - Performance optimization
+            
+            Always:
+            - Follow the project's CLAUDE.md guidelines
+            - Maintain Clean Architecture principles
+            - Use modern Swift patterns (@Observable, async/await)
+            - Include comprehensive tests
+            - Ensure accessibility compliance
+            - Follow SwiftLint/SwiftFormat standards
+            
+            When creating PRs:
+            - Include detailed descriptions
+            - Add tests for new functionality
+            - Update documentation if needed
+            - Follow conventional commit messages
+            
+          # Timeout for Claude responses
+          timeout_minutes: 10
+
+  # Additional job for Claude to create issues from project analysis
+  claude_project_analysis:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      issues: write
+      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Analyze Project and Create Issues
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-3-5-sonnet-20241022"
+          
+          # Custom analysis prompt
+          system_message: |
+            Analyze the TeamGen iOS project and identify any missing implementations, 
+            potential issues, or areas for improvement. Create GitHub issues for:
+            
+            1. Incomplete test implementations
+            2. Missing features from the architecture
+            3. Performance optimization opportunities
+            4. Accessibility improvements needed
+            5. Documentation gaps
+            
+            For each issue found, create a detailed GitHub issue with:
+            - Clear title and description
+            - Acceptance criteria
+            - Appropriate labels
+            - Priority level
+            
+          # Trigger this analysis on main branch pushes
+          trigger_phrase: "AUTO_ANALYSIS"
+          repository_context: true
+          project_guidelines: true
