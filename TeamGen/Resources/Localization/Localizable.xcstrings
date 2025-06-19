@@ -1,0 +1,2093 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "/ 10" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@ skill level" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Fähigkeitsstufe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ skill level"
+          }
+        }
+      }
+    },
+    "%@ skill picker" : {
+
+    },
+    "%@, skill level %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, Fähigkeitsstufe %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, skill level %2$@"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        }
+      }
+    },
+    "%@: %lld out of %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$lld von %3$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$lld out of %3$lld"
+          }
+        }
+      }
+    },
+    "%@: %lld out of 10" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$lld out of 10"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld balanced teams • %lld players" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld balanced teams • %2$lld players"
+          }
+        }
+      }
+    },
+    "%lld characters" : {
+
+    },
+    "%lld of %lld players" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld von %2$lld Spielern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld players"
+          }
+        }
+      }
+    },
+    "%lld out of 10" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld von 10"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld out of 10"
+          }
+        }
+      }
+    },
+    "%lld Player%@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld Spieler%2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld Player%2$@"
+          }
+        }
+      }
+    },
+    "%lld player%@ selected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld player%2$@ selected"
+          }
+        }
+      }
+    },
+    "%lld players" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Spieler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld players"
+          }
+        }
+      }
+    },
+    "%lld Players" : {
+
+    },
+    "%lld players, sorted by %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld Spieler, sortiert nach %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld players, sorted by %2$@"
+          }
+        }
+      }
+    },
+    "%lld selected" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld selected"
+          }
+        }
+      }
+    },
+    "%lld teams" : {
+
+    },
+    "1" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1"
+          }
+        }
+      }
+    },
+    "10" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10"
+          }
+        }
+      }
+    },
+    "About" : {
+      "comment" : "About section title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
+    },
+    "About TeamGen" : {
+
+    },
+    "Add" : {
+      "comment" : "Add button text",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "Add new player" : {
+      "comment" : "Add new player action text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuen Spieler hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add new player"
+          }
+        }
+      }
+    },
+    "Add Player" : {
+      "comment" : "Add player button and navigation title",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Player"
+          }
+        }
+      }
+    },
+    "Add players" : {
+      "comment" : "Add players instruction text",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add players"
+          }
+        }
+      }
+    },
+    "Add players in the Players tab first" : {
+      "comment" : "Instruction to add players first",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge zuerst Spieler im Spieler-Tab hinzu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add players in the Players tab first"
+          }
+        }
+      }
+    },
+    "Add players in the Players tab to get started" : {
+
+    },
+    "Add your first player" : {
+
+    },
+    "Add Your First Player" : {
+
+    },
+    "Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution." : {
+      "comment" : "Empty state description for adding first player",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge deinen ersten Spieler hinzu, um ausgewogene Teams zu erstellen. Du kannst Spieler mit verschiedenen Fähigkeitsstufen hinzufügen, um eine faire Teamverteilung zu gewährleisten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution."
+          }
+        }
+      }
+    },
+    "Add your first player to start creating balanced teams. You can manage their skills and track their performance." : {
+      "comment" : "Alternative empty state description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge deinen ersten Spieler hinzu, um ausgewogene Teams zu erstellen. Du kannst ihre Fähigkeiten verwalten und ihre Leistung verfolgen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your first player to start creating balanced teams. You can manage their skills and track their performance."
+          }
+        }
+      }
+    },
+    "Add your first player to start creating teams" : {
+      "comment" : "Short empty state message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge deinen ersten Spieler hinzu, um Teams zu erstellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your first player to start creating teams"
+          }
+        }
+      }
+    },
+    "Adjust skill level from 1 to 10" : {
+      "comment" : "Skill level adjustment instruction",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fähigkeitsstufe von 1 bis 10 anpassen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust skill level from 1 to 10"
+          }
+        }
+      }
+    },
+    "App Language" : {
+      "comment" : "App language setting title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App-Sprache"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Language"
+          }
+        }
+      }
+    },
+    "App Version" : {
+      "comment" : "App version info title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App-Version"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Version"
+          }
+        }
+      }
+    },
+    "Appearance" : {
+      "comment" : "Appearance settings section title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aussehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete %@? This action cannot be undone." : {
+
+    },
+    "Balancing players into teams" : {
+      "comment" : "Team generation progress message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler werden in Teams aufgeteilt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balancing players into teams"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "comment" : "Cancel button text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Choose between fair balanced teams or random distribution" : {
+      "comment" : "Team generation mode description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle zwischen fairen ausgewogenen Teams oder zufälliger Verteilung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose between fair balanced teams or random distribution"
+          }
+        }
+      }
+    },
+    "Choose how TeamGen appears on your device. Automatic follows your system settings." : {
+
+    },
+    "Choose how to sort the player list" : {
+      "comment" : "Sort option description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle, wie die Spielerliste sortiert werden soll"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose how to sort the player list"
+          }
+        }
+      }
+    },
+    "Choose your preferred language" : {
+      "comment" : "App language setting subtitle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle deine bevorzugte Sprache"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose your preferred language"
+          }
+        }
+      }
+    },
+    "Choose your preferred theme" : {
+      "comment" : "Color scheme setting subtitle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle dein bevorzugtes Design"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose your preferred theme"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "comment" : "Clear button text",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
+          }
+        }
+      }
+    },
+    "Clear Selection" : {
+      "comment" : "Clear selection button text",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswahl löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Selection"
+          }
+        }
+      }
+    },
+    "Collapse players list" : {
+
+    },
+    "Color Scheme" : {
+      "comment" : "Color scheme setting title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbschema"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color Scheme"
+          }
+        }
+      }
+    },
+    "Coming soon" : {
+      "comment" : "GitHub link placeholder",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demnächst verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming soon"
+          }
+        }
+      }
+    },
+    "Creating Teams" : {
+      "comment" : "Team creation progress title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teams werden erstellt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creating Teams"
+          }
+        }
+      }
+    },
+    "Currently set to %lld teams" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Delete Player" : {
+      "comment" : "Delete player action text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Player"
+          }
+        }
+      }
+    },
+    "Deselect All (%lld)" : {
+      "comment" : "Deselect all players button with count",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle abwählen (%lld)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deselect All (%lld)"
+          }
+        }
+      }
+    },
+    "Developer" : {
+      "comment" : "Developer info title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entwickler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developer"
+          }
+        }
+      }
+    },
+    "Display & Brightness" : {
+
+    },
+    "Done" : {
+      "comment" : "Done button text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "Edit Player" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler bearbeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Player"
+          }
+        }
+      }
+    },
+    "Enter player name" : {
+      "comment" : "Player name input placeholder",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielername eingeben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter player name"
+          }
+        }
+      }
+    },
+    "Enter the player's name" : {
+
+    },
+    "Error" : {
+      "comment" : "Generic error title",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "Expand players list" : {
+
+    },
+    "Fair" : {
+      "comment" : "Fair team generation mode",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fair"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fair"
+          }
+        }
+      }
+    },
+    "Fetching your player roster" : {
+
+    },
+    "Filtered from %lld total" : {
+      "comment" : "Filter results count display",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gefiltert von %lld insgesamt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtered from %lld total"
+          }
+        }
+      }
+    },
+    "General" : {
+
+    },
+    "Generate %lld Teams" : {
+
+    },
+    "Generated Teams" : {
+
+    },
+    "Generating teams..." : {
+      "comment" : "Team generation progress message",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teams werden erstellt..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generating teams..."
+          }
+        }
+      }
+    },
+    "Generation Error" : {
+      "comment" : "Team generation error alert title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erstellungsfehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generation Error"
+          }
+        }
+      }
+    },
+    "Generation Failed" : {
+      "comment" : "Team generation failure title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erstellung fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generation Failed"
+          }
+        }
+      }
+    },
+    "Generation Mode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generierungsmodus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generation Mode"
+          }
+        }
+      }
+    },
+    "GitHub" : {
+      "comment" : "GitHub link title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
+          }
+        }
+      }
+    },
+    "High Contrast" : {
+      "comment" : "High contrast setting title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoher Kontrast"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High Contrast"
+          }
+        }
+      }
+    },
+    "in" : {
+
+    },
+    "Increase Contrast" : {
+
+    },
+    "Increase text and UI contrast" : {
+      "comment" : "High contrast setting subtitle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text- und UI-Kontrast erhöhen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Increase text and UI contrast"
+          }
+        }
+      }
+    },
+    "Initialization Error" : {
+      "comment" : "App initialization error title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Initialisierungsfehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Initialization Error"
+          }
+        }
+      }
+    },
+    "Initializing..." : {
+
+    },
+    "Jorge Savvidis" : {
+      "comment" : "Developer name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jorge Savvidis"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jorge Savvidis"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "comment" : "Language settings section title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        }
+      }
+    },
+    "Level %lld out of 10, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Level %1$lld out of 10, %2$@"
+          }
+        }
+      }
+    },
+    "Loading players" : {
+      "comment" : "Loading players state message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler werden geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading players"
+          }
+        }
+      }
+    },
+    "Loading Players" : {
+      "comment" : "Loading players title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler werden geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading Players"
+          }
+        }
+      }
+    },
+    "Loading players..." : {
+      "comment" : "Loading players progress message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler werden geladen..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading players..."
+          }
+        }
+      }
+    },
+    "Multi-skill picker" : {
+
+    },
+    "Name" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "Need 2+ players" : {
+      "comment" : "Minimum players requirement message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mindestens 2 Spieler erforderlich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Need 2+ players"
+          }
+        }
+      }
+    },
+    "No players added yet" : {
+      "comment" : "Empty state message when no players exist",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Spieler hinzugefügt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No players added yet"
+          }
+        }
+      }
+    },
+    "No Players Available" : {
+      "comment" : "Empty state title when no players exist",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Spieler verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Players Available"
+          }
+        }
+      }
+    },
+    "No players found" : {
+
+    },
+    "No Players Found" : {
+
+    },
+    "No Players Selected" : {
+
+    },
+    "No Players Yet" : {
+      "comment" : "Empty state title for no players",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Spieler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Players Yet"
+          }
+        }
+      }
+    },
+    "No Results Found" : {
+      "comment" : "Search results empty state",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Ergebnisse gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Results Found"
+          }
+        }
+      }
+    },
+    "Not selected" : {
+      "comment" : "Player not selected state",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not selected"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "comment" : "OK button text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Opens player selection" : {
+      "comment" : "Accessibility hint for player selection button",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffnet Spielerauswahl"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens player selection"
+          }
+        }
+      }
+    },
+    "Opens the add player form" : {
+      "comment" : "Accessibility hint for add player button",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffnet das Spieler-hinzufügen-Formular"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the add player form"
+          }
+        }
+      }
+    },
+    "Overall %@, Technical %lld, Agility %lld, Endurance %lld, Teamwork %lld" : {
+      "comment" : "Player skills summary format",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamt %1$@, Technik %2$lld, Beweglichkeit %3$lld, Ausdauer %4$lld, Teamwork %5$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overall %1$@, Technical %2$lld, Agility %3$lld, Endurance %4$lld, Teamwork %5$lld"
+          }
+        }
+      }
+    },
+    "Overall Rating" : {
+
+    },
+    "Overall Skill" : {
+      "comment" : "Overall skill field label",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtfähigkeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overall Skill"
+          }
+        }
+      }
+    },
+    "Performance history and game participation" : {
+
+    },
+    "Player Information" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielerinformationen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player Information"
+          }
+        }
+      }
+    },
+    "Player Name" : {
+
+    },
+    "Player name input field" : {
+
+    },
+    "Player skills" : {
+      "comment" : "Player skills section label",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielerfähigkeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player skills"
+          }
+        }
+      }
+    },
+    "Player Skills" : {
+      "comment" : "Player skills section title",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielerfähigkeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player Skills"
+          }
+        }
+      }
+    },
+    "Player Statistics" : {
+
+    },
+    "Player: %@, Overall skill: %@" : {
+      "comment" : "Player summary format for accessibility",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler: %1$@, Gesamtfähigkeit: %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player: %1$@, Overall skill: %2$@"
+          }
+        }
+      }
+    },
+    "Players" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Players"
+          }
+        }
+      }
+    },
+    "Please wait while your player roster is being loaded" : {
+
+    },
+    "Quick selection options" : {
+      "comment" : "Quick selection accessibility label",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schnellauswahloptionen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick selection options"
+          }
+        }
+      }
+    },
+    "Random" : {
+      "comment" : "Random team generation mode",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zufällig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Random"
+          }
+        }
+      }
+    },
+    "Ready to Generate" : {
+
+    },
+    "Remove %@" : {
+      "comment" : "Remove player action with name",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove %@"
+          }
+        }
+      }
+    },
+    "Remove all selected players?" : {
+      "comment" : "Confirmation message for removing all selected players",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle ausgewählten Spieler entfernen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove all selected players?"
+          }
+        }
+      }
+    },
+    "Retry" : {
+      "comment" : "Retry button text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederholen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        }
+      }
+    },
+    "Return to %@" : {
+      "comment" : "Return to tab navigation",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück zu %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Return to %@"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Score: %@ out of 10" : {
+      "comment" : "Player score display format",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewertung: %@ von 10"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score: %@ out of 10"
+          }
+        }
+      }
+    },
+    "Search by name..." : {
+      "comment" : "Search placeholder text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Name suchen..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search by name..."
+          }
+        }
+      }
+    },
+    "Search players..." : {
+
+    },
+    "Select All (%lld)" : {
+      "comment" : "Select all players button with count",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle auswählen (%lld)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select All (%lld)"
+          }
+        }
+      }
+    },
+    "Select Players" : {
+      "comment" : "Select players button text",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Players"
+          }
+        }
+      }
+    },
+    "Select players to start generating teams" : {
+
+    },
+    "Select your preferred language for TeamGen. Some changes may require restarting the app." : {
+
+    },
+    "Selected" : {
+      "comment" : "Player selected state",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected"
+          }
+        }
+      }
+    },
+    "Setting up TeamGen..." : {
+      "comment" : "App initialization progress message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TeamGen wird eingerichtet..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setting up TeamGen..."
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "comment" : "Settings screen title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Showing %lld of %lld players, sorted by %@" : {
+      "comment" : "Player list status with count and sort order",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld von %2$lld Spielern angezeigt, sortiert nach %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Showing %1$lld of %2$lld players, sorted by %3$@"
+          }
+        }
+      }
+    },
+    "Shows all %lld players in this team" : {
+
+    },
+    "Skill Level:" : {
+      "comment" : "Skill level field label with colon",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fähigkeitsstufe:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skill Level:"
+          }
+        }
+      }
+    },
+    "Skill level: %@" : {
+      "comment" : "Skill level display format",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fähigkeitsstufe: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skill level: %@"
+          }
+        }
+      }
+    },
+    "Skill level: %lld out of %lld" : {
+      "comment" : "Skill level display with current and maximum values",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fähigkeitsstufe: %1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skill level: %1$lld out of %2$lld"
+          }
+        }
+      }
+    },
+    "Skills" : {
+      "comment" : "Skills section or tab title",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fähigkeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skills"
+          }
+        }
+      }
+    },
+    "Something Went Wrong" : {
+      "comment" : "Generic error message title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etwas ist schiefgelaufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something Went Wrong"
+          }
+        }
+      }
+    },
+    "Sort by" : {
+
+    },
+    "Sort players" : {
+      "comment" : "Action to sort the player list",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler sortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort players"
+          }
+        }
+      }
+    },
+    "Sorted by %@" : {
+      "comment" : "Indicates current sort criteria for player list",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortiert nach %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorted by %@"
+          }
+        }
+      }
+    },
+    "Statistics" : {
+      "comment" : "Statistics section or screen title",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistiken"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistics"
+          }
+        }
+      }
+    },
+    "Swipe up or down to adjust team count" : {
+
+    },
+    "Switch to strongest player view" : {
+
+    },
+    "Switch to team number view" : {
+
+    },
+    "Tap to toggle between team number and strongest player name" : {
+
+    },
+    "Tap to toggle selection" : {
+      "comment" : "Accessibility hint for toggling player selection",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippen, um Auswahl umzuschalten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to toggle selection"
+          }
+        }
+      }
+    },
+    "Team %lld" : {
+      "comment" : "Team label with number (long long format)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team %lld"
+          }
+        }
+      }
+    },
+    "Team %lld with %lld players, average skill %@" : {
+      "comment" : "Team summary with player count and average skill level",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team %1$lld mit %2$lld Spielern, durchschnittliche Fähigkeit %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team %1$lld with %2$lld players, average skill %3$@"
+          }
+        }
+      }
+    },
+    "Team %lld: %lld players" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Team %1$lld: %2$lld players"
+          }
+        }
+      }
+    },
+    "Team distribution: %lld teams" : {
+
+    },
+    "Team generation mode" : {
+      "comment" : "Setting for how teams are generated",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team-Generierungsmodus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team generation mode"
+          }
+        }
+      }
+    },
+    "TeamGen helps create balanced teams for sports and recreational activities. Thank you for using our app!" : {
+
+    },
+    "Teams" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teams"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teams"
+          }
+        }
+      }
+    },
+    "Tips for getting started" : {
+      "comment" : "Help section title for new users",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipps für den Einstieg"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tips for getting started"
+          }
+        }
+      }
+    },
+    "Try adjusting your search terms or check the spelling" : {
+      "comment" : "Search help message when no results found",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versuchen Sie, Ihre Suchbegriffe anzupassen oder die Rechtschreibung zu überprüfen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try adjusting your search terms or check the spelling"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "comment" : "Button to retry a failed operation",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        }
+      }
+    },
+    "Unable to load players. Please try again." : {
+      "comment" : "Error message when player loading fails",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler konnten nicht geladen werden. Bitte versuchen Sie es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to load players. Please try again."
+          }
+        }
+      }
+    },
+    "Unable to load your players. Please check your connection and try again." : {
+      "comment" : "Error message when player loading fails due to connection issues",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Spieler konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to load your players. Please check your connection and try again."
+          }
+        }
+      }
+    },
+    "Version" : {
+
+    }
+  },
+  "version" : "1.0"
+}
