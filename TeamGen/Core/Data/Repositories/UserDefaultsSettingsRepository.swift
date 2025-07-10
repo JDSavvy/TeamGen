@@ -3,9 +3,9 @@ import Foundation
 // MARK: - UserDefaults Settings Repository
 /// Concrete implementation of SettingsRepositoryProtocol using UserDefaults
 public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @unchecked Sendable {
-    
+
     private let userDefaults: UserDefaults
-    
+
     // Keys for UserDefaults
     private enum Keys {
         static let isDarkModeEnabled = "isDarkModeEnabled"
@@ -16,11 +16,11 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
         static let isHighContrastEnabled = "isHighContrastEnabled"
         static let isReduceMotionEnabled = "isReduceMotionEnabled"
     }
-    
+
     public init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
     }
-    
+
     public func getSettings() async throws -> AppSettings {
         return AppSettings(
             isDarkModeEnabled: userDefaults.bool(forKey: Keys.isDarkModeEnabled),
@@ -32,7 +32,7 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
             isReduceMotionEnabled: userDefaults.bool(forKey: Keys.isReduceMotionEnabled)
         )
     }
-    
+
     public func saveSettings(_ settings: AppSettings) async throws {
         userDefaults.set(settings.isDarkModeEnabled, forKey: Keys.isDarkModeEnabled)
         userDefaults.set(settings.language.rawValue, forKey: Keys.language)
@@ -41,14 +41,14 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
         userDefaults.set(settings.colorSchemePreference.rawValue, forKey: Keys.colorSchemePreference)
         userDefaults.set(settings.isHighContrastEnabled, forKey: Keys.isHighContrastEnabled)
         userDefaults.set(settings.isReduceMotionEnabled, forKey: Keys.isReduceMotionEnabled)
-        
+
         // Apply language change
         UserDefaults.standard.set([settings.language.rawValue], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
     }
-    
+
     // MARK: - Private Helpers
-    
+
     private func getLanguage() -> AppLanguage {
         if let languageCode = userDefaults.string(forKey: Keys.language),
            let language = AppLanguage(rawValue: languageCode) {
@@ -56,12 +56,12 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
         }
         return .english
     }
-    
+
     private func getDefaultTeamCount() -> Int {
         let count = userDefaults.integer(forKey: Keys.defaultTeamCount)
         return count > 0 ? count : 2
     }
-    
+
     private func getDefaultGenerationMode() -> TeamGenerationMode {
         if let modeString = userDefaults.string(forKey: Keys.defaultGenerationMode),
            let mode = TeamGenerationMode(rawValue: modeString) {
@@ -69,7 +69,7 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
         }
         return .fair
     }
-    
+
     private func getColorSchemePreference() -> ColorSchemeOption {
         if let preferenceString = userDefaults.string(forKey: Keys.colorSchemePreference),
            let preference = ColorSchemeOption(rawValue: preferenceString) {
@@ -77,4 +77,4 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
         }
         return .system
     }
-} 
+}

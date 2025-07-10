@@ -9,13 +9,13 @@ struct PlayerView: View {
     @Environment(\.dependencies) private var dependencies
     @State private var presentationState = PlayerPresentationState()
     @State private var isInitialized = false
-    
+
     // MARK: - Player Details Display
     // Current: Expandable rows with tap-to-expand functionality
     // Alternative: Consider using NavigationLink to dedicated PlayerDetailView for better UX
     // This would provide more space for detailed information and editing capabilities
     @State private var expandedPlayerIDs = Set<UUID>()
-    
+
     var body: some View {
         Group {
             if let viewModel = viewModel {
@@ -64,7 +64,7 @@ struct PlayerView: View {
                     }
                     .accessibilityLabel("Sort players")
                 }
-                
+
                 Button {
                     presentationState.showingAddPlayer = true
                 } label: {
@@ -119,17 +119,17 @@ struct PlayerView: View {
             }
         }
     }
-    
+
     // MARK: - Helper Methods
-    
+
     private func initializeViewIfNeeded() async {
         guard !isInitialized else { return }
-        
+
         let initializedViewModel = PlayerManagementViewModel(
             managePlayersUseCase: dependencies.managePlayersUseCase,
             hapticService: dependencies.hapticService
         )
-        
+
         viewModel = initializedViewModel
         await initializedViewModel.loadPlayers()
         isInitialized = true
@@ -144,13 +144,13 @@ private struct PlayerContentView: View {
     let viewModel: PlayerManagementViewModel
     @Binding var presentationState: PlayerPresentationState
     @Binding var expandedPlayerIDs: Set<UUID>
-    
+
     var body: some View {
         ZStack {
             // Background
             DesignSystem.Colors.primaryBackground
                 .ignoresSafeArea()
-            
+
             // Content
             Group {
                 switch viewModel.currentViewState {
@@ -177,14 +177,14 @@ private struct PlayerContentView: View {
             }
         }
     }
-    
+
     // MARK: - State Views
-    
+
     @ViewBuilder
     private func LoadingStateView() -> some View {
         LoadingStateContent()
     }
-    
+
     @ViewBuilder
     private func ErrorStateView(viewModel: PlayerManagementViewModel) -> some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
@@ -193,20 +193,20 @@ private struct PlayerContentView: View {
                     .font(DesignSystem.Typography.extraLargeDisplay)
                     .fontWeight(.light)
                     .foregroundColor(DesignSystem.Colors.error)
-                
+
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Text("Something Went Wrong")
                         .font(DesignSystem.Typography.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text("Unable to load players. Please try again.")
                         .font(DesignSystem.Typography.subheadline)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
                         .multilineTextAlignment(.center)
                 }
             }
-            
+
             Button {
                 Task { await viewModel.loadPlayers() }
             } label: {
@@ -232,7 +232,7 @@ private struct PlayerContentView: View {
 
 private struct LoadingStateContent: View {
     @State private var isRotating = false
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             // Modern loading indicator with subtle animation
@@ -240,7 +240,7 @@ private struct LoadingStateContent: View {
                 Circle()
                     .stroke(DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLight), lineWidth: DesignSystem.VisualConsistency.borderBold)
                     .frame(width: DesignSystem.ComponentSize.loadingIndicatorStandard, height: DesignSystem.ComponentSize.loadingIndicatorStandard)
-                
+
                 Circle()
                     .trim(from: 0, to: 0.7)
                     .stroke(
@@ -260,13 +260,13 @@ private struct LoadingStateContent: View {
                         }
                     }
             }
-            
+
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Text("Loading Players")
                     .font(DesignSystem.Typography.largeControl)
                     .fontWeight(.semibold)
                     .foregroundColor(DesignSystem.Colors.primaryText)
-                
+
                 Text("Fetching your player roster")
                     .font(DesignSystem.Typography.mediumIcon)
                     .fontWeight(.medium)
@@ -277,9 +277,9 @@ private struct LoadingStateContent: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(DesignSystem.Spacing.xxxl)
     }
-    
+
     // PlayerListContentView is now extracted to its own file
-    
+
     // EmptySearchStateView is now extracted to PlayerListContentView.swift
 }
 
@@ -303,17 +303,17 @@ private struct ActionButton: View {
     let style: ButtonStyle
     let action: () -> Void
     let accessibilityLabel: String
-    
+
     enum ButtonStyle {
         case primary, secondary
-        
+
         var foregroundColor: Color {
             switch self {
             case .primary: return DesignSystem.Colors.primary
             case .secondary: return DesignSystem.Colors.secondaryText
             }
         }
-        
+
         var backgroundColor: Color {
             switch self {
             case .primary: return DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacitySkillBackground)
@@ -321,7 +321,7 @@ private struct ActionButton: View {
             }
         }
     }
-    
+
     var body: some View {
         Button(action: action) {
             Image(systemName: icon)
@@ -342,7 +342,7 @@ private struct ActionButton: View {
 private struct SortControlMenu: View {
     @Binding var selectedOption: PlayerSortOption
     let onChange: () async -> Void
-    
+
     var body: some View {
         Menu {
             ForEach(PlayerSortOption.allCases) { option in
@@ -375,7 +375,7 @@ private struct SortControlMenu: View {
 // Player Count Badge
 private struct PlayerCountBadge: View {
     let count: Int
-    
+
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "person.2")
@@ -404,7 +404,7 @@ private struct LoadingPlayersState: View {
             ProgressView()
                 .controlSize(.large)
                 .tint(DesignSystem.Colors.primary)
-            
+
             Text("Loading players...")
                 .font(DesignSystem.Typography.subheadline)
                 .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -421,7 +421,7 @@ private struct LoadingPlayersState: View {
 // Empty State
 private struct EmptyPlayersState: View {
     let onAddPlayer: () -> Void
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             VStack(spacing: DesignSystem.Spacing.lg) {
@@ -429,14 +429,14 @@ private struct EmptyPlayersState: View {
                     .font(.system(size: 64, weight: .light))
                     .foregroundColor(DesignSystem.Colors.tertiaryText)
                     .accessibilityHidden(true)
-                
+
                 VStack(spacing: DesignSystem.Spacing.sm) {
                     Text("No Players Yet")
                         .font(DesignSystem.Typography.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(DesignSystem.Colors.primaryText)
                         .accessibilityAddTraits(.isHeader)
-                    
+
                     Text("Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution.")
                         .font(DesignSystem.Typography.body)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -444,7 +444,7 @@ private struct EmptyPlayersState: View {
                         .lineLimit(nil)
                 }
             }
-            
+
             VStack(spacing: DesignSystem.Spacing.md) {
                 EnhancedButton.primary(
                     "Add Your First Player",
@@ -452,7 +452,7 @@ private struct EmptyPlayersState: View {
                 ) {
                     onAddPlayer()
                 }
-                
+
                 // Quick tips
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     HelpfulTip(
@@ -460,7 +460,7 @@ private struct EmptyPlayersState: View {
                         iconColor: DesignSystem.Colors.accent,
                         text: "Tip: Add at least 4 players for team generation"
                     )
-                    
+
                     HelpfulTip(
                         icon: "star.fill",
                         iconColor: DesignSystem.Colors.warning,
@@ -483,7 +483,7 @@ private struct EmptyPlayersState: View {
 private struct ErrorPlayersState: View {
     let onRetry: () async -> Void
     let onAddPlayer: () -> Void
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             VStack(spacing: DesignSystem.Spacing.md) {
@@ -491,24 +491,24 @@ private struct ErrorPlayersState: View {
                     .font(DesignSystem.Typography.extraLargeDisplay)
                     .fontWeight(.light)
                     .foregroundColor(DesignSystem.Colors.error)
-                
+
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Text("Something Went Wrong")
                         .font(DesignSystem.Typography.title3)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text("Unable to load your players. Please check your connection and try again.")
                         .font(DesignSystem.Typography.subheadline)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
                         .multilineTextAlignment(.center)
                 }
             }
-            
+
             HStack(spacing: DesignSystem.Spacing.md) {
                 EnhancedButton.secondary("Try Again", systemImage: "arrow.clockwise") {
                     Task { await onRetry() }
                 }
-                
+
                 EnhancedButton.primary("Add Player", systemImage: "plus") {
                     onAddPlayer()
                 }
@@ -527,23 +527,23 @@ private struct HelpfulTip: View {
     let icon: String
     let iconColor: Color
     let text: String
-    
+
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()
                     .fill(iconColor.opacity(0.15))
                     .frame(width: 20, height: 20)
-                
+
                 Image(systemName: icon)
                     .font(.system(size: 10, weight: .medium))
                     .foregroundColor(iconColor)
             }
-            
+
             Text(text)
                 .font(DesignSystem.Typography.caption1)
                 .foregroundColor(DesignSystem.Colors.secondaryText)
-            
+
             Spacer()
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
@@ -561,7 +561,7 @@ private struct PlayerCardWithActions: View {
     let player: PlayerEntity
     let onEdit: () -> Void
     let onDelete: () -> Void
-    
+
     var body: some View {
         EnhancedPlayerCard(player: player)
     }
@@ -584,19 +584,19 @@ private struct PlayerCardWithActions: View {
 private struct StatItem: View {
     let title: String
     let value: String
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xxxs) {
             Text(value)
                 .font(DesignSystem.Typography.callout)
                 .fontWeight(.semibold)
                 .foregroundColor(DesignSystem.Colors.primaryText)
-            
+
             Text(title)
                 .font(DesignSystem.Typography.caption2)
                 .foregroundColor(DesignSystem.Colors.tertiaryText)
                 .textCase(.uppercase)
         }
-    
+
 }
 }

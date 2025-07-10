@@ -3,12 +3,15 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+    # Run on iOS/Swift specific file changes
+    paths:
+      - "TeamGen/**/*.swift"
+      - "TeamGenTests/**/*.swift"
+      - "TeamGenUITests/**/*.swift"
+      - "TeamGen.xcodeproj/**"
+      - ".github/workflows/**"
+      - "scripts/**"
+      - "*.md"
 
 jobs:
   claude-review:
@@ -27,29 +30,52 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Run Claude Code Review
         id: claude-review
-        uses: anthropics/claude-code-action@beta
+        uses: anthropics/claude-code-action@beta  # Consider pinning to specific SHA when stable
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           
           # Optional: Specify model (defaults to Claude Sonnet 4, uncomment for Claude Opus 4)
           # model: "claude-opus-4-20250514"
           
-          # Direct prompt for automated review (no @claude mention needed)
+          # iOS/Swift specific automated review for TeamGen
           direct_prompt: |
-            Please review this pull request and provide feedback on:
-            - Code quality and best practices
-            - Potential bugs or issues
-            - Performance considerations
-            - Security concerns
-            - Test coverage
+            Review this TeamGen iOS Swift pull request with focus on:
             
-            Be constructive and helpful in your feedback.
+            **Architecture & Design:**
+            - Clean Architecture adherence (Domain → Core → Features → Shared)
+            - Proper dependency injection and protocol usage
+            - @Observable ViewModel patterns (not @ObservableObject)
+            - SwiftData repository pattern compliance
+            
+            **Code Quality:**
+            - Swift API Design Guidelines compliance
+            - Proper error handling and async/await usage
+            - Memory management and performance optimization
+            - SwiftUI best practices and state management
+            
+            **Testing & Quality:**
+            - Unit test coverage for new functionality
+            - Integration with existing test infrastructure
+            - SwiftLint and SwiftFormat compliance
+            
+            **iOS Specific:**
+            - Accessibility (VoiceOver, Dynamic Type) support
+            - Design system consistency
+            - iOS 18.4+ compatibility
+            - Performance on iPhone devices
+            
+            **Security:**
+            - No hardcoded secrets or sensitive data
+            - Proper data validation and error handling
+            - Secure SwiftData operations
+            
+            Provide specific, actionable feedback with code examples where helpful.
           
           # Optional: Customize review based on file types
           # direct_prompt: |
@@ -65,8 +91,8 @@ jobs:
           #   'Welcome! Please review this PR from a first-time contributor. Be encouraging and provide detailed explanations for any suggestions.' ||
           #   'Please provide a thorough code review focusing on our coding standards and best practices.' }}
           
-          # Optional: Add specific tools for running tests or linting
-          # allowed_tools: "Bash(npm run test),Bash(npm run lint),Bash(npm run typecheck)"
+          # iOS/Swift specific tools for automated testing and linting
+          allowed_tools: "Bash(./scripts/build.sh ci),Bash(swiftlint lint),Bash(swiftformat --lint .),Bash(xcodebuild test)"
           
           # Optional: Skip review for certain conditions
           # if: |

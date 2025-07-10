@@ -25,13 +25,13 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Run Claude Code
         id: claude
-        uses: anthropics/claude-code-action@beta
+        uses: anthropics/claude-code-action@beta  # Consider pinning to specific SHA when stable
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           
@@ -44,14 +44,31 @@ jobs:
           # Optional: Trigger when specific user is assigned to an issue
           # assignee_trigger: "claude-bot"
           
-          # Optional: Allow Claude to run specific commands
-          # allowed_tools: "Bash(npm install),Bash(npm run build),Bash(npm run test:*),Bash(npm run lint:*)"
+          # iOS/Swift specific allowed tools for TeamGen
+          allowed_tools: "Bash(xcodebuild),Bash(swiftlint),Bash(swiftformat),Bash(./scripts/build.sh),Bash(./scripts/test.sh)"
           
-          # Optional: Add custom instructions for Claude to customize its behavior for your project
-          # custom_instructions: |
-          #   Follow our coding standards
-          #   Ensure all new code has tests
-          #   Use TypeScript for new files
+          # TeamGen-specific custom instructions
+          custom_instructions: |
+            You are reviewing iOS Swift code for TeamGen, a team management app.
+            
+            Key guidelines:
+            - Follow Clean Architecture principles (Domain → Core → Features → Shared)
+            - Use @Observable ViewModels (not @ObservableObject)
+            - Ensure SwiftData integration follows repository patterns
+            - All new code should have comprehensive tests
+            - Follow Apple's Swift API Design Guidelines
+            - Use SwiftUI best practices with proper state management
+            - Check for proper dependency injection patterns
+            - Ensure accessibility (VoiceOver, Dynamic Type) compliance
+            - Follow the existing design system patterns
+            - Use async/await patterns for data operations
+            
+            Focus areas:
+            - Performance optimization
+            - Memory management
+            - Error handling
+            - Unit test coverage
+            - Code maintainability
           
           # Optional: Custom environment variables for Claude
           # claude_env: |

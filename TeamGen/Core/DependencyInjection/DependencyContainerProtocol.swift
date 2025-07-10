@@ -8,22 +8,23 @@ public protocol DependencyContainerProtocol {
     // Repositories
     var playerRepository: PlayerRepositoryProtocol { get }
     var settingsRepository: SettingsRepositoryProtocol { get }
-    
+
     // Services
     var teamGenerationService: TeamGenerationServiceProtocol { get }
     var hapticService: HapticServiceProtocol { get }
     var colorSchemeService: any ColorSchemeServiceProtocol { get }
-    
+
     // Core Services (modular architecture)
     var analyticsService: AnalyticsServiceProtocol { get }
     var networkService: NetworkServiceProtocol { get }
-    
+
     // Use Cases
     var generateTeamsUseCase: GenerateTeamsUseCaseProtocol { get }
     var managePlayersUseCase: ManagePlayersUseCaseProtocol { get }
-    
+
     // ViewModels (singletons for state persistence)
     var teamGenerationViewModel: TeamGenerationViewModel { get }
+    var settingsManagementViewModel: SettingsManagementViewModel { get }
 }
 
 // MARK: - Color Scheme Service Protocol
@@ -32,28 +33,28 @@ public protocol DependencyContainerProtocol {
 public protocol ColorSchemeServiceProtocol {
     /// Current effective color scheme (resolved from user preference and system setting)
     var effectiveColorScheme: ColorScheme? { get }
-    
+
     /// User's color scheme preference
     var userPreference: ColorSchemeOption { get set }
-    
+
     /// Whether high contrast is enabled
     var isHighContrastEnabled: Bool { get set }
-    
+
     /// Whether reduce motion is enabled
     var isReduceMotionEnabled: Bool { get set }
-    
+
     /// Load color scheme preferences from settings
     func loadPreferences() async
-    
+
     /// Save color scheme preferences to settings
     func savePreferences() async
-    
+
     /// Update color scheme preference
     func updateColorScheme(_ scheme: ColorSchemeOption) async
-    
+
     /// Update high contrast setting
     func updateHighContrast(_ enabled: Bool) async
-    
+
     /// Update reduce motion setting
     func updateReduceMotion(_ enabled: Bool) async
 }
@@ -68,9 +69,9 @@ public protocol SettingsRepositoryProtocol: Sendable {
 public enum AppLanguage: String, CaseIterable, Identifiable, Sendable, Codable {
     case english = "en"
     case german = "de"
-    
+
     public var id: String { self.rawValue }
-    
+
     public var displayName: String {
         switch self {
         case .english: return "English"
@@ -84,9 +85,9 @@ public enum ColorSchemeOption: String, CaseIterable, Identifiable, Sendable, Cod
     case system = "System"
     case light = "Light"
     case dark = "Dark"
-    
+
     public var id: String { self.rawValue }
-    
+
     public var displayName: String {
         switch self {
         case .system: return "Automatic"
@@ -94,7 +95,7 @@ public enum ColorSchemeOption: String, CaseIterable, Identifiable, Sendable, Cod
         case .dark: return "Dark"
         }
     }
-    
+
     public var systemColorScheme: ColorScheme? {
         switch self {
         case .system: return nil
@@ -113,7 +114,7 @@ public struct AppSettings: Equatable, Sendable, Codable {
     public var colorSchemePreference: ColorSchemeOption
     public var isHighContrastEnabled: Bool
     public var isReduceMotionEnabled: Bool
-    
+
     public init(
         isDarkModeEnabled: Bool = false,
         language: AppLanguage = .english,
@@ -131,4 +132,4 @@ public struct AppSettings: Equatable, Sendable, Codable {
         self.isHighContrastEnabled = isHighContrastEnabled
         self.isReduceMotionEnabled = isReduceMotionEnabled
     }
-} 
+}

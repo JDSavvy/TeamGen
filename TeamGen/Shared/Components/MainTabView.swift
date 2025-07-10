@@ -7,19 +7,19 @@ struct MainTabView: View {
     @State private var selectedTab = 0
     @State private var isInitialized = false
     @State private var lastImpactTime: Date = Date.distantPast
-    
+
     private let impactCooldown: TimeInterval = 0.1 // Prevent rapid haptic feedback
-    
+
     init() {
         configureTabBarAppearance()
     }
-    
+
     var body: some View {
         ZStack {
             // Background gradient
             backgroundGradient
                 .ignoresSafeArea()
-            
+
             // Individual NavigationStacks for each tab to prevent toolbar cross-contamination
             TabView(selection: $selectedTab) {
                 // Teams Tab
@@ -30,7 +30,7 @@ struct MainTabView: View {
                     Label("Teams", systemImage: selectedTab == 0 ? DesignSystem.Symbols.personGroupFill : DesignSystem.Symbols.personGroup)
                 }
                 .tag(0)
-                
+
                 // Players Tab - Isolated NavigationStack
                 NavigationStack {
                     PlayerViewContent()
@@ -39,7 +39,7 @@ struct MainTabView: View {
                     Label("Players", systemImage: selectedTab == 1 ? DesignSystem.Symbols.personStackFill : DesignSystem.Symbols.personStack)
                 }
                 .tag(1)
-                
+
                 // Settings Tab
                 NavigationStack {
                     SettingsViewContent()
@@ -64,7 +64,7 @@ struct MainTabView: View {
             updateTabBarStyle(for: newScheme ?? systemColorScheme)
         }
     }
-    
+
     // MARK: - Background Gradient
     private var backgroundGradient: some View {
         LinearGradient(
@@ -76,43 +76,43 @@ struct MainTabView: View {
             endPoint: .bottomTrailing
         )
     }
-    
+
     // MARK: - Configuration Methods
     private func configureTabBarAppearance() {
         // Configure modern tab bar appearance following Apple's latest HIG
         let appearance = UITabBarAppearance()
         appearance.configureWithTransparentBackground()
-        
+
         // Background styling
         appearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.95)
         appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-        
+
         // Item styling - consistent with Apple's design language
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor.systemGray,
             .font: UIFont.systemFont(ofSize: 10, weight: .medium)
         ]
-        
+
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor.systemBlue
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
             .foregroundColor: UIColor.systemBlue,
             .font: UIFont.systemFont(ofSize: 10, weight: .semibold)
         ]
-        
+
         // Compact appearance (iPhone landscape)
         appearance.compactInlineLayoutAppearance = appearance.stackedLayoutAppearance
-        
+
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
-        
+
         // Additional styling following Apple's elevation guidelines
         UITabBar.appearance().layer.shadowColor = UIColor.black.cgColor
         UITabBar.appearance().layer.shadowOffset = CGSize(width: 0, height: -2)
         UITabBar.appearance().layer.shadowRadius = 8
         UITabBar.appearance().layer.shadowOpacity = 0.1
     }
-    
+
     // MARK: - Event Handlers
     private func handleTabChange(from oldTab: Int, to newTab: Int) {
         // Haptic feedback with cooldown following Apple's guidelines
@@ -123,25 +123,25 @@ struct MainTabView: View {
             }
             lastImpactTime = now
         }
-        
+
         // Analytics tracking
         trackTabChange(from: oldTab, to: newTab)
     }
-    
+
     private func trackTabChange(from oldTab: Int, to newTab: Int) {
         // Analytics tracking following Apple's privacy guidelines
         // Tab change logged for analytics
     }
-    
+
     private func tabName(for index: Int) -> String {
         switch index {
         case 0: return "Teams"
-        case 1: return "Players" 
+        case 1: return "Players"
         case 2: return "Settings"
         default: return "Unknown"
         }
     }
-    
+
     // MARK: - Initialization & State Management
     private func initializeView() async {
         if !isInitialized {
@@ -150,11 +150,11 @@ struct MainTabView: View {
             isInitialized = true
         }
     }
-    
+
     private func loadColorScheme() async {
         await dependencies.colorSchemeService.loadPreferences()
     }
-    
+
     private func updateTabBarStyle(for colorScheme: ColorScheme) {
         // Implementation of updateTabBarStyle method
     }
@@ -165,7 +165,7 @@ struct MainTabView: View {
 
 private struct TeamViewContent: View {
     @Binding var selectedTab: Int
-    
+
     var body: some View {
         TeamView(selectedTab: $selectedTab)
             .navigationTitle("Teams")
@@ -196,4 +196,4 @@ struct MainTabView_Previews: PreviewProvider {
         MainTabView()
     }
 }
-#endif 
+#endif

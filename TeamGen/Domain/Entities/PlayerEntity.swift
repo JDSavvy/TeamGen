@@ -8,7 +8,7 @@ public struct PlayerEntity: Equatable, Identifiable, Sendable {
     public var skills: PlayerSkills
     public var statistics: PlayerStatistics
     public var isSelected: Bool
-    
+
     public init(
         id: UUID = UUID(),
         name: String,
@@ -30,18 +30,18 @@ public struct PlayerSkills: Equatable, Sendable {
     public let agility: Int
     public let endurance: Int
     public let teamwork: Int
-    
+
     public var overall: Double {
         Double(technical + agility + endurance + teamwork) / 4.0
     }
-    
+
     public init(technical: Int, agility: Int, endurance: Int, teamwork: Int) {
         self.technical = min(max(technical, 1), 10)
         self.agility = min(max(agility, 1), 10)
         self.endurance = min(max(endurance, 1), 10)
         self.teamwork = min(max(teamwork, 1), 10)
     }
-    
+
 
 }
 
@@ -49,7 +49,7 @@ public struct PlayerStatistics: Equatable, Sendable {
     public var gamesPlayed: Int
     public var teamsJoined: Int
     public var lastPlayed: Date?
-    
+
     public init(
         gamesPlayed: Int = 0,
         teamsJoined: Int = 0,
@@ -68,7 +68,7 @@ public enum SkillLevel: String, CaseIterable, Sendable {
     case intermediate = "Intermediate"
     case advanced = "Advanced"
     case expert = "Expert"
-    
+
     public init(from overallRank: Double) {
         switch overallRank {
         case 0..<2:
@@ -83,7 +83,7 @@ public enum SkillLevel: String, CaseIterable, Sendable {
             self = .expert
         }
     }
-    
+
     public var color: String {
         switch self {
         case .beginner: return "red"
@@ -93,7 +93,7 @@ public enum SkillLevel: String, CaseIterable, Sendable {
         case .expert: return "blue"
         }
     }
-    
+
     // MARK: - Display Properties
     var displayName: String {
         switch self {
@@ -109,7 +109,7 @@ public enum SkillLevel: String, CaseIterable, Sendable {
             return "Expert"
         }
     }
-    
+
     /// Detailed accessibility description for VoiceOver users
     var accessibilityDescription: String {
         switch self {
@@ -125,7 +125,7 @@ public enum SkillLevel: String, CaseIterable, Sendable {
             return "Expert level, represented by a star shape"
         }
     }
-    
+
     /// Short accessibility hint for skill level
     var accessibilityHint: String {
         switch self {
@@ -143,4 +143,3 @@ public enum SkillLevel: String, CaseIterable, Sendable {
     }
 }
 
- 

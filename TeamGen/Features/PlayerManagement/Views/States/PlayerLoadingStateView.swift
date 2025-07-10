@@ -4,7 +4,7 @@ import SwiftUI
 /// Modern loading state view with subtle animation for player management
 struct PlayerLoadingStateView: View {
     @State private var rotationAngle: Double = 0
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             // Modern loading indicator with subtle animation
@@ -12,7 +12,7 @@ struct PlayerLoadingStateView: View {
                 Circle()
                     .stroke(DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityIconBackground), lineWidth: DesignSystem.VisualConsistency.borderBold)
                     .frame(width: DesignSystem.ComponentSize.loadingIndicatorStandard, height: DesignSystem.ComponentSize.loadingIndicatorStandard)
-                
+
                 Circle()
                     .trim(from: 0, to: 0.7)
                     .stroke(
@@ -31,12 +31,12 @@ struct PlayerLoadingStateView: View {
                         }
                     }
             }
-            
+
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Text("Loading Players")
                     .font(DesignSystem.Typography.loadingStateTitle)
                     .foregroundColor(DesignSystem.Colors.primaryText)
-                
+
                 Text("Fetching your player roster")
                     .font(DesignSystem.Typography.loadingStateSubtitle)
                     .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -58,4 +58,4 @@ struct PlayerLoadingStateView_Previews: PreviewProvider {
         PlayerLoadingStateView()
     }
 }
-#endif 
+#endif

@@ -10,29 +10,29 @@ final class PlayerPresentationState {
     // Sheet presentations
     var showingAddPlayer = false
     var showingEditPlayer = false
-    
+
     // Alert presentations
     var showingDeleteConfirmation = false
-    
+
     // Current player being edited or deleted
     var editingPlayer: PlayerEntity?
     var playerToDelete: PlayerEntity?
-    
+
     // State management methods
     func presentAddPlayer() {
         showingAddPlayer = true
     }
-    
+
     func presentEditPlayer(_ player: PlayerEntity) {
         editingPlayer = player
         showingEditPlayer = true
     }
-    
+
     func presentDeleteConfirmation(for player: PlayerEntity) {
         playerToDelete = player
         showingDeleteConfirmation = true
     }
-    
+
     func dismissAll() {
         showingAddPlayer = false
         showingEditPlayer = false
@@ -40,4 +40,4 @@ final class PlayerPresentationState {
         editingPlayer = nil
         playerToDelete = nil
     }
-} 
+}

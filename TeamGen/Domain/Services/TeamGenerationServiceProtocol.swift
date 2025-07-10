@@ -14,12 +14,12 @@ public protocol TeamGenerationServiceProtocol: Sendable {
         count: Int,
         mode: TeamGenerationMode
     ) async throws -> [TeamEntity]
-    
+
     /// Calculates balance scores for the given teams
     /// - Parameter teams: Teams to calculate balance for
     /// - Returns: Teams with updated balance scores
     func calculateBalanceScores(for teams: [TeamEntity]) -> [TeamEntity]
-    
+
     /// Validates if team generation is possible
     /// - Parameters:
     ///   - playerCount: Number of available players
@@ -32,16 +32,16 @@ public protocol TeamGenerationServiceProtocol: Sendable {
 public struct ValidationResult: Sendable {
     public let isValid: Bool
     public let error: TeamGenerationError?
-    
+
     public init(isValid: Bool, error: TeamGenerationError?) {
         self.isValid = isValid
         self.error = error
     }
-    
+
     public static var valid: ValidationResult {
         ValidationResult(isValid: true, error: nil)
     }
-    
+
     public static func invalid(_ error: TeamGenerationError) -> ValidationResult {
         ValidationResult(isValid: false, error: error)
     }
@@ -53,7 +53,7 @@ public enum TeamGenerationError: LocalizedError, Sendable {
     case invalidTeamCount(Int)
     case emptyPlayerList
     case generationFailed(String)
-    
+
     public var errorDescription: String? {
         switch self {
         case .insufficientPlayers(let required, let available):
@@ -73,11 +73,11 @@ public struct TeamBalanceMetrics: Sendable {
     public let averageSkillDeviation: Double
     public let maxSkillDifference: Double
     public let balanceScore: Double // 0.0 to 1.0
-    
+
     public var isWellBalanced: Bool {
         balanceScore >= 0.8
     }
-    
+
     public var balanceDescription: String {
         switch balanceScore {
         case 0.9...1.0:
@@ -90,4 +90,4 @@ public struct TeamBalanceMetrics: Sendable {
             return "Poorly balanced"
         }
     }
-} 
+}

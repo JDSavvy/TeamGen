@@ -3,14 +3,14 @@ import UIKit
 // MARK: - iOS Haptic Service
 /// Concrete implementation of haptic feedback for iOS
 public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable {
-    
+
     // Feedback generators
     private let impactLight = UIImpactFeedbackGenerator(style: .light)
     private let impactMedium = UIImpactFeedbackGenerator(style: .medium)
     private let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
     private let selectionFeedback = UISelectionFeedbackGenerator()
     private let notificationFeedback = UINotificationFeedbackGenerator()
-    
+
     public init() {
         // Prepare generators for immediate use on main thread
         Task { @MainActor in
@@ -21,13 +21,13 @@ public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable 
             notificationFeedback.prepare()
         }
     }
-    
+
     public func selection() async {
         await MainActor.run {
             selectionFeedback.selectionChanged()
         }
     }
-    
+
     public func impact(_ intensity: HapticIntensity) async {
         await MainActor.run {
             switch intensity {
@@ -40,7 +40,7 @@ public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable 
             }
         }
     }
-    
+
     public func notification(_ type: HapticNotificationType) async {
         await MainActor.run {
             switch type {
@@ -53,19 +53,19 @@ public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable 
             }
         }
     }
-    
+
     public func success() async {
         await notification(.success)
     }
-    
+
     public func error() async {
         await notification(.error)
     }
-    
+
     public func warning() async {
         await notification(.warning)
     }
-    
+
     public func provideGenerationFeedback(balanceScore: Double) async {
         switch balanceScore {
         case 0.9...1.0:
@@ -78,4 +78,4 @@ public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable 
             await warning()
         }
     }
-} 
+}

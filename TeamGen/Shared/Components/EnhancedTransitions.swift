@@ -4,19 +4,19 @@ import SwiftUI
 /// A comprehensive collection of HIG-compliant transitions for various UI contexts
 /// Enhanced with modern iOS 18 motion design principles and accessibility features
 public struct EnhancedTransitions {
-    
+
     // MARK: - List Transitions (Enhanced)
     /// Smooth slide transition for list items with improved physics
     public static let listItemSlide: AnyTransition = .asymmetric(
         insertion: .move(edge: .trailing).combined(with: .opacity).combined(with: .scale(scale: 0.95)),
         removal: .move(edge: .leading).combined(with: .opacity).combined(with: .scale(scale: 0.95))
     )
-    
+
     /// Scale and fade for new items with enhanced spring animation
     public static let listItemAppear: AnyTransition = .scale(scale: 0.8, anchor: .center)
         .combined(with: .opacity)
         .animation(DesignSystem.Animation.spring)
-    
+
     /// Staggered list transition with improved timing
     public static func staggeredListItem(index: Int, baseDelay: Double = 0.03) -> AnyTransition {
         return .asymmetric(
@@ -29,7 +29,7 @@ public struct EnhancedTransitions {
                 .animation(DesignSystem.Animation.quick.delay(Double(index) * 0.02))
         )
     }
-    
+
     /// Enhanced list item removal with physics-based animation
     public static let listItemRemoval: AnyTransition = .asymmetric(
         insertion: .identity,
@@ -38,7 +38,7 @@ public struct EnhancedTransitions {
             .combined(with: .scale(scale: 0.8))
             .animation(DesignSystem.Animation.spring)
     )
-    
+
     // MARK: - Modal Transitions (Enhanced)
     /// Smooth modal presentation with improved spring physics
     public static let modalPresentation: AnyTransition = .asymmetric(
@@ -51,12 +51,12 @@ public struct EnhancedTransitions {
             .combined(with: .scale(scale: 0.95, anchor: .bottom))
             .animation(DesignSystem.Animation.standard)
     )
-    
+
     /// Card-style modal with enhanced depth perception
     public static let cardModal: AnyTransition = .scale(scale: 0.9, anchor: .center)
         .combined(with: .opacity)
         .animation(DesignSystem.Animation.modalPresentation)
-    
+
     /// Sheet-style modal with natural physics
     public static let sheetModal: AnyTransition = .asymmetric(
         insertion: .move(edge: .bottom)
@@ -66,7 +66,7 @@ public struct EnhancedTransitions {
             .combined(with: .scale(scale: 0.98, anchor: .bottom))
             .animation(DesignSystem.Animation.standard)
     )
-    
+
     // MARK: - Content State Transitions (Enhanced)
     /// Loading to content transition with improved visual continuity
     public static let contentAppear: AnyTransition = .asymmetric(
@@ -77,23 +77,23 @@ public struct EnhancedTransitions {
             .combined(with: .opacity)
             .animation(DesignSystem.Animation.quick)
     )
-    
+
     /// Error state transition with attention-grabbing animation
     public static let errorState: AnyTransition = .scale(scale: 0.9, anchor: .center)
         .combined(with: .opacity)
         .combined(with: .offset(y: -10))
         .animation(DesignSystem.Animation.errorFeedback)
-    
+
     /// Empty state transition with gentle appearance
     public static let emptyState: AnyTransition = .scale(scale: 0.95, anchor: .center)
         .combined(with: .opacity)
         .animation(DesignSystem.Animation.standard)
-    
+
     /// Success state transition with celebratory feel
     public static let successState: AnyTransition = .scale(scale: 0.8, anchor: .center)
         .combined(with: .opacity)
         .animation(DesignSystem.Animation.successFeedback)
-    
+
     // MARK: - Navigation Transitions (Enhanced)
     /// Forward navigation with improved depth perception
     public static let navigationForward: AnyTransition = .asymmetric(
@@ -106,7 +106,7 @@ public struct EnhancedTransitions {
             .combined(with: .scale(scale: 1.05, anchor: .trailing))
             .animation(DesignSystem.Animation.navigation)
     )
-    
+
     /// Backward navigation with natural feel
     public static let navigationBackward: AnyTransition = .asymmetric(
         insertion: .move(edge: .leading)
@@ -118,7 +118,7 @@ public struct EnhancedTransitions {
             .combined(with: .scale(scale: 1.05, anchor: .leading))
             .animation(DesignSystem.Animation.navigation)
     )
-    
+
     /// Tab transition with smooth cross-fade
     public static let tabTransition: AnyTransition = .asymmetric(
         insertion: .opacity.combined(with: .scale(scale: 0.98))
@@ -126,7 +126,7 @@ public struct EnhancedTransitions {
         removal: .opacity.combined(with: .scale(scale: 1.02))
             .animation(DesignSystem.Animation.quick)
     )
-    
+
     // MARK: - Contextual Transitions (Enhanced)
     /// Skill expansion transition with natural unfold
     public static let skillExpansion: AnyTransition = .asymmetric(
@@ -139,12 +139,12 @@ public struct EnhancedTransitions {
             .combined(with: .scale(scale: 0.95, anchor: .top))
             .animation(DesignSystem.Animation.quick)
     )
-    
+
     /// Team generation result with celebratory animation
     public static let teamResult: AnyTransition = .scale(scale: 0.8, anchor: .center)
         .combined(with: .opacity)
         .animation(DesignSystem.Animation.bouncy)
-    
+
     /// Player card flip transition
     public static let playerCardFlip: AnyTransition = .asymmetric(
         insertion: .scale(scale: 0.1, anchor: .center)
@@ -154,7 +154,7 @@ public struct EnhancedTransitions {
             .combined(with: .opacity)
             .animation(DesignSystem.Animation.quick)
     )
-    
+
     /// Settings panel slide
     public static let settingsPanel: AnyTransition = .asymmetric(
         insertion: .move(edge: .trailing)
@@ -171,14 +171,14 @@ public struct EnhancedTransitions {
 public struct InteractiveFeedbackModifier: ViewModifier {
     let style: FeedbackStyle
     let isEnabled: Bool
-    
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var isPressed = false
     @State private var isHovered = false
-    
+
     public enum FeedbackStyle {
         case subtle, standard, prominent, dramatic
-        
+
         var pressedScale: CGFloat {
             switch self {
             case .subtle: return DesignSystem.VisualConsistency.scalePressedSubtle
@@ -187,7 +187,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             case .dramatic: return 0.94
             }
         }
-        
+
         var hoverScale: CGFloat {
             switch self {
             case .subtle: return 1.01
@@ -196,7 +196,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             case .dramatic: return 1.12
             }
         }
-        
+
         var animation: SwiftUI.Animation {
             switch self {
             case .subtle: return DesignSystem.Animation.ultraQuick
@@ -205,7 +205,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             case .dramatic: return DesignSystem.Animation.bouncy
             }
         }
-        
+
         var shadowIntensity: Double {
             switch self {
             case .subtle: return 0.05
@@ -215,7 +215,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             }
         }
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .scaleEffect(effectiveScale)
@@ -248,7 +248,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
                 }
             }
     }
-    
+
     private var effectiveScale: CGFloat {
         if isPressed && isEnabled {
             return style.pressedScale
@@ -258,7 +258,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             return 1.0
         }
     }
-    
+
     private var effectiveShadowOpacity: Double {
         if isPressed && isEnabled {
             return style.shadowIntensity * 0.5
@@ -268,7 +268,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             return style.shadowIntensity
         }
     }
-    
+
     private var effectiveShadowRadius: CGFloat {
         if isPressed && isEnabled {
             return 2
@@ -278,7 +278,7 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             return 4
         }
     }
-    
+
     private var effectiveShadowOffset: CGFloat {
         if isPressed && isEnabled {
             return 1
@@ -295,20 +295,20 @@ public struct InteractiveFeedbackModifier: ViewModifier {
 public struct HoverEffectModifier: ViewModifier {
     let style: HoverStyle
     let isEnabled: Bool
-    
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var isHovered = false
-    
+
     public enum HoverStyle {
         case lift, scale, glow, float, pulse
-        
+
         var hoverScale: CGFloat {
             switch self {
             case .lift, .glow, .float, .pulse: return 1.0
             case .scale: return DesignSystem.VisualConsistency.scaleHover
             }
         }
-        
+
         var shadowRadius: CGFloat {
             switch self {
             case .lift: return 12
@@ -318,7 +318,7 @@ public struct HoverEffectModifier: ViewModifier {
             case .pulse: return 8
             }
         }
-        
+
         var shadowOpacity: Double {
             switch self {
             case .lift: return 0.15
@@ -328,7 +328,7 @@ public struct HoverEffectModifier: ViewModifier {
             case .pulse: return 0.12
             }
         }
-        
+
         var yOffset: CGFloat {
             switch self {
             case .lift: return -2
@@ -337,7 +337,7 @@ public struct HoverEffectModifier: ViewModifier {
             }
         }
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .scaleEffect(isHovered && isEnabled ? style.hoverScale : 1.0)
@@ -386,17 +386,17 @@ public struct HoverEffectModifier: ViewModifier {
 public struct ShimmerModifier: ViewModifier {
     @State private var phase: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     let duration: Double
     let angle: Double
     let opacity: Double
-    
+
     init(duration: Double = 1.5, angle: Double = 70, opacity: Double = 0.3) {
         self.duration = duration
         self.angle = angle
         self.opacity = opacity
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .overlay(
@@ -434,15 +434,15 @@ public struct ShimmerModifier: ViewModifier {
 public struct PulseModifier: ViewModifier {
     @State private var isPulsing = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     let intensity: Double
     let duration: Double
-    
+
     init(intensity: Double = 0.05, duration: Double = 1.0) {
         self.intensity = intensity
         self.duration = duration
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .scaleEffect(isPulsing ? 1 + intensity : 1)
@@ -463,15 +463,15 @@ public struct PulseModifier: ViewModifier {
 public struct BreathingModifier: ViewModifier {
     @State private var isBreathing = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     let intensity: Double
     let duration: Double
-    
+
     init(intensity: Double = 0.03, duration: Double = 2.0) {
         self.intensity = intensity
         self.duration = duration
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .scaleEffect(isBreathing ? 1 + intensity : 1 - intensity)
@@ -493,11 +493,11 @@ public struct BreathingModifier: ViewModifier {
 public struct SmoothAppearanceModifier: ViewModifier {
     @State private var hasAppeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     let delay: Double
     let duration: Double
     let transition: AnyTransition
-    
+
     init(
         delay: Double = 0,
         duration: Double = 0.5,
@@ -507,7 +507,7 @@ public struct SmoothAppearanceModifier: ViewModifier {
         self.duration = duration
         self.transition = transition
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .opacity(hasAppeared ? 1 : 0)
@@ -534,7 +534,7 @@ extension View {
     ) -> some View {
         modifier(InteractiveFeedbackModifier(style: style, isEnabled: isEnabled))
     }
-    
+
     /// Applies hover effect with specified style
     public func hoverEffect(
         style: HoverEffectModifier.HoverStyle = .lift,
@@ -542,7 +542,7 @@ extension View {
     ) -> some View {
         modifier(HoverEffectModifier(style: style, isEnabled: isEnabled))
     }
-    
+
     /// Applies shimmer loading effect
     public func shimmer(
         duration: Double = 1.5,
@@ -551,7 +551,7 @@ extension View {
     ) -> some View {
         modifier(ShimmerModifier(duration: duration, angle: angle, opacity: opacity))
     }
-    
+
     /// Applies pulse effect
     public func pulse(
         intensity: Double = 0.05,
@@ -559,7 +559,7 @@ extension View {
     ) -> some View {
         modifier(PulseModifier(intensity: intensity, duration: duration))
     }
-    
+
     /// Applies breathing effect
     public func breathing(
         intensity: Double = 0.03,
@@ -567,7 +567,7 @@ extension View {
     ) -> some View {
         modifier(BreathingModifier(intensity: intensity, duration: duration))
     }
-    
+
     /// Applies smooth appearance animation
     public func smoothAppearance(
         delay: Double = 0,
@@ -576,7 +576,7 @@ extension View {
     ) -> some View {
         modifier(SmoothAppearanceModifier(delay: delay, duration: duration, transition: transition))
     }
-    
+
     /// Applies accessibility-aware animation
     public func accessibleAnimation<V: Equatable>(
         _ animation: SwiftUI.Animation?,
@@ -600,86 +600,86 @@ struct EnhancedTransitions_Previews: PreviewProvider {
                 VStack(spacing: DesignSystem.Spacing.md) {
                     Text("Interactive Feedback")
                         .font(DesignSystem.Typography.headline)
-                    
+
                     HStack(spacing: DesignSystem.Spacing.md) {
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.primary)
                             .frame(width: 60, height: 60)
                             .interactiveFeedback(style: .subtle)
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.success)
                             .frame(width: 60, height: 60)
                             .interactiveFeedback(style: .standard)
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.warning)
                             .frame(width: 60, height: 60)
                             .interactiveFeedback(style: .prominent)
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.error)
                             .frame(width: 60, height: 60)
                             .interactiveFeedback(style: .dramatic)
                     }
                 }
-                
+
                 // Hover effects examples
                 VStack(spacing: DesignSystem.Spacing.md) {
                     Text("Hover Effects")
                         .font(DesignSystem.Typography.headline)
-                    
+
                     HStack(spacing: DesignSystem.Spacing.md) {
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.accent)
                             .frame(width: 60, height: 60)
                             .hoverEffect(style: .lift)
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.mint)
                             .frame(width: 60, height: 60)
                             .hoverEffect(style: .scale)
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.teal)
                             .frame(width: 60, height: 60)
                             .hoverEffect(style: .glow)
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.indigo)
                             .frame(width: 60, height: 60)
                             .hoverEffect(style: .float)
                     }
                 }
-                
+
                 // Animation effects examples
                 VStack(spacing: DesignSystem.Spacing.md) {
                     Text("Animation Effects")
                         .font(DesignSystem.Typography.headline)
-                    
+
                     HStack(spacing: DesignSystem.Spacing.md) {
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.primary.opacity(0.7))
                             .frame(width: 60, height: 60)
                             .shimmer()
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.success.opacity(0.7))
                             .frame(width: 60, height: 60)
                             .pulse()
-                        
+
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.warning.opacity(0.7))
                             .frame(width: 60, height: 60)
                             .breathing()
                     }
                 }
-                
+
                 // Smooth appearance examples
                 VStack(spacing: DesignSystem.Spacing.md) {
                     Text("Smooth Appearance")
                         .font(DesignSystem.Typography.headline)
-                    
+
                     ForEach(0..<3, id: \.self) { index in
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .fill(DesignSystem.Colors.cardBackground)
@@ -696,4 +696,4 @@ struct EnhancedTransitions_Previews: PreviewProvider {
         }
     }
 }
-#endif 
+#endif

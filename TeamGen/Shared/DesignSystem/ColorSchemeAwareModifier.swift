@@ -8,7 +8,7 @@ struct ColorSchemeAwareModifier: ViewModifier {
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
     @Environment(\.accessibilityInvertColors) private var invertColors
-    
+
     func body(content: Content) -> some View {
         content
             .preferredColorScheme(dependencies.colorSchemeService.effectiveColorScheme)
@@ -18,13 +18,13 @@ struct ColorSchemeAwareModifier: ViewModifier {
             )
             .accessibilityElement(children: .contain)
     }
-    
+
     // MARK: - Computed Properties
-    
+
     private var shouldReduceMotion: Bool {
         dependencies.colorSchemeService.isReduceMotionEnabled || systemReduceMotion
     }
-    
+
     private var shouldUseHighContrast: Bool {
         dependencies.colorSchemeService.isHighContrastEnabled || differentiateWithoutColor
     }
@@ -53,7 +53,7 @@ extension EnvironmentValues {
         get { self[ColorSchemeEnvironmentKey.self] }
         set { self[ColorSchemeEnvironmentKey.self] = newValue }
     }
-    
+
     var isHighContrastEnabled: Bool {
         get { self[HighContrastEnvironmentKey.self] }
         set { self[HighContrastEnvironmentKey.self] = newValue }
@@ -65,47 +65,47 @@ extension EnvironmentValues {
 @MainActor
 public struct AccessibilityAwareColors {
     private let colorSchemeService: any ColorSchemeServiceProtocol
-    
+
     public init(colorSchemeService: any ColorSchemeServiceProtocol) {
         self.colorSchemeService = colorSchemeService
     }
-    
+
     // MARK: - Text Colors
-    
+
     public var primaryText: Color {
         DesignSystem.Colors.accessibleTextColor(
             isHighContrast: colorSchemeService.isHighContrastEnabled
         )
     }
-    
+
     public var secondaryText: Color {
         DesignSystem.Colors.accessibleSecondaryTextColor(
             isHighContrast: colorSchemeService.isHighContrastEnabled
         )
     }
-    
+
     // MARK: - Background Colors
-    
+
     public var primaryBackground: Color {
         DesignSystem.Colors.accessibleBackgroundColor(
             isHighContrast: colorSchemeService.isHighContrastEnabled
         )
     }
-    
+
     public var cardBackground: Color {
         DesignSystem.Colors.accessibleCardBackground(
             isHighContrast: colorSchemeService.isHighContrastEnabled
         )
     }
-    
+
     // MARK: - Interactive Colors
-    
+
     public var buttonBackground: Color {
-        colorSchemeService.isHighContrastEnabled 
-            ? DesignSystem.Colors.highContrastPrimary 
+        colorSchemeService.isHighContrastEnabled
+            ? DesignSystem.Colors.highContrastPrimary
             : DesignSystem.Colors.buttonBackground
     }
-    
+
     public var focusRing: Color {
         DesignSystem.Colors.focusRing
     }
@@ -115,18 +115,18 @@ public struct AccessibilityAwareColors {
 /// Provides smooth transitions between color schemes
 struct SmoothColorTransitionModifier: ViewModifier {
     @Environment(\.dependencies) private var dependencies
-    
+
     func body(content: Content) -> some View {
         content
             .animation(
-                dependencies.colorSchemeService.isReduceMotionEnabled 
-                    ? nil 
+                dependencies.colorSchemeService.isReduceMotionEnabled
+                    ? nil
                     : .easeInOut(duration: 0.3),
                 value: dependencies.colorSchemeService.effectiveColorScheme
             )
             .animation(
-                dependencies.colorSchemeService.isReduceMotionEnabled 
-                    ? nil 
+                dependencies.colorSchemeService.isReduceMotionEnabled
+                    ? nil
                     : .easeInOut(duration: 0.2),
                 value: dependencies.colorSchemeService.isHighContrastEnabled
             )
@@ -138,4 +138,4 @@ public extension View {
     func smoothColorTransitions() -> some View {
         modifier(SmoothColorTransitionModifier())
     }
-} 
+}

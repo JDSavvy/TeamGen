@@ -6,13 +6,13 @@ struct EnhancedPlayerCard: View {
     let player: PlayerEntity
     let style: PlayerCardStyle
     let showDetailedSkills: Bool
-    
+
     init(player: PlayerEntity, style: PlayerCardStyle = .detailed, showDetailedSkills: Bool = true) {
         self.player = player
         self.style = style
         self.showDetailedSkills = showDetailedSkills
     }
-    
+
     var body: some View {
         EnhancedCard(style: CardStyle.default, elevation: CardElevation.low) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
@@ -23,16 +23,16 @@ struct EnhancedPlayerCard: View {
                             .font(DesignSystem.Typography.title3)
                             .fontWeight(.semibold)
                             .foregroundColor(DesignSystem.Colors.primaryText)
-                        
+
                         // Overall skill level badge with synchronized color
                         SkillLevelBadge(
                             skillLevel: PlayerSkillPresentation.skillLevel(from: player.skills.overall),
                             size: .small
                         )
                     }
-                    
+
                     Spacer()
-                    
+
                     // Overall skill indicator with perfect synchronization
                     OverallSkillIndicator(
                         overallSkill: player.skills.overall,
@@ -41,11 +41,11 @@ struct EnhancedPlayerCard: View {
                         showValue: true
                     )
                 }
-                
+
                 if showDetailedSkills {
                     Divider()
                         .background(DesignSystem.Colors.separatorColor)
-                    
+
                     // Individual skill indicators
                     VStack(spacing: DesignSystem.Spacing.sm) {
                         SkillIndicatorBar(
@@ -53,19 +53,19 @@ struct EnhancedPlayerCard: View {
                             skillValue: player.skills.technical,
                             size: .medium
                         )
-                        
+
                         SkillIndicatorBar(
                             skillName: "Agility",
                             skillValue: player.skills.agility,
                             size: .medium
                         )
-                        
+
                         SkillIndicatorBar(
                             skillName: "Endurance",
                             skillValue: player.skills.endurance,
                             size: .medium
                         )
-                        
+
                         SkillIndicatorBar(
                             skillName: "Teamwork",
                             skillValue: player.skills.teamwork,
@@ -85,27 +85,27 @@ struct EnhancedPlayerCard: View {
 struct CompactPlayerScore: View {
     let player: PlayerEntity
     let size: ScoreSize
-    
+
     init(player: PlayerEntity, size: ScoreSize = .medium) {
         self.player = player
         self.size = size
     }
-    
+
     var body: some View {
         HStack(spacing: size.spacing) {
             // Skill indicator dot
             Circle()
                 .fill(PlayerSkillPresentation.rankColor(player.skills.overall))
                 .frame(width: size.dotSize, height: size.dotSize)
-            
+
             // Player name
             Text(player.name)
                 .font(size.nameFont)
                 .foregroundColor(DesignSystem.Colors.primaryText)
                 .lineLimit(1)
-            
+
             Spacer()
-            
+
             // Score with synchronized color
             Text(String(format: "%.1f", player.skills.overall))
                 .font(size.scoreFont)
@@ -143,7 +143,7 @@ enum ScoreSize {
     case small
     case medium
     case large
-    
+
     var dotSize: CGFloat {
         switch self {
         case .small: return 6
@@ -151,7 +151,7 @@ enum ScoreSize {
         case .large: return 10
         }
     }
-    
+
     var spacing: CGFloat {
         switch self {
         case .small: return DesignSystem.Spacing.xs
@@ -159,7 +159,7 @@ enum ScoreSize {
         case .large: return DesignSystem.Spacing.md
         }
     }
-    
+
     var padding: CGFloat {
         switch self {
         case .small: return DesignSystem.Spacing.xs
@@ -167,7 +167,7 @@ enum ScoreSize {
         case .large: return DesignSystem.Spacing.md
         }
     }
-    
+
     var cornerRadius: CGFloat {
         switch self {
         case .small: return DesignSystem.CornerRadius.small
@@ -175,7 +175,7 @@ enum ScoreSize {
         case .large: return DesignSystem.CornerRadius.large
         }
     }
-    
+
     var nameFont: Font {
         switch self {
         case .small: return DesignSystem.Typography.caption1
@@ -183,7 +183,7 @@ enum ScoreSize {
         case .large: return DesignSystem.Typography.body
         }
     }
-    
+
     var scoreFont: Font {
         switch self {
         case .small: return DesignSystem.Typography.caption1
@@ -201,16 +201,16 @@ enum ScoreSize {
         skills: PlayerSkills(technical: 8, agility: 6, endurance: 7, teamwork: 9),
         isSelected: true
     )
-    
+
     VStack(spacing: DesignSystem.Spacing.lg) {
         EnhancedPlayerCard(player: samplePlayer)
-        
+
         CompactPlayerScore(player: samplePlayer)
-        
+
         HStack {
             CompactPlayerScore(player: samplePlayer, size: .small)
             CompactPlayerScore(player: samplePlayer, size: .large)
         }
     }
     .padding()
-} 
+}

@@ -18,7 +18,7 @@ public enum TeamGenAnalyticsEvent: AnalyticsEvent {
     case playerAdded(skillLevel: Double)
     case teamGenerated(playerCount: Int, teamCount: Int)
     case settingsChanged(setting: String, value: String)
-    
+
     public var name: String {
         switch self {
         case .playerAdded:
@@ -29,7 +29,7 @@ public enum TeamGenAnalyticsEvent: AnalyticsEvent {
             return "settings_changed"
         }
     }
-    
+
     public var parameters: [String: Any] {
         switch self {
         case .playerAdded(let skillLevel):
@@ -40,4 +40,4 @@ public enum TeamGenAnalyticsEvent: AnalyticsEvent {
             return ["setting": setting, "value": value]
         }
     }
-} 
+}

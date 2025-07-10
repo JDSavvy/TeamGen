@@ -17,7 +17,7 @@ struct TeamGenApp: App {
         }
         .modelContainer(createModelContainer())
     }
-    
+
     // MARK: - Safe Model Container Creation
     private func createModelContainer() -> ModelContainer {
         do {
@@ -26,7 +26,7 @@ struct TeamGenApp: App {
             // Log the error for debugging but provide a fallback
             Logger(subsystem: "com.teamgen.app", category: "ModelContainer")
                 .fault("Failed to create ModelContainer: \(error.localizedDescription)")
-            
+
             // Create a minimal fallback container
             do {
                 return try ModelContainer(for: SchemaV3.PlayerV3.self)
@@ -44,7 +44,7 @@ struct ContentBootstrapper: View {
     @State private var dependencyContainer: DependencyContainerProtocol?
     @State private var isInitialized = false
     @State private var initializationError: Error?
-    
+
     var body: some View {
         Group {
             if let error = initializationError {
@@ -66,19 +66,19 @@ struct ContentBootstrapper: View {
             await initializeDependencies()
         }
     }
-    
+
     @MainActor
     private func initializeDependencies() async {
         let logger = Logger(subsystem: "com.teamgen.app", category: "Initialization")
         logger.info("Initializing dependencies with modern SwiftData integration")
-        
+
         // Create dependency container with SwiftData context
         let container = LiveDependencyContainer(modelContext: modelContext)
-        
+
         self.dependencyContainer = container
         self.isInitialized = true
         self.initializationError = nil
-        
+
         logger.info("Dependencies initialized successfully")
     }
 }
@@ -90,7 +90,7 @@ private struct LoadingView: View {
             ProgressView()
                 .scaleEffect(1.5)
                 .tint(.accentColor)
-            
+
             Text("Setting up TeamGen...")
                 .font(.headline)
                 .foregroundColor(.secondary)
@@ -104,23 +104,23 @@ private struct LoadingView: View {
 private struct ErrorView: View {
     let error: Error
     let retry: () -> Void
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "exclamationmark.triangle")
                 .font(DesignSystem.Typography.splashScreen)
                 .foregroundColor(.orange)
-            
+
             Text("Initialization Error")
                 .font(.title2)
                 .fontWeight(.semibold)
-            
+
             Text(error.localizedDescription)
                 .font(.body)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
-            
+
             Button("Retry", action: retry)
                 .buttonStyle(.borderedProminent)
         }

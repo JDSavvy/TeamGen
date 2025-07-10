@@ -9,21 +9,21 @@ struct PlayerFormView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var formModel: PlayerFormModel
     @FocusState private var isNameFieldFocused: Bool
-    
+
     let mode: FormMode
     let onCompletion: () async -> Void
-    
+
     enum FormMode {
         case add
         case edit(PlayerEntity)
-        
+
         var title: String {
             switch self {
             case .add: return "Add Player"
             case .edit: return "Edit Player"
             }
         }
-        
+
         var confirmationButtonTitle: String {
             switch self {
             case .add: return "Add"
@@ -31,11 +31,11 @@ struct PlayerFormView: View {
             }
         }
     }
-    
+
     init(mode: FormMode, onCompletion: @escaping () async -> Void) {
         self.mode = mode
         self.onCompletion = onCompletion
-        
+
         switch mode {
         case .add:
             self._formModel = State(wrappedValue: PlayerFormModel())
@@ -43,7 +43,7 @@ struct PlayerFormView: View {
             self._formModel = State(wrappedValue: PlayerFormModel(player: player))
         }
     }
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -52,11 +52,11 @@ struct PlayerFormView: View {
                         formModel: $formModel,
                         isNameFieldFocused: $isNameFieldFocused
                     )
-                    
+
                     if case .edit(let player) = mode, player.statistics.gamesPlayed > 0 {
                         PlayerStatisticsSection(player: player)
                     }
-                    
+
                     if case .edit = mode {
                         EnhancedButton.destructive("Delete Player", systemImage: "trash") {
                             await deletePlayer()
@@ -74,7 +74,7 @@ struct PlayerFormView: View {
                         dismiss()
                     }
                 }
-                
+
                 ToolbarItem(placement: .confirmationAction) {
                     Button(mode.confirmationButtonTitle) {
                         Task { await savePlayer() }
@@ -92,12 +92,12 @@ struct PlayerFormView: View {
             }
         }
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func savePlayer() async {
         guard formModel.isValid else { return }
-        
+
         do {
             let skills = PlayerSkills(
                 technical: formModel.technicalSkill,
@@ -105,7 +105,7 @@ struct PlayerFormView: View {
                 endurance: formModel.enduranceLevel,
                 teamwork: formModel.teamworkRating
             )
-            
+
             switch mode {
             case .add:
                 _ = try await dependencies.managePlayersUseCase.addPlayer(
@@ -118,7 +118,7 @@ struct PlayerFormView: View {
                 updatedPlayer.skills = skills
                 try await dependencies.managePlayersUseCase.updatePlayer(updatedPlayer)
             }
-            
+
             await dependencies.hapticService.success()
             await onCompletion()
             dismiss()
@@ -127,10 +127,10 @@ struct PlayerFormView: View {
             formModel.errorMessage = error.localizedDescription
         }
     }
-    
+
     private func deletePlayer() async {
         guard case .edit(let player) = mode else { return }
-        
+
         do {
             try await dependencies.managePlayersUseCase.deletePlayer(id: player.id)
             await dependencies.hapticService.impact(.medium)
@@ -153,9 +153,9 @@ final class PlayerFormModel {
     var enduranceLevel: Int = 5
     var teamworkRating: Int = 5
     var errorMessage: String?
-    
+
     init() {}
-    
+
     init(player: PlayerEntity) {
         self.name = player.name
         self.technicalSkill = player.skills.technical
@@ -163,7 +163,7 @@ final class PlayerFormModel {
         self.enduranceLevel = player.skills.endurance
         self.teamworkRating = player.skills.teamwork
     }
-    
+
     var isValid: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
@@ -175,23 +175,23 @@ final class PlayerFormModel {
 private struct PlayerFormSection: View {
     @Binding var formModel: PlayerFormModel
     var isNameFieldFocused: FocusState<Bool>.Binding?
-    
+
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @FocusState private var internalFocus: Bool
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             // Enhanced Name Input Section with modern design
             modernNameInputSection
-            
+
             // Enhanced Skills Section with improved visual design
             modernSkillsSection
         }
     }
-    
+
     // MARK: - Modern Name Input Section
-    
+
     private var modernNameInputSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             // Section header with icon
@@ -200,7 +200,7 @@ private struct PlayerFormSection: View {
                 icon: "person.fill",
                 description: "Basic player details and identification"
             )
-            
+
             // Enhanced text field container
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 // Field label with enhanced typography
@@ -209,7 +209,7 @@ private struct PlayerFormSection: View {
                      .fontWeight(.semibold)
                      .foregroundStyle(DesignSystem.Colors.primaryText)
                      .labelStyle(.titleAndIcon)
-                
+
                 // Modern text field with enhanced styling
                 ZStack(alignment: .leading) {
                     // Enhanced background with adaptive styling
@@ -222,7 +222,7 @@ private struct PlayerFormSection: View {
                              x: 0,
                              y: 1
                          )
-                    
+
                     // Text field with modern styling
                     TextField("Enter player name", text: $formModel.name, prompt: textFieldPrompt)
                         .font(DesignSystem.Typography.body)
@@ -238,7 +238,7 @@ private struct PlayerFormSection: View {
                 }
                 .frame(height: 44) // Standard iOS touch target
                 .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.spring, reduceMotion: reduceMotion), value: formModel.name.isEmpty)
-                
+
                 // Character count indicator
                 if !formModel.name.isEmpty {
                     HStack {
@@ -250,7 +250,7 @@ private struct PlayerFormSection: View {
                     }
                     .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion), value: formModel.name.count)
                 }
-                
+
                 // Enhanced error display
                 if let errorMessage = formModel.errorMessage {
                     modernErrorDisplay(message: errorMessage)
@@ -270,9 +270,9 @@ private struct PlayerFormSection: View {
                  )
          )
     }
-    
+
     // MARK: - Modern Skills Section
-    
+
     private var modernSkillsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             // Enhanced skills header
@@ -281,7 +281,7 @@ private struct PlayerFormSection: View {
                 icon: "star.circle.fill",
                 description: "Rate the player's abilities across different areas"
             )
-            
+
             // Skills picker with enhanced spacing
             MultiSkillPicker(
                 technicalSkill: $formModel.technicalSkill,
@@ -303,9 +303,9 @@ private struct PlayerFormSection: View {
                 )
         )
     }
-    
+
     // MARK: - Helper Views
-    
+
     private func sectionHeader(title: String, icon: String, description: String) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             // Title with icon
@@ -314,7 +314,7 @@ private struct PlayerFormSection: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Colors.primaryText)
                 .symbolRenderingMode(.hierarchical)
-            
+
             // Description text
             Text(description)
                 .font(DesignSystem.Typography.caption1)
@@ -322,18 +322,18 @@ private struct PlayerFormSection: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
-    
+
     private func modernErrorDisplay(message: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .foregroundStyle(DesignSystem.Colors.error)
                 .font(DesignSystem.Typography.caption1)
-            
+
             Text(message)
                 .font(DesignSystem.Typography.caption1)
                 .foregroundStyle(DesignSystem.Colors.error)
                 .fixedSize(horizontal: false, vertical: true)
-            
+
             Spacer()
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
@@ -344,15 +344,15 @@ private struct PlayerFormSection: View {
         )
         .transition(.scale.combined(with: .opacity))
     }
-    
+
     // MARK: - Computed Properties
-    
+
     private var textFieldBackgroundColor: Color {
-        formModel.name.isEmpty 
+        formModel.name.isEmpty
             ? DesignSystem.Colors.fillSecondary
             : DesignSystem.Colors.fillTertiary
     }
-    
+
     private var textFieldBorderColor: Color {
         if formModel.errorMessage != nil {
             return DesignSystem.Colors.error.opacity(0.6)
@@ -362,17 +362,17 @@ private struct PlayerFormSection: View {
             return DesignSystem.Colors.separatorColor
         }
     }
-    
+
     private var textFieldBorderWidth: CGFloat {
         formModel.errorMessage != nil ? 1.5 : 1.0
     }
-    
+
     private var textFieldShadowColor: Color {
-        formModel.errorMessage != nil 
+        formModel.errorMessage != nil
             ? DesignSystem.Colors.error.opacity(0.2)
             : Color.black.opacity(0.1)
     }
-    
+
     private var textFieldPrompt: Text {
         Text("Enter player name")
             .foregroundStyle(DesignSystem.Colors.placeholderText)
@@ -382,12 +382,12 @@ private struct PlayerFormSection: View {
 /// Enhanced Player Statistics Section with modern design
 private struct PlayerStatisticsSection: View {
     let player: PlayerEntity
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             // Enhanced header
             sectionHeader
-            
+
             // Statistics grid with modern design
             statisticsGrid
         }
@@ -404,9 +404,9 @@ private struct PlayerStatisticsSection: View {
                 )
         )
     }
-    
+
     // MARK: - Header
-    
+
     private var sectionHeader: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Label("Player Statistics", systemImage: "chart.bar.fill")
@@ -414,15 +414,15 @@ private struct PlayerStatisticsSection: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Colors.primaryText)
                 .symbolRenderingMode(.hierarchical)
-            
+
             Text("Performance history and game participation")
                 .font(DesignSystem.Typography.caption1)
                 .foregroundStyle(DesignSystem.Colors.secondaryText)
         }
     }
-    
+
     // MARK: - Statistics Grid
-    
+
     private var statisticsGrid: some View {
         HStack(spacing: DesignSystem.Spacing.lg) {
             // Games played stat
@@ -432,9 +432,9 @@ private struct PlayerStatisticsSection: View {
                 icon: "gamecontroller.fill",
                 color: DesignSystem.Colors.primary
             )
-            
+
             Spacer()
-            
+
             // Teams joined stat
             modernStatCard(
                 title: "Teams Joined",
@@ -444,7 +444,7 @@ private struct PlayerStatisticsSection: View {
             )
         }
     }
-    
+
     private func modernStatCard(title: String, value: String, icon: String, color: Color) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             // Icon with background
@@ -452,14 +452,14 @@ private struct PlayerStatisticsSection: View {
                 Circle()
                     .fill(color.opacity(0.15))
                     .frame(width: 40, height: 40)
-                
+
                 Image(systemName: icon)
                     .font(DesignSystem.Typography.callout)
                     .fontWeight(.semibold)
                     .foregroundStyle(color)
                     .symbolRenderingMode(.hierarchical)
             }
-            
+
             // Value and title
             VStack(spacing: DesignSystem.Spacing.xxxs) {
                 Text(value)
@@ -467,7 +467,7 @@ private struct PlayerStatisticsSection: View {
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Colors.primaryText)
                     .monospacedDigit()
-                
+
                 Text(title)
                     .font(DesignSystem.Typography.caption1)
                     .foregroundStyle(DesignSystem.Colors.secondaryText)
@@ -479,4 +479,4 @@ private struct PlayerStatisticsSection: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(title): \(value)")
     }
-} 
+}

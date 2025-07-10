@@ -5,11 +5,11 @@ struct TeamCountControl: View {
     @Binding var teamCount: Int
     let maxPlayers: Int
     let isEnabled: Bool
-    
+
     private var maxTeams: Int {
         min(maxPlayers / 2, 8)
     }
-    
+
     var body: some View {
         if maxPlayers >= 2 && maxTeams <= 4 {
             Picker("Teams", selection: $teamCount) {
@@ -30,14 +30,14 @@ struct TeamCountControl: View {
                         teamCount -= 1
                     }
                 }
-                
+
                 Text("\(teamCount)")
                     .font(DesignSystem.Typography.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(isEnabled ? DesignSystem.Colors.primaryText : DesignSystem.Colors.tertiaryText)
                     .frame(minWidth: 32)
                     .contentTransition(.numericText())
-                
+
                 StepperButton(
                     systemImage: "plus",
                     isEnabled: isEnabled && teamCount < maxTeams
@@ -59,7 +59,7 @@ struct TeamCountControl: View {
 struct GenerationModeControl: View {
     @Binding var mode: TeamGenerationMode
     let isEnabled: Bool
-    
+
     var body: some View {
         Picker("Generation Mode", selection: $mode) {
             Text("Fair")
@@ -79,7 +79,7 @@ struct StepperButton: View {
     let systemImage: String
     let isEnabled: Bool
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
@@ -103,7 +103,7 @@ struct StepperButton: View {
         .accessibilityHint(accessibilityHint)
         .accessibilityAddTraits(.isButton)
     }
-    
+
     private var accessibilityLabel: String {
         switch systemImage {
         case "plus": return "Increase team count"
@@ -111,7 +111,7 @@ struct StepperButton: View {
         default: return "Adjust team count"
         }
     }
-    
+
     private var accessibilityHint: String {
         if !isEnabled { return "Button is disabled" }
         switch systemImage {
@@ -120,4 +120,4 @@ struct StepperButton: View {
         default: return "Changes the number of teams"
         }
     }
-} 
+}

@@ -4,19 +4,19 @@ import SwiftUI
 struct SkillLevelBadge: View {
     let skillLevel: SkillLevel
     let size: BadgeSize
-    
+
     init(skillLevel: SkillLevel, size: BadgeSize = .small) {
         self.skillLevel = skillLevel
         self.size = size
     }
-    
+
     var body: some View {
         HStack(spacing: size.iconSpacing) {
             // Shape indicator for accessibility (color-blind support)
             skillLevelIcon
                 .font(.system(size: size.iconSize, weight: .medium))
                 .foregroundColor(continuousTextColor)
-            
+
             Text(skillLevel.displayName)
                 .font(size.font)
                 .foregroundColor(continuousTextColor)
@@ -30,7 +30,7 @@ struct SkillLevelBadge: View {
         .overlay(
             Capsule()
                 .strokeBorder(
-                    continuousColor.opacity(DesignSystem.VisualConsistency.opacityMedium), 
+                    continuousColor.opacity(DesignSystem.VisualConsistency.opacityMedium),
                     lineWidth: DesignSystem.VisualConsistency.borderThin
                 )
         )
@@ -38,21 +38,21 @@ struct SkillLevelBadge: View {
         .accessibilityLabel("Skill level: \(skillLevel.displayName)")
         .accessibilityValue(skillLevel.accessibilityDescription)
     }
-    
+
     // MARK: - Continuous Gradient Colors
     /// Uses the skill level's representative value for perfect gradient synchronization
     private var continuousColor: Color {
         skillLevel.designSystemColor
     }
-    
+
     private var continuousTextColor: Color {
         skillLevel.textColor
     }
-    
+
     private var continuousBackgroundColor: Color {
         skillLevel.backgroundColorLight
     }
-    
+
     // MARK: - Skill Level Icon (Shape Differentiation)
     private var skillLevelIcon: Image {
         switch skillLevel {

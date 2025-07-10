@@ -4,12 +4,12 @@ import SwiftData
 // MARK: - Schema Versioning with Proper Model Finalization
 enum SchemaV1: VersionedSchema {
     static var versionIdentifier = Schema.Version(1, 0, 0)
-    
+
     // Use static model array to prevent checksum issues
     static var models: [any PersistentModel.Type] {
         [PlayerV1.self]
     }
-    
+
     @Model
     final class PlayerV1 {
         @Attribute(.unique) var id: UUID
@@ -18,7 +18,7 @@ enum SchemaV1: VersionedSchema {
         var isSelected: Bool
         var createdAt: Date
         var updatedAt: Date
-        
+
         init(name: String, rank: Int) {
             self.id = UUID()
             self.name = name
@@ -32,12 +32,12 @@ enum SchemaV1: VersionedSchema {
 
 enum SchemaV2: VersionedSchema {
     static var versionIdentifier = Schema.Version(2, 0, 0)
-    
+
     // Use static model array to prevent checksum issues
     static var models: [any PersistentModel.Type] {
         [PlayerV2.self]
     }
-    
+
     // Define V2 model explicitly to avoid conflicts
     @Model
     final class PlayerV2 {
@@ -45,24 +45,24 @@ enum SchemaV2: VersionedSchema {
         var name: String
         var createdAt: Date
         var updatedAt: Date
-        
+
         // Multi-dimensional skill attributes with proper defaults
         var technicalSkill: Int = 5
         var fitnessLevel: Int = 5
         var teamworkRating: Int = 5
-        
+
         // Computed overall rank
         var overallRank: Double {
             Double(technicalSkill + fitnessLevel + teamworkRating) / 3.0
         }
-        
+
         // Selection state with default
         var isSelected: Bool = false
-        
+
         // Stats tracking with defaults
         var gamesPlayed: Int = 0
         var teamsJoined: Int = 0
-        
+
         init(name: String, technicalSkill: Int = 5, fitnessLevel: Int = 5, teamworkRating: Int = 5) {
             self.id = UUID()
             self.name = name
@@ -80,12 +80,12 @@ enum SchemaV2: VersionedSchema {
 
 enum SchemaV3: VersionedSchema {
     static var versionIdentifier = Schema.Version(3, 0, 0)
-    
+
     // Use static model array to prevent checksum issues
     static var models: [any PersistentModel.Type] {
         [PlayerV3.self]
     }
-    
+
     // Define V3 model with four-skill system
     @Model
     final class PlayerV3 {
@@ -93,25 +93,25 @@ enum SchemaV3: VersionedSchema {
         var name: String
         var createdAt: Date
         var updatedAt: Date
-        
+
         // Four-dimensional skill attributes with proper defaults
         var technicalSkill: Int = 5
         var agilityLevel: Int = 5
         var enduranceLevel: Int = 5
         var teamworkRating: Int = 5
-        
+
         // Computed overall rank
         var overallRank: Double {
             Double(technicalSkill + agilityLevel + enduranceLevel + teamworkRating) / 4.0
         }
-        
+
         // Selection state with default
         var isSelected: Bool = false
-        
+
         // Stats tracking with defaults
         var gamesPlayed: Int = 0
         var teamsJoined: Int = 0
-        
+
         init(name: String, technicalSkill: Int = 5, agilityLevel: Int = 5, enduranceLevel: Int = 5, teamworkRating: Int = 5) {
             self.id = UUID()
             self.name = name
@@ -133,23 +133,23 @@ enum PlayerMigrationPlan: SchemaMigrationPlan {
     static var schemas: [any VersionedSchema.Type] {
         [SchemaV1.self, SchemaV2.self, SchemaV3.self]
     }
-    
+
     static var stages: [MigrationStage] {
         [migrateV1toV2, migrateV2toV3]
     }
-    
+
     static let migrateV1toV2 = MigrationStage.lightweight(
         fromVersion: SchemaV1.self,
         toVersion: SchemaV2.self
     )
-    
+
     static let migrateV2toV3 = MigrationStage.custom(
         fromVersion: SchemaV2.self,
         toVersion: SchemaV3.self,
         willMigrate: { context in
             // Custom migration to split fitness into agility and endurance
             let players = try context.fetch(FetchDescriptor<SchemaV2.PlayerV2>())
-            
+
             for player in players {
                 // Create new V3 player with fitness split into agility and endurance
                 let newPlayer = SchemaV3.PlayerV3(
@@ -159,7 +159,7 @@ enum PlayerMigrationPlan: SchemaMigrationPlan {
                     enduranceLevel: player.fitnessLevel, // Map fitness to endurance
                     teamworkRating: player.teamworkRating
                 )
-                
+
                 // Preserve metadata
                 newPlayer.id = player.id
                 newPlayer.createdAt = player.createdAt
@@ -167,7 +167,7 @@ enum PlayerMigrationPlan: SchemaMigrationPlan {
                 newPlayer.isSelected = player.isSelected
                 newPlayer.gamesPlayed = player.gamesPlayed
                 newPlayer.teamsJoined = player.teamsJoined
-                
+
                 context.insert(newPlayer)
             }
         },
@@ -194,7 +194,7 @@ extension SchemaV2.PlayerV2 {
             isSelected: self.isSelected
         )
     }
-    
+
     func updateFromEntity(_ entity: PlayerEntity) {
         self.name = entity.name
         self.technicalSkill = entity.skills.technical
@@ -226,7 +226,7 @@ extension SchemaV3.PlayerV3 {
             isSelected: self.isSelected
         )
     }
-    
+
     func updateFromEntity(_ entity: PlayerEntity) {
         self.name = entity.name
         self.technicalSkill = entity.skills.technical

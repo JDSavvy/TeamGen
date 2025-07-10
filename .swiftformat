@@ -1,0 +1,47 @@
+# SwiftFormat Configuration for TeamGen
+# Modern Swift formatting standards
+
+# Version requirement
+--swiftversion 5.9
+
+# Basic formatting
+--indent 4
+--indentcase false
+--trimwhitespace always
+--insertlines true
+--removelines true
+
+# Import organization
+--importgrouping testable-bottom
+
+# Spacing and alignment
+--operatorfunc spaced
+--nospaceoperators ...,..<
+--ranges spaced
+--spacearoundcomments true
+--spacearoundgenerics true
+--spacearoundbrackets true
+--spaceinsidebrackets false
+--spaceinsidebraces true
+--spaceinsideparens false
+--spacearoundoperators true
+
+# Wrapping and line breaks
+--maxwidth 120
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--wrapconditions before-first
+--closingparen balanced
+
+# Comma and semicolon handling
+--commas always
+--semicolons never
+--trailingcommas true
+
+# Control flow
+--guardelse next-line
+--elseposition next-line
+
+# Excluded patterns
+--exclude DerivedData,.build,TeamGen.xcodeproj,Carthage,Pods

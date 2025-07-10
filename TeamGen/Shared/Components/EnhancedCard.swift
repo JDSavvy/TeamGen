@@ -7,7 +7,7 @@ public enum CardStyle {
     case prominent
     case elevated
     case glassmorphism
-    
+
     var padding: CGFloat {
         switch self {
         case .default: return DesignSystem.Spacing.md
@@ -17,7 +17,7 @@ public enum CardStyle {
         case .glassmorphism: return DesignSystem.Spacing.lg
         }
     }
-    
+
     var cornerRadius: CGFloat {
         switch self {
         case .default, .elevated: return DesignSystem.CornerRadius.medium
@@ -35,7 +35,7 @@ public enum CardElevation {
     case medium
     case high
     case floating
-    
+
     var shadowRadius: CGFloat {
         switch self {
         case .none: return 0
@@ -46,7 +46,7 @@ public enum CardElevation {
         case .floating: return 16
         }
     }
-    
+
     var shadowOpacity: Double {
         switch self {
         case .none: return 0
@@ -57,7 +57,7 @@ public enum CardElevation {
         case .floating: return 0.2
         }
     }
-    
+
     var shadowOffset: CGSize {
         switch self {
         case .none: return .zero
@@ -87,12 +87,12 @@ struct EnhancedCard<Content: View>: View {
     let isInteractive: Bool
     let isSelected: Bool
     let onTap: (() -> Void)?
-    
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @State private var isHovered = false
     @State private var isPressed = false
-    
+
     init(
         style: CardStyle = .default,
         variant: CardVariant = .filled,
@@ -110,7 +110,7 @@ struct EnhancedCard<Content: View>: View {
         self.isSelected = isSelected
         self.onTap = onTap
     }
-    
+
     var body: some View {
         Group {
             if isInteractive, let onTap = onTap {
@@ -160,7 +160,7 @@ struct EnhancedCard<Content: View>: View {
             }
         }
     }
-    
+
     // MARK: - Card Content
     @ViewBuilder
     private var cardContent: some View {
@@ -176,7 +176,7 @@ struct EnhancedCard<Content: View>: View {
                 y: shadowOffset.height
             )
     }
-    
+
     // MARK: - Background View
     @ViewBuilder
     private var backgroundView: some View {
@@ -186,7 +186,7 @@ struct EnhancedCard<Content: View>: View {
                 // Glassmorphism background
                 DesignSystem.Colors.glassMorphismBackground
                     .background(.ultraThinMaterial)
-                
+
                 // Subtle gradient overlay
                 LinearGradient(
                     colors: [
@@ -212,7 +212,7 @@ struct EnhancedCard<Content: View>: View {
             Color.clear
         }
     }
-    
+
     // MARK: - Overlay View
     @ViewBuilder
     private var overlayView: some View {
@@ -237,7 +237,7 @@ struct EnhancedCard<Content: View>: View {
             case .filled, .plain, .gradient:
                 EmptyView()
             }
-            
+
             // Selection indicator
             if isSelected {
                 RoundedRectangle(cornerRadius: style.cornerRadius)
@@ -248,15 +248,15 @@ struct EnhancedCard<Content: View>: View {
             }
         }
     }
-    
+
     // MARK: - Clip Shape
     @ViewBuilder
     private var clipShape: some Shape {
         RoundedRectangle(cornerRadius: style.cornerRadius)
     }
-    
+
     // MARK: - Computed Properties
-    
+
     private var backgroundColor: Color {
         switch style {
         case .default, .compact: return DesignSystem.Colors.cardBackground
@@ -265,7 +265,7 @@ struct EnhancedCard<Content: View>: View {
         case .glassmorphism: return Color.clear
         }
     }
-    
+
     private var strokeColor: Color {
         if isSelected {
             return DesignSystem.Colors.primary
@@ -275,7 +275,7 @@ struct EnhancedCard<Content: View>: View {
             return DesignSystem.Colors.separatorColor.opacity(0.5)
         }
     }
-    
+
     private var strokeWidth: CGFloat {
         if isSelected {
             return DesignSystem.VisualConsistency.borderThick
@@ -283,7 +283,7 @@ struct EnhancedCard<Content: View>: View {
             return DesignSystem.VisualConsistency.borderThin
         }
     }
-    
+
     private var shadowColor: Color {
         switch elevation {
         case .none: return Color.clear
@@ -294,14 +294,14 @@ struct EnhancedCard<Content: View>: View {
         case .floating: return DesignSystem.Shadow.extraLarge
         }
     }
-    
+
     private var shadowOffset: CGSize {
         elevation.shadowOffset
     }
-    
+
     private var effectiveShadowRadius: CGFloat {
         let baseRadius = elevation.shadowRadius
-        
+
         if isPressed && isInteractive {
             return baseRadius * 0.5
         } else if isHovered && isInteractive {
@@ -312,7 +312,7 @@ struct EnhancedCard<Content: View>: View {
             return baseRadius
         }
     }
-    
+
     private var effectiveScale: CGFloat {
         if isPressed && isInteractive {
             return DesignSystem.VisualConsistency.scalePressed
@@ -331,7 +331,7 @@ struct InteractiveCardButtonStyle: SwiftUI.ButtonStyle {
     @Binding var isHovered: Bool
     @Binding var isPressed: Bool
     let reduceMotion: Bool
-    
+
     func makeBody(configuration: SwiftUI.ButtonStyle.Configuration) -> some View {
         configuration.label
             .onChange(of: configuration.isPressed) { _, newValue in
@@ -362,7 +362,7 @@ extension EnhancedCard {
             content: content
         )
     }
-    
+
     // MARK: - Compact Cards
     static func compact<CardContent: View>(
         elevation: CardElevation = .subtle,
@@ -381,7 +381,7 @@ extension EnhancedCard {
             content: content
         )
     }
-    
+
     // MARK: - Prominent Cards
     static func prominent<CardContent: View>(
         elevation: CardElevation = .medium,
@@ -400,7 +400,7 @@ extension EnhancedCard {
             content: content
         )
     }
-    
+
     // MARK: - Elevated Cards
     static func elevated<CardContent: View>(
         elevation: CardElevation = .high,
@@ -419,7 +419,7 @@ extension EnhancedCard {
             content: content
         )
     }
-    
+
     // MARK: - Glassmorphism Cards
     static func glassmorphism<CardContent: View>(
         elevation: CardElevation = .floating,
@@ -438,7 +438,7 @@ extension EnhancedCard {
             content: content
         )
     }
-    
+
     // MARK: - Outlined Cards
     static func outlined<CardContent: View>(
         style: CardStyle = .default,
@@ -458,7 +458,7 @@ extension EnhancedCard {
             content: content
         )
     }
-    
+
     // MARK: - Plain Cards
     static func plain<CardContent: View>(
         style: CardStyle = .default,
@@ -477,7 +477,7 @@ extension EnhancedCard {
             content: content
         )
     }
-    
+
     // MARK: - Interactive Cards
     static func interactive<CardContent: View>(
         style: CardStyle = .default,
@@ -520,7 +520,7 @@ extension View {
             self
         }
     }
-    
+
     /// Applies interactive card styling with tap gesture
     func interactiveCard(
         style: CardStyle = .default,
@@ -537,7 +537,7 @@ extension View {
             self
         }
     }
-    
+
     /// Applies glassmorphism card styling
     func glassmorphismCard(
         elevation: CardElevation = .floating,
@@ -571,7 +571,7 @@ struct EnhancedCard_Previews: PreviewProvider {
                         .foregroundColor(DesignSystem.Colors.secondaryText)
                 }
                 .cardStyle(.default, variant: .filled, elevation: .low)
-                
+
                 HStack {
                     Image(systemName: "star.fill")
                         .foregroundColor(DesignSystem.Colors.warning)
@@ -580,7 +580,7 @@ struct EnhancedCard_Previews: PreviewProvider {
                     Spacer()
                 }
                 .cardStyle(.compact, variant: .filled, elevation: .subtle)
-                
+
                 VStack(spacing: DesignSystem.Spacing.md) {
                     Image(systemName: "crown.fill")
                         .font(.system(size: 32))
@@ -594,7 +594,7 @@ struct EnhancedCard_Previews: PreviewProvider {
                         .multilineTextAlignment(.center)
                 }
                 .cardStyle(.prominent, variant: .gradient, elevation: .high)
-                
+
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Interactive Card")
@@ -608,7 +608,7 @@ struct EnhancedCard_Previews: PreviewProvider {
                         .foregroundColor(DesignSystem.Colors.tertiaryText)
                 }
                 .interactiveCard(onTap: {})
-                
+
                 VStack(spacing: DesignSystem.Spacing.sm) {
                     Text("Glassmorphism Card")
                         .font(DesignSystem.Typography.headline)
@@ -624,11 +624,11 @@ struct EnhancedCard_Previews: PreviewProvider {
                         endPoint: .bottomTrailing
                     )
                 )
-                
+
                 Text("Outlined Card")
                     .font(DesignSystem.Typography.body)
                     .cardStyle(.default, variant: .outlined, elevation: .none)
-                
+
                 Text("Selected Card")
                     .font(DesignSystem.Typography.body)
                     .cardStyle(.default, variant: .filled, elevation: .low, isSelected: true)
@@ -637,4 +637,4 @@ struct EnhancedCard_Previews: PreviewProvider {
         }
     }
 }
-#endif 
+#endif

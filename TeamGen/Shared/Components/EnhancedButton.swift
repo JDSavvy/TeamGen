@@ -3,13 +3,13 @@ import SwiftUI
 // MARK: - AnyShape Helper
 struct AnyShape: Shape {
     private let _path: @Sendable (CGRect) -> Path
-    
+
     init<S: Shape>(_ shape: S) {
         _path = { rect in
             shape.path(in: rect)
         }
     }
-    
+
     func path(in rect: CGRect) -> Path {
         _path(rect)
     }
@@ -24,7 +24,7 @@ public enum ButtonStyle {
     case ghost
     case success
     case warning
-    
+
     var semanticRole: ButtonRole? {
         switch self {
         case .destructive: return .destructive
@@ -38,7 +38,7 @@ public enum ButtonSize {
     case medium
     case large
     case extraLarge
-    
+
     var height: CGFloat {
         switch self {
         case .small: return DesignSystem.ButtonStyles.smallHeight
@@ -47,7 +47,7 @@ public enum ButtonSize {
         case .extraLarge: return DesignSystem.ButtonStyles.extraLargeHeight
         }
     }
-    
+
     var iconSize: CGFloat {
         switch self {
         case .small: return DesignSystem.IconSize.sm
@@ -78,13 +78,13 @@ struct EnhancedButton: View {
     let isLoading: Bool
     let fullWidth: Bool
     let action: () async -> Void
-    
+
     @Environment(\.dependencies) private var dependencies
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @State private var isPressed = false
     @State private var isHovered = false
-    
+
     init(
         _ title: String,
         systemImage: String? = nil,
@@ -106,7 +106,7 @@ struct EnhancedButton: View {
         self.fullWidth = fullWidth
         self.action = action
     }
-    
+
     var body: some View {
         Button(role: style.semanticRole) {
             Task {
@@ -151,7 +151,7 @@ struct EnhancedButton: View {
             }
         }
     }
-    
+
     // MARK: - Button Content
     @ViewBuilder
     private var buttonContent: some View {
@@ -161,7 +161,7 @@ struct EnhancedButton: View {
             } else if let systemImage = systemImage {
                 iconView(systemImage)
             }
-            
+
             if !title.isEmpty {
                 textView
             }
@@ -170,7 +170,7 @@ struct EnhancedButton: View {
         .frame(height: size.height)
         .frame(maxWidth: fullWidth ? .infinity : nil)
     }
-    
+
     @ViewBuilder
     private func iconView(_ systemImage: String) -> some View {
         Image(systemName: systemImage)
@@ -180,7 +180,7 @@ struct EnhancedButton: View {
             .symbolRenderingMode(.hierarchical)
             .contentTransition(.symbolEffect(.replace))
     }
-    
+
     @ViewBuilder
     private var textView: some View {
         Text(title)
@@ -190,7 +190,7 @@ struct EnhancedButton: View {
             .lineLimit(1)
             .minimumScaleFactor(0.8)
     }
-    
+
     @ViewBuilder
     private var loadingIndicator: some View {
         ProgressView()
@@ -198,9 +198,9 @@ struct EnhancedButton: View {
             .scaleEffect(loadingScale)
             .controlSize(.small)
     }
-    
+
     // MARK: - Computed Properties
-    
+
     private var iconSpacing: CGFloat {
         switch size {
         case .small: return DesignSystem.Spacing.xxs
@@ -209,7 +209,7 @@ struct EnhancedButton: View {
         case .extraLarge: return DesignSystem.Spacing.md
         }
     }
-    
+
     private var horizontalPadding: CGFloat {
         switch size {
         case .small: return DesignSystem.Spacing.sm
@@ -218,7 +218,7 @@ struct EnhancedButton: View {
         case .extraLarge: return DesignSystem.Spacing.xl
         }
     }
-    
+
     private var buttonFont: Font {
         switch size {
         case .small: return DesignSystem.Typography.footnote
@@ -227,7 +227,7 @@ struct EnhancedButton: View {
         case .extraLarge: return DesignSystem.Typography.title3
         }
     }
-    
+
     private var textWeight: Font.Weight {
         switch style {
         case .primary, .destructive, .success: return .semibold
@@ -235,14 +235,14 @@ struct EnhancedButton: View {
         case .tertiary, .ghost, .warning: return .medium
         }
     }
-    
+
     private var iconWeight: Font.Weight {
         switch style {
         case .primary, .destructive, .success: return .semibold
         case .secondary, .tertiary, .ghost, .warning: return .medium
         }
     }
-    
+
     private var loadingScale: CGFloat {
         switch size {
         case .small: return 0.7
@@ -251,7 +251,7 @@ struct EnhancedButton: View {
         case .extraLarge: return 1.0
         }
     }
-    
+
     private var textColor: Color {
         switch (style, variant) {
         case (.primary, .filled): return .white
@@ -268,11 +268,11 @@ struct EnhancedButton: View {
         case (.warning, .outlined), (.warning, .plain), (.warning, .capsule): return DesignSystem.Colors.warning
         }
     }
-    
+
     private var iconColor: Color {
         return textColor
     }
-    
+
     private var effectiveOpacity: Double {
         if !isEnabled {
             return DesignSystem.VisualConsistency.opacityDisabled
@@ -282,7 +282,7 @@ struct EnhancedButton: View {
             return 1.0
         }
     }
-    
+
     private var effectiveScale: CGFloat {
         if isPressed && isEnabled {
             return DesignSystem.VisualConsistency.scalePressed
@@ -292,7 +292,7 @@ struct EnhancedButton: View {
             return 1.0
         }
     }
-    
+
     private var iconFont: Font {
         switch size {
         case .small: return DesignSystem.Typography.tinyIcon
@@ -301,9 +301,9 @@ struct EnhancedButton: View {
         case .extraLarge: return DesignSystem.Typography.largeControl
         }
     }
-    
+
     // MARK: - Accessibility
-    
+
     private var accessibilityLabel: String {
         if isLoading {
             return "\(title), Loading"
@@ -311,7 +311,7 @@ struct EnhancedButton: View {
             return title
         }
     }
-    
+
     private var accessibilityHint: String? {
         if !isEnabled {
             return "Button is disabled"
@@ -321,14 +321,14 @@ struct EnhancedButton: View {
             return nil
         }
     }
-    
+
     private var accessibilityTraits: AccessibilityTraits {
         var traits: AccessibilityTraits = [.isButton]
-        
+
         if !isEnabled {
             _ = traits.insert(.isStaticText)
         }
-        
+
         return traits
     }
 }
@@ -341,7 +341,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
     @Binding var isPressed: Bool
     @Binding var isHovered: Bool
     let reduceMotion: Bool
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .background(backgroundView)
@@ -359,7 +359,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
                 }
             }
     }
-    
+
     // MARK: - Background View
     @ViewBuilder
     private var backgroundView: some View {
@@ -410,7 +410,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             Color.clear
         }
     }
-    
+
     // MARK: - Overlay View
     @ViewBuilder
     private var overlayView: some View {
@@ -430,7 +430,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             EmptyView()
         }
     }
-    
+
     // MARK: - Clip Shape
     @ViewBuilder
     private func clipShapeView() -> some View {
@@ -441,7 +441,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             RoundedRectangle(cornerRadius: cornerRadius)
         }
     }
-    
+
     private func clipShapeForVariant() -> AnyShape {
         switch variant {
         case .capsule:
@@ -450,9 +450,9 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             return AnyShape(RoundedRectangle(cornerRadius: cornerRadius))
         }
     }
-    
+
     // MARK: - Style Properties
-    
+
     private var cornerRadius: CGFloat {
         switch size {
         case .small: return DesignSystem.CornerRadius.small
@@ -461,7 +461,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
         case .extraLarge: return DesignSystem.CornerRadius.large
         }
     }
-    
+
     private var strokeColor: Color {
         switch style {
         case .primary: return DesignSystem.Colors.primary
@@ -473,7 +473,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
         case .warning: return DesignSystem.Colors.warning
         }
     }
-    
+
     private var strokeWidth: CGFloat {
         switch style {
         case .primary, .destructive, .success, .warning: return DesignSystem.VisualConsistency.borderThick
@@ -481,7 +481,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
         case .tertiary, .ghost: return DesignSystem.VisualConsistency.borderThin
         }
     }
-    
+
     private var shadowColor: Color {
         switch (style, variant) {
         case (.primary, .filled), (.destructive, .filled), (.success, .filled), (.warning, .filled):
@@ -492,14 +492,14 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             return Color.clear
         }
     }
-    
+
     private var shadowRadius: CGFloat {
         switch variant {
         case .filled: return isPressed ? 2 : 4
         default: return 0
         }
     }
-    
+
     private var shadowOffset: CGFloat {
         switch variant {
         case .filled: return isPressed ? 1 : 2
@@ -532,7 +532,7 @@ extension EnhancedButton {
             action: action
         )
     }
-    
+
     // MARK: - Secondary Buttons
     static func secondary(
         _ title: String,
@@ -555,7 +555,7 @@ extension EnhancedButton {
             action: action
         )
     }
-    
+
     // MARK: - Tertiary Buttons
     static func tertiary(
         _ title: String,
@@ -578,7 +578,7 @@ extension EnhancedButton {
             action: action
         )
     }
-    
+
     // MARK: - Destructive Buttons
     static func destructive(
         _ title: String,
@@ -601,7 +601,7 @@ extension EnhancedButton {
             action: action
         )
     }
-    
+
     // MARK: - Success Buttons
     static func success(
         _ title: String,
@@ -624,7 +624,7 @@ extension EnhancedButton {
             action: action
         )
     }
-    
+
     // MARK: - Warning Buttons
     static func warning(
         _ title: String,
@@ -647,7 +647,7 @@ extension EnhancedButton {
             action: action
         )
     }
-    
+
     // MARK: - Ghost Buttons
     static func ghost(
         _ title: String,
@@ -670,7 +670,7 @@ extension EnhancedButton {
             action: action
         )
     }
-    
+
     // MARK: - Capsule Buttons
     static func capsule(
         _ title: String,
@@ -703,35 +703,35 @@ struct EnhancedButton_Previews: PreviewProvider {
         VStack(spacing: DesignSystem.Spacing.md) {
             // Primary buttons
             EnhancedButton.primary("Primary Button", systemImage: "star.fill") { }
-            
+
             // Secondary buttons
             EnhancedButton.secondary("Secondary Button", systemImage: "heart") { }
-            
+
             // Tertiary buttons
             EnhancedButton.tertiary("Tertiary Button", systemImage: "info.circle") { }
-            
+
             // Destructive buttons
             EnhancedButton.destructive("Delete", systemImage: "trash") { }
-            
+
             // Success buttons
             EnhancedButton.success("Save", systemImage: "checkmark") { }
-            
+
             // Warning buttons
             EnhancedButton.warning("Warning", systemImage: "exclamationmark.triangle") { }
-            
+
             // Ghost buttons
             EnhancedButton.ghost("Ghost Button", systemImage: "eye") { }
-            
+
             // Capsule buttons
             EnhancedButton.capsule("Capsule", systemImage: "plus") { }
-            
+
             // Loading state
             EnhancedButton.primary("Loading", isLoading: true) { }
-            
+
             // Disabled state
             EnhancedButton.primary("Disabled", isEnabled: false) { }
         }
         .padding()
     }
 }
-#endif 
+#endif

@@ -6,9 +6,57 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		7E8BCA712E0423E700BE5D13 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E5123CD2DDF5BC600DF0831 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E5123D42DDF5BC600DF0831;
+			remoteInfo = TeamGen;
+		};
+		7E8BCAA72E04240500BE5D13 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E5123CD2DDF5BC600DF0831 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E5123D42DDF5BC600DF0831;
+			remoteInfo = TeamGen;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7E5123D52DDF5BC600DF0831 /* TeamGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8BCA6D2E0423E700BE5D13 /* TeamGenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamGenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8BCAA12E04240500BE5D13 /* TeamGenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamGenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7E8BCB052E04617300BE5D13 /* Exceptions for "TeamGenTests" folder in "TeamGenTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Repositories/SwiftDataPlayerRepositoryTests.swift,
+				Domain/Entities/PlayerEntityTests.swift,
+				Domain/Entities/TeamEntityTests.swift,
+				Domain/UseCases/GenerateTeamsUseCaseTests.swift,
+				Domain/UseCases/ManagePlayersUseCaseTests.swift,
+				Features/ViewModels/PlayerManagementViewModelTests.swift,
+				TeamGenTests.swift,
+			);
+			target = 7E8BCA6C2E0423E700BE5D13 /* TeamGenTests */;
+		};
+		7E8BCB062E04617300BE5D13 /* Exceptions for "TeamGenTests" folder in "TeamGenUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Repositories/SwiftDataPlayerRepositoryTests.swift,
+				Domain/Entities/PlayerEntityTests.swift,
+				Domain/Entities/TeamEntityTests.swift,
+				Domain/UseCases/GenerateTeamsUseCaseTests.swift,
+				Domain/UseCases/ManagePlayersUseCaseTests.swift,
+				Features/ViewModels/PlayerManagementViewModelTests.swift,
+				TeamGenTests.swift,
+			);
+			target = 7E8BCAA02E04240500BE5D13 /* TeamGenUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7E5123D72DDF5BC600DF0831 /* TeamGen */ = {
@@ -16,10 +64,38 @@
 			path = TeamGen;
 			sourceTree = "<group>";
 		};
+		7E8BCAA22E04240500BE5D13 /* TeamGenUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TeamGenUITests;
+			sourceTree = "<group>";
+		};
+		7E8BCAFC2E04617300BE5D13 /* TeamGenTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7E8BCB052E04617300BE5D13 /* Exceptions for "TeamGenTests" folder in "TeamGenTests" target */,
+				7E8BCB062E04617300BE5D13 /* Exceptions for "TeamGenTests" folder in "TeamGenUITests" target */,
+			);
+			path = TeamGenTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		7E5123D22DDF5BC600DF0831 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8BCA6A2E0423E700BE5D13 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8BCA9E2E04240500BE5D13 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				7E5123D72DDF5BC600DF0831 /* TeamGen */,
+				7E8BCAFC2E04617300BE5D13 /* TeamGenTests */,
+				7E8BCAA22E04240500BE5D13 /* TeamGenUITests */,
 				7E5123D62DDF5BC600DF0831 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				7E5123D52DDF5BC600DF0831 /* TeamGen.app */,
+				7E8BCA6D2E0423E700BE5D13 /* TeamGenTests.xctest */,
+				7E8BCAA12E04240500BE5D13 /* TeamGenUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +150,50 @@
 			productReference = 7E5123D52DDF5BC600DF0831 /* TeamGen.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7E8BCA6C2E0423E700BE5D13 /* TeamGenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E8BCA752E0423E700BE5D13 /* Build configuration list for PBXNativeTarget "TeamGenTests" */;
+			buildPhases = (
+				7E8BCA692E0423E700BE5D13 /* Sources */,
+				7E8BCA6A2E0423E700BE5D13 /* Frameworks */,
+				7E8BCA6B2E0423E700BE5D13 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E8BCA722E0423E700BE5D13 /* PBXTargetDependency */,
+			);
+			name = TeamGenTests;
+			packageProductDependencies = (
+			);
+			productName = TeamGenTests;
+			productReference = 7E8BCA6D2E0423E700BE5D13 /* TeamGenTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7E8BCAA02E04240500BE5D13 /* TeamGenUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E8BCAA92E04240500BE5D13 /* Build configuration list for PBXNativeTarget "TeamGenUITests" */;
+			buildPhases = (
+				7E8BCA9D2E04240500BE5D13 /* Sources */,
+				7E8BCA9E2E04240500BE5D13 /* Frameworks */,
+				7E8BCA9F2E04240500BE5D13 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E8BCAA82E04240500BE5D13 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7E8BCAA22E04240500BE5D13 /* TeamGenUITests */,
+				7E8BCAFC2E04617300BE5D13 /* TeamGenTests */,
+			);
+			name = TeamGenUITests;
+			packageProductDependencies = (
+			);
+			productName = TeamGenUITests;
+			productReference = 7E8BCAA12E04240500BE5D13 /* TeamGenUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -77,11 +201,19 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1630;
+				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					7E5123D42DDF5BC600DF0831 = {
 						CreatedOnToolsVersion = 16.3;
+					};
+					7E8BCA6C2E0423E700BE5D13 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 7E5123D42DDF5BC600DF0831;
+					};
+					7E8BCAA02E04240500BE5D13 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 7E5123D42DDF5BC600DF0831;
 					};
 				};
 			};
@@ -100,12 +232,28 @@
 			projectRoot = "";
 			targets = (
 				7E5123D42DDF5BC600DF0831 /* TeamGen */,
+				7E8BCA6C2E0423E700BE5D13 /* TeamGenTests */,
+				7E8BCAA02E04240500BE5D13 /* TeamGenUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7E5123D32DDF5BC600DF0831 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8BCA6B2E0423E700BE5D13 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8BCA9F2E04240500BE5D13 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +270,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E8BCA692E0423E700BE5D13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8BCA9D2E04240500BE5D13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7E8BCA722E0423E700BE5D13 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E5123D42DDF5BC600DF0831 /* TeamGen */;
+			targetProxy = 7E8BCA712E0423E700BE5D13 /* PBXContainerItemProxy */;
+		};
+		7E8BCAA82E04240500BE5D13 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E5123D42DDF5BC600DF0831 /* TeamGen */;
+			targetProxy = 7E8BCAA72E04240500BE5D13 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7E5123E02DDF5BC600DF0831 /* Debug */ = {
@@ -300,6 +475,80 @@
 			};
 			name = Release;
 		};
+		7E8BCA732E0423E700BE5D13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JV4QB7FYS7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.savvydev.TeamGenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeamGen.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TeamGen";
+			};
+			name = Debug;
+		};
+		7E8BCA742E0423E700BE5D13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JV4QB7FYS7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.savvydev.TeamGenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeamGen.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TeamGen";
+			};
+			name = Release;
+		};
+		7E8BCAAA2E04240500BE5D13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JV4QB7FYS7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.savvydev.TeamGenUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TeamGen;
+			};
+			name = Debug;
+		};
+		7E8BCAAB2E04240500BE5D13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JV4QB7FYS7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.savvydev.TeamGenUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TeamGen;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -317,6 +566,24 @@
 			buildConfigurations = (
 				7E5123E32DDF5BC600DF0831 /* Debug */,
 				7E5123E42DDF5BC600DF0831 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E8BCA752E0423E700BE5D13 /* Build configuration list for PBXNativeTarget "TeamGenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E8BCA732E0423E700BE5D13 /* Debug */,
+				7E8BCA742E0423E700BE5D13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E8BCAA92E04240500BE5D13 /* Build configuration list for PBXNativeTarget "TeamGenUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E8BCAAA2E04240500BE5D13 /* Debug */,
+				7E8BCAAB2E04240500BE5D13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

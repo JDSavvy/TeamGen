@@ -4,7 +4,7 @@ import SwiftUI
 /// Empty state view for when no players exist
 struct PlayerEmptyStateView: View {
     @Binding var presentationState: PlayerPresentationState
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xxxl) {
             VStack(spacing: DesignSystem.Spacing.xl) {
@@ -13,18 +13,18 @@ struct PlayerEmptyStateView: View {
                     Circle()
                         .fill(DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacitySkillBackground))
                         .frame(width: DesignSystem.ComponentSize.emptyStateIcon, height: DesignSystem.ComponentSize.emptyStateIcon)
-                    
+
                     Image(systemName: "person.3.fill")
                         .font(DesignSystem.Typography.extraLargeDisplay)
                         .foregroundColor(DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityIntense))
                 }
-                
+
                 VStack(spacing: DesignSystem.Spacing.md) {
                     Text("No Players Yet")
                         .font(DesignSystem.Typography.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text("Add your first player to start creating balanced teams. You can manage their skills and track their performance.")
                         .font(DesignSystem.Typography.body)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -32,7 +32,7 @@ struct PlayerEmptyStateView: View {
                         .lineLimit(nil)
                 }
             }
-            
+
             VStack(spacing: DesignSystem.Spacing.md) {
                 EnhancedButton.primary(
                     "Add Your First Player",
@@ -40,7 +40,7 @@ struct PlayerEmptyStateView: View {
                 ) {
                     presentationState.presentAddPlayer()
                 }
-                
+
                 // Helpful tips
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     HelpfulTip(
@@ -48,7 +48,7 @@ struct PlayerEmptyStateView: View {
                         iconColor: DesignSystem.Colors.accent,
                         text: "Tip: Add at least 4 players for team generation"
                     )
-                    
+
                     HelpfulTip(
                         icon: "star.fill",
                         iconColor: DesignSystem.Colors.warning,
@@ -70,17 +70,17 @@ private struct HelpfulTip: View {
     let icon: String
     let iconColor: Color
     let text: String
-    
+
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
                 .font(DesignSystem.Typography.controlLabel)
                 .foregroundColor(iconColor)
-            
+
             Text(text)
                 .font(DesignSystem.Typography.controlLabel)
                 .foregroundColor(DesignSystem.Colors.secondaryText)
-            
+
             Spacer()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -101,4 +101,4 @@ struct PlayerEmptyStateView_Previews: PreviewProvider {
         PlayerEmptyStateView(presentationState: .constant(PlayerPresentationState()))
     }
 }
-#endif 
+#endif

@@ -10,18 +10,18 @@ struct RefinedPlayerRow: View {
     let onTap: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
-    
+
     @Environment(\.dependencies) private var dependencies
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     // Constants for consistent layout
     private let headerHeight: CGFloat = 72
-    
+
     var body: some View {
         VStack(spacing: 0) {
             // Header that's always visible
             headerView
-            
+
             // Expandable content - only shows when expanded
             if isExpanded {
                 expandableContent
@@ -33,9 +33,9 @@ struct RefinedPlayerRow: View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(accessibilityHint)
     }
-    
+
     // MARK: - Header View
-    
+
     private var headerView: some View {
         Button(action: {
             withAnimation(
@@ -50,27 +50,27 @@ struct RefinedPlayerRow: View {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     // Player initial with skill color
                     playerInitial
-                    
+
                     // Player information - clean hierarchy
                     VStack(alignment: .leading, spacing: 2) {
                         Text(player.name)
                             .font(DesignSystem.Typography.listItemTitle)
                             .foregroundColor(DesignSystem.Colors.primaryText)
                             .lineLimit(1)
-                        
+
                         Text(skillLevelText)
                             .font(DesignSystem.Typography.listItemSubtitle)
                             .foregroundColor(DesignSystem.Colors.secondaryText)
                     }
-                    
+
                     Spacer()
-                    
+
                     // Skill score - prominent but not overwhelming
                     Text(String(format: "%.1f", player.skills.overall))
                         .font(DesignSystem.Typography.headlineEmphasized)
                         .foregroundColor(skillColor)
                         .monospacedDigit()
-                    
+
                 // Enhanced expansion indicator with smooth rotation
                     Image(systemName: DesignSystem.Symbols.chevronDown)
                         .font(.system(size: DesignSystem.IconSize.sm, weight: DesignSystem.Symbols.symbolWeight(for: .icon)))
@@ -96,7 +96,7 @@ struct RefinedPlayerRow: View {
                 } label: {
                     Label("Edit Player", systemImage: "pencil")
                 }
-                
+
                 Button(role: .destructive) {
                     onDelete()
                 } label: {
@@ -104,15 +104,15 @@ struct RefinedPlayerRow: View {
                 }
             }
     }
-    
+
     // MARK: - Expandable Content
-            
+
     private var expandableContent: some View {
                 ExpandedSkillsView(player: player, onEdit: onEdit, onDelete: onDelete)
     }
-    
+
     // MARK: - Component Views
-    
+
     private var playerInitial: some View {
         Text(String(player.name.prefix(1).uppercased()))
             .font(DesignSystem.Typography.headlineEmphasized)
@@ -123,21 +123,21 @@ struct RefinedPlayerRow: View {
                     .fill(skillColor)
             )
     }
-    
+
     // MARK: - Computed Properties
-    
+
     private var skillColor: Color {
         PlayerSkillPresentation.rankColor(player.skills.overall)
     }
-    
+
     private var skillLevelText: String {
         PlayerSkillPresentation.skillLevelText(player.skills.overall)
     }
-    
+
     private var accessibilityLabel: String {
         "\(player.name), skill level \(skillLevelText), overall score \(String(format: "%.1f", player.skills.overall))"
     }
-    
+
     private var accessibilityHint: String {
         "Tap to expand skill details"
     }
@@ -149,9 +149,9 @@ struct ExpandedSkillsView: View {
     let player: PlayerEntity
     let onEdit: () -> Void
     let onDelete: () -> Void
-    
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     var body: some View {
         VStack(spacing: 0) {
             // Simple divider
@@ -159,7 +159,7 @@ struct ExpandedSkillsView: View {
                 .fill(DesignSystem.Colors.separatorColor)
                 .frame(height: 0.5)
                 .padding(.horizontal, DesignSystem.Spacing.md)
-            
+
             // Content container with skills and actions
             VStack(spacing: DesignSystem.Spacing.sm) {
                 // Skills list
@@ -169,7 +169,7 @@ struct ExpandedSkillsView: View {
                     SkillRowView(name: "Endurance", value: player.skills.endurance, icon: DesignSystem.Symbols.endurance)
                     SkillRowView(name: "Teamwork", value: player.skills.teamwork, icon: DesignSystem.Symbols.teamwork)
             }
-            
+
             // Action buttons
             HStack(spacing: DesignSystem.Spacing.md) {
                     SimpleActionButton(title: "Edit", icon: "pencil", color: .blue, action: onEdit)
@@ -193,7 +193,7 @@ struct SkillRowView: View {
     let name: String
     let value: Int
     let icon: String
-    
+
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             // Icon
@@ -201,14 +201,14 @@ struct SkillRowView: View {
                 .font(.system(size: DesignSystem.IconSize.sm, weight: .medium))
                 .foregroundColor(DesignSystem.Colors.secondaryText)
                 .frame(width: 20)
-            
+
             // Skill name
             Text(name)
                 .font(DesignSystem.Typography.subheadline)
                 .foregroundColor(DesignSystem.Colors.primaryText)
-            
+
             Spacer()
-            
+
             // Progress indicator
             HStack(spacing: 4) {
                 ForEach(1...10, id: \.self) { index in
@@ -217,7 +217,7 @@ struct SkillRowView: View {
                         .frame(width: 6, height: 6)
                 }
             }
-            
+
             // Numeric value
             Text("\(value)")
                 .font(DesignSystem.Typography.caption1)
@@ -228,7 +228,7 @@ struct SkillRowView: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(name): \(value) out of 10")
     }
-    
+
     private var skillColor: Color {
         PlayerSkillPresentation.skillColor(for: value)
     }
@@ -241,7 +241,7 @@ struct SimpleActionButton: View {
     let icon: String
     let color: Color
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             HStack(spacing: DesignSystem.Spacing.xs) {
@@ -264,4 +264,4 @@ struct SimpleActionButton: View {
         }
         .buttonStyle(.plain)
     }
-} 
+}

@@ -8,7 +8,7 @@ struct SkillIndicatorBar: View {
     let maxValue: Int
     let showLabel: Bool
     let size: IndicatorSize
-    
+
     init(
         skillName: String,
         skillValue: Int,
@@ -22,7 +22,7 @@ struct SkillIndicatorBar: View {
         self.showLabel = showLabel
         self.size = size
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: size.spacing) {
             if showLabel {
@@ -30,16 +30,16 @@ struct SkillIndicatorBar: View {
                     Text(skillName)
                         .font(size.labelFont)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Spacer()
-                    
+
                     Text("\(skillValue)")
                         .font(size.valueFont)
                         .fontWeight(.medium)
                         .foregroundColor(PlayerSkillPresentation.textColor(for: Double(skillValue)))
                 }
             }
-            
+
             // Skill bar with continuous gradient
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
@@ -47,7 +47,7 @@ struct SkillIndicatorBar: View {
                     RoundedRectangle(cornerRadius: size.cornerRadius)
                         .fill(DesignSystem.Colors.separatorColor.opacity(0.2))
                         .frame(height: size.barHeight)
-                    
+
                     // Filled portion with gradient color
                     RoundedRectangle(cornerRadius: size.cornerRadius)
                         .fill(PlayerSkillPresentation.skillColor(for: skillValue))
@@ -56,7 +56,7 @@ struct SkillIndicatorBar: View {
                             height: size.barHeight
                         )
                         .accessibleAnimation(DesignSystem.Animation.standard, value: skillValue)
-                    
+
                     // Subtle highlight overlay
                     RoundedRectangle(cornerRadius: size.cornerRadius)
                         .fill(
@@ -82,7 +82,7 @@ struct SkillIndicatorBar: View {
         .accessibilityLabel("\(skillName): \(skillValue) out of \(maxValue)")
         .accessibilityValue("Skill level: \(PlayerSkillPresentation.skillLevelText(Double(skillValue)))")
     }
-    
+
     // MARK: - Computed Properties
     private var fillPercentage: Double {
         guard maxValue > 0 else { return 0 }
@@ -96,13 +96,13 @@ struct SkillIndicatorDots: View {
     let skillValue: Int
     let maxValue: Int
     let size: IndicatorSize
-    
+
     init(skillValue: Int, maxValue: Int = 10, size: IndicatorSize = .small) {
         self.skillValue = skillValue
         self.maxValue = maxValue
         self.size = size
     }
-    
+
     var body: some View {
         HStack(spacing: size.dotSpacing) {
             ForEach(1...maxValue, id: \.self) { index in
@@ -116,7 +116,7 @@ struct SkillIndicatorDots: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Skill level: \(skillValue) out of \(maxValue)")
     }
-    
+
     private func dotColor(for index: Int) -> Color {
         if index <= skillValue {
             return PlayerSkillPresentation.skillColor(for: index)
@@ -131,7 +131,7 @@ enum IndicatorSize {
     case small
     case medium
     case large
-    
+
     var barHeight: CGFloat {
         switch self {
         case .small: return 4
@@ -139,11 +139,11 @@ enum IndicatorSize {
         case .large: return 8
         }
     }
-    
+
     var cornerRadius: CGFloat {
         return barHeight / 2
     }
-    
+
     var spacing: CGFloat {
         switch self {
         case .small: return DesignSystem.Spacing.xxs
@@ -151,7 +151,7 @@ enum IndicatorSize {
         case .large: return DesignSystem.Spacing.sm
         }
     }
-    
+
     var labelFont: Font {
         switch self {
         case .small: return DesignSystem.Typography.caption2
@@ -159,7 +159,7 @@ enum IndicatorSize {
         case .large: return DesignSystem.Typography.subheadline
         }
     }
-    
+
     var valueFont: Font {
         switch self {
         case .small: return DesignSystem.Typography.caption1
@@ -167,7 +167,7 @@ enum IndicatorSize {
         case .large: return DesignSystem.Typography.body
         }
     }
-    
+
     var dotSize: CGFloat {
         switch self {
         case .small: return 6
@@ -175,7 +175,7 @@ enum IndicatorSize {
         case .large: return 10
         }
     }
-    
+
     var dotSpacing: CGFloat {
         switch self {
         case .small: return 2
@@ -204,4 +204,4 @@ enum IndicatorSize {
         SkillIndicatorDots(skillValue: 9)
     }
     .padding()
-} 
+}

@@ -12,23 +12,23 @@ struct TeamView: View {
     @State private var presentationState = PresentationState()
     @State private var isInitialized = false
     @Namespace private var animationNamespace
-    
+
     // Tab selection binding for navigation
     @Binding var selectedTab: Int
-    
+
     // Use the persistent ViewModel from dependency injection
     private var viewModel: TeamGenerationViewModel {
         dependencies.teamGenerationViewModel
     }
-    
+
     init(selectedTab: Binding<Int> = .constant(0)) {
         self._selectedTab = selectedTab
     }
-    
+
     var body: some View {
         content
     }
-    
+
     @ViewBuilder
     private var content: some View {
         baseContent
@@ -44,22 +44,22 @@ struct TeamView: View {
             .modifier(SheetsModifier(presentationState: $presentationState, viewModel: viewModel))
             .modifier(AlertsModifier(presentationState: $presentationState, viewModel: viewModel))
             .modifier(ChangeHandlersModifier(
-                presentationState: $presentationState, 
-                viewModel: viewModel, 
+                presentationState: $presentationState,
+                viewModel: viewModel,
                 selectedTab: $selectedTab
             ))
     }
-    
+
     @ViewBuilder
     private var baseContent: some View {
         ScrollView {
             LazyVStack(spacing: DesignSystem.Spacing.lg) {
-                
+
                 TeamContentView(
-                    viewModel: viewModel, 
+                    viewModel: viewModel,
                     presentationState: $presentationState
                 )
-                
+
             }
             .padding(.horizontal, DesignSystem.Spacing.screenPadding)
             .padding(.bottom, DesignSystem.Spacing.xxxl)
@@ -70,16 +70,16 @@ struct TeamView: View {
             await refreshViewDataIfNeeded()
         }
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func initializeViewIfNeeded() async {
         guard !isInitialized else { return }
-        
+
         await viewModel.refreshPlayerDataIfNeeded()
         isInitialized = true
     }
-    
+
     private func refreshViewDataIfNeeded() async {
         await viewModel.refreshPlayerDataIfNeeded()
     }
@@ -96,13 +96,13 @@ fileprivate struct PresentationState {
 private struct TeamContentView: View {
     let viewModel: TeamGenerationViewModel
     @Binding var presentationState: PresentationState
-    
+
     // Optimized state observation - only track what's needed
     @State private var lastPlayerCount: Int = 0
     @State private var lastTeamCount: Int = 2
     @State private var lastGenerationMode: TeamGenerationMode = .fair
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     var body: some View {
         // Unified Team Generation Interface
         VStack(spacing: DesignSystem.Spacing.lg) {
@@ -112,7 +112,7 @@ private struct TeamContentView: View {
                 onSelectPlayers: { presentationState.showingPlayerSelection = true },
                 onGenerateTeams: { await viewModel.generateTeams() }
             )
-            
+
             // Content based on current state with optimized transitions
             Group {
                 switch viewModel.state {
@@ -167,7 +167,7 @@ private struct TeamContentView: View {
             }
         }
     }
-    
+
     private func updateTrackedState() {
         lastPlayerCount = viewModel.selectedPlayersCount
         lastTeamCount = viewModel.teamCount
@@ -180,7 +180,7 @@ private struct TeamContentView: View {
 fileprivate struct SheetsModifier: ViewModifier {
     @Binding fileprivate var presentationState: PresentationState
     fileprivate let viewModel: TeamGenerationViewModel
-    
+
     func body(content: Content) -> some View {
         content
             .sheet(isPresented: $presentationState.showingPlayerSelection, onDismiss: {
@@ -206,7 +206,7 @@ fileprivate struct SheetsModifier: ViewModifier {
 fileprivate struct AlertsModifier: ViewModifier {
     @Binding fileprivate var presentationState: PresentationState
     fileprivate let viewModel: TeamGenerationViewModel
-    
+
     func body(content: Content) -> some View {
         content
             .alert("Generation Error", isPresented: Binding(
@@ -227,11 +227,11 @@ fileprivate struct ChangeHandlersModifier: ViewModifier {
     @Binding fileprivate var presentationState: PresentationState
     fileprivate let viewModel: TeamGenerationViewModel
     @Binding fileprivate var selectedTab: Int
-    
+
     // Debouncing state
     @State private var navigationDebounceTask: Task<Void, Never>?
     @State private var lastNavigationTrigger: Date = Date()
-    
+
     func body(content: Content) -> some View {
         content
             .onChange(of: viewModel.shouldNavigateToPlayers) { _, shouldNavigate in
@@ -249,20 +249,20 @@ fileprivate struct ChangeHandlersModifier: ViewModifier {
                 }
             }
     }
-    
+
     private func handleNavigationChange(_ action: @escaping () -> Void) {
         // Cancel previous task
         navigationDebounceTask?.cancel()
-        
+
         // Debounce navigation changes to prevent rapid firing
         navigationDebounceTask = Task {
             let now = Date()
             let timeSinceLastTrigger = now.timeIntervalSince(lastNavigationTrigger)
-            
+
             if timeSinceLastTrigger < 0.5 { // 500ms debounce
                 try? await Task.sleep(nanoseconds: 500_000_000)
             }
-            
+
             if !Task.isCancelled {
                 await MainActor.run {
                     lastNavigationTrigger = Date()
@@ -283,13 +283,13 @@ private struct EmptyPlayerPrompt: View {
                 Image(systemName: DesignSystem.Symbols.personGroup)
                     .font(.system(size: 48, weight: .light))
                     .foregroundColor(DesignSystem.Colors.tertiaryText)
-                
+
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Text("No Players Selected")
                         .font(DesignSystem.Typography.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text("Select players to start generating teams")
                         .font(DesignSystem.Typography.subheadline)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -305,24 +305,24 @@ private struct EmptyPlayerPrompt: View {
 // Ready to Generate Prompt - Clean confirmation when players are selected
 private struct ReadyToGeneratePrompt: View {
     let playerCount: Int
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             HStack {
                 Image(systemName: DesignSystem.Symbols.success)
                     .font(DesignSystem.Typography.title3)
                     .foregroundColor(DesignSystem.Colors.success)
-                
+
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Ready to Generate")
                         .font(DesignSystem.Typography.headline)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text("\(playerCount) player\(playerCount == 1 ? "" : "s") selected")
                         .font(DesignSystem.Typography.subheadline)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
                 }
-                
+
                 Spacer()
             }
             .padding(DesignSystem.Spacing.md)
@@ -341,7 +341,7 @@ private struct LoadingView: View {
             ProgressView()
                 .controlSize(.large)
                 .tint(DesignSystem.Colors.primary)
-            
+
             Text("Loading players...")
                 .font(DesignSystem.Typography.subheadline)
                 .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -359,12 +359,12 @@ private struct GeneratingView: View {
                 ProgressView()
                     .controlSize(.large)
                     .tint(DesignSystem.Colors.primary)
-                
+
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Text("Creating Teams")
                         .font(DesignSystem.Typography.title3)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text("Balancing players into teams")
                         .font(DesignSystem.Typography.subheadline)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -381,9 +381,9 @@ private struct GeneratingView: View {
 private struct TeamsDisplayView: View {
     let teams: [TeamEntity]
     let viewModel: TeamGenerationViewModel
-    
 
-    
+
+
     private var adaptiveColumnCount: Int {
         #if os(iOS)
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -393,22 +393,23 @@ private struct TeamsDisplayView: View {
         #endif
         return 1  // Single column for portrait iPhone to prevent compression
     }
-    
+
     private var maxPlayersPerTeam: Int {
         teams.map(\.players.count).max() ?? 0
     }
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             // Teams summary header with expansion controls
             enhancedTeamsSummaryHeader
-            
+
             // Teams Grid - Optimized for scroll efficiency
             LazyVGrid(
                 columns: Array(repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.md), count: adaptiveColumnCount),
                 spacing: DesignSystem.Spacing.lg
             ) {
-                ForEach(Array(teams.enumerated()), id: \.element.id) { index, team in
+                ForEach(teams.indices, id: \.self) { index in
+                    let team = teams[index]
                     TeamCard(
                         team: team,
                         teamNumber: index + 1,
@@ -420,7 +421,7 @@ private struct TeamsDisplayView: View {
             }
         }
     }
-    
+
     // MARK: - Enhanced Header with Global Expansion Controls
     private var enhancedTeamsSummaryHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -431,22 +432,22 @@ private struct TeamsDisplayView: View {
                         .font(DesignSystem.Typography.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text("\(teams.count) balanced teams • \(totalPlayers) players")
                         .font(DesignSystem.Typography.subheadline)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
                 }
-                
+
                 Spacer()
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
     }
-    
 
-    
+
+
     // MARK: - Helper Properties
-    
+
     private var totalPlayers: Int {
         teams.reduce(0) { $0 + $1.players.count }
     }
@@ -458,27 +459,27 @@ private struct TeamsDisplayView: View {
 private struct ErrorView: View {
     let error: TeamGenerationError
     let viewModel: TeamGenerationViewModel
-    
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: DesignSystem.Symbols.error)
                     .font(.system(size: 48, weight: .light))
                     .foregroundColor(DesignSystem.Colors.error)
-                
+
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Text("Generation Failed")
                         .font(DesignSystem.Typography.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(DesignSystem.Colors.primaryText)
-                    
+
                     Text(error.localizedDescription)
                         .font(DesignSystem.Typography.subheadline)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
                         .multilineTextAlignment(.center)
                 }
             }
-            
+
             // Recovery actions
             HStack(spacing: DesignSystem.Spacing.md) {
                 EnhancedButton.primary("Retry", systemImage: DesignSystem.Symbols.loading) {
@@ -486,7 +487,7 @@ private struct ErrorView: View {
                         await viewModel.generateTeams()
                     }
                 }
-                
+
                 EnhancedButton.secondary("Dismiss", systemImage: DesignSystem.Symbols.xmark) {
                     viewModel.dismissError()
                 }
@@ -504,9 +505,9 @@ private struct PlayerSelectionSheet: View {
     @State private var players: [PlayerEntity] = []
     @State private var isLoading = true
     @State private var searchText = ""
-    
+
     let onDismiss: (Bool) -> Void
-    
+
     var body: some View {
         NavigationStack {
             Group {
@@ -527,7 +528,7 @@ private struct PlayerSelectionSheet: View {
                         onDismiss(false)
                     }
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
                         dismiss()
@@ -542,32 +543,32 @@ private struct PlayerSelectionSheet: View {
             await loadPlayers()
         }
     }
-    
+
     private var loadingView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             ProgressView()
                 .controlSize(.large)
                 .tint(DesignSystem.Colors.primary)
-            
+
             Text("Loading Players")
                 .font(DesignSystem.Typography.title3)
                 .foregroundColor(DesignSystem.Colors.primaryText)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     private var emptyStateView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             Image(systemName: DesignSystem.Symbols.personGroup)
                 .font(.system(size: 48, weight: .light))
                 .foregroundColor(DesignSystem.Colors.tertiaryText)
-            
+
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Text("No Players Found")
                     .font(DesignSystem.Typography.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(DesignSystem.Colors.primaryText)
-                
+
                 Text("Add players in the Players tab to get started")
                     .font(DesignSystem.Typography.subheadline)
                     .foregroundColor(DesignSystem.Colors.secondaryText)
@@ -577,7 +578,7 @@ private struct PlayerSelectionSheet: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(DesignSystem.Spacing.xxxl)
     }
-    
+
     private var playerListView: some View {
         List {
             ForEach(filteredPlayers) { player in
@@ -593,7 +594,7 @@ private struct PlayerSelectionSheet: View {
         }
         .listStyle(.insetGrouped)
     }
-    
+
     private var filteredPlayers: [PlayerEntity] {
         if searchText.isEmpty {
             return players
@@ -603,7 +604,7 @@ private struct PlayerSelectionSheet: View {
             }
         }
     }
-    
+
     private func loadPlayers() async {
         do {
             let loadedPlayers = try await dependencies.managePlayersUseCase.getAllPlayers()
@@ -618,18 +619,18 @@ private struct PlayerSelectionSheet: View {
             }
         }
     }
-    
+
     private func updatePlayerSelection(player: PlayerEntity, isSelected: Bool) async {
         do {
             try await dependencies.managePlayersUseCase.updatePlayerSelection(id: player.id, isSelected: isSelected)
-            
+
             // Update local state
             await MainActor.run {
                 if let index = players.firstIndex(where: { $0.id == player.id }) {
                     players[index].isSelected = isSelected
                 }
             }
-            
+
             await dependencies.hapticService.selection()
         } catch {
             await dependencies.hapticService.error()
@@ -641,7 +642,7 @@ private struct PlayerSelectionSheet: View {
 private struct PlayerSelectionRow: View {
     let player: PlayerEntity
     let onSelectionChanged: (Bool) -> Void
-    
+
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
             // Selection indicator
@@ -653,26 +654,26 @@ private struct PlayerSelectionRow: View {
                     .foregroundColor(player.isSelected ? DesignSystem.Colors.primary : DesignSystem.Colors.tertiaryText)
             }
             .buttonStyle(.plain)
-            
+
             // Player info
             HStack {
                 Text(player.name)
                     .font(DesignSystem.Typography.headline)
                     .fontWeight(.medium)
                     .foregroundColor(DesignSystem.Colors.primaryText)
-                
+
                 Spacer()
-                
+
                 // Overall skill indicator
                 Circle()
                     .fill(PlayerSkillPresentation.rankColor(player.skills.overall))
                     .frame(width: 8, height: 8)
-                
+
                 Text("\(String(format: "%.1f", player.skills.overall))")
                     .font(DesignSystem.Typography.subheadline)
                     .foregroundColor(DesignSystem.Colors.secondaryText)
             }
-            
+
             Spacer()
         }
         .padding(.vertical, DesignSystem.Spacing.xs)
@@ -687,4 +688,4 @@ private struct PlayerSelectionRow: View {
 #Preview {
     TeamView()
         .environment(\.dependencies, MockDependencyContainer())
-} 
+}

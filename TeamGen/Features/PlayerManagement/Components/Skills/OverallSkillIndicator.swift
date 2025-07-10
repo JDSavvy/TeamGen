@@ -7,9 +7,9 @@ struct OverallSkillIndicator: View {
     let style: IndicatorStyle
     let showLabel: Bool
     let showValue: Bool
-    
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+
     init(
         overallSkill: Double,
         style: IndicatorStyle = .standard,
@@ -21,7 +21,7 @@ struct OverallSkillIndicator: View {
         self.showLabel = showLabel
         self.showValue = showValue
     }
-    
+
     var body: some View {
         switch style {
         case .compact:
@@ -34,23 +34,23 @@ struct OverallSkillIndicator: View {
             minimalView
         }
     }
-    
+
     // MARK: - Style Variants
-    
+
     private var compactView: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             // Skill indicator dot with continuous gradient
             Circle()
                 .fill(continuousColor)
                 .frame(width: 8, height: 8)
-            
+
             if showValue {
                 Text(String(format: "%.1f", overallSkill))
                     .font(DesignSystem.Typography.caption1)
                     .fontWeight(.medium)
                     .foregroundColor(continuousTextColor)
             }
-            
+
             if showLabel {
                 Text(skillLevel.displayName)
                     .font(DesignSystem.Typography.caption2)
@@ -60,7 +60,7 @@ struct OverallSkillIndicator: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
     }
-    
+
     private var standardView: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             HStack {
@@ -69,9 +69,9 @@ struct OverallSkillIndicator: View {
                         .font(DesignSystem.Typography.caption1)
                         .foregroundColor(DesignSystem.Colors.secondaryText)
                 }
-                
+
                 Spacer()
-                
+
                 if showValue {
                     Text(String(format: "%.1f", overallSkill))
                         .font(DesignSystem.Typography.subheadline)
@@ -79,10 +79,10 @@ struct OverallSkillIndicator: View {
                         .foregroundColor(continuousTextColor)
                 }
             }
-            
+
             // Skill level badge with synchronized color
             SkillLevelBadge(skillLevel: skillLevel, size: .small)
-            
+
             // Progress bar with continuous gradient
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
@@ -90,7 +90,7 @@ struct OverallSkillIndicator: View {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.compact)
                         .fill(DesignSystem.Colors.separatorColor.opacity(DesignSystem.VisualConsistency.opacitySeparator))
                         .frame(height: DesignSystem.ComponentSize.progressBarCompact)
-                    
+
                     // Filled portion with gradient color
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.compact)
                         .fill(continuousColor)
@@ -99,7 +99,7 @@ struct OverallSkillIndicator: View {
                             height: DesignSystem.ComponentSize.progressBarCompact
                         )
                         .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion), value: overallSkill)
-                    
+
                     // Subtle highlight overlay
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.compact)
                         .fill(
@@ -124,7 +124,7 @@ struct OverallSkillIndicator: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
     }
-    
+
     private var detailedView: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             // Header with value and level
@@ -136,13 +136,13 @@ struct OverallSkillIndicator: View {
                             .fontWeight(.medium)
                             .foregroundColor(DesignSystem.Colors.primaryText)
                     }
-                    
+
                     // Skill level badge with synchronized color
                     SkillLevelBadge(skillLevel: skillLevel, size: .medium)
                 }
-                
+
                 Spacer()
-                
+
                 if showValue {
                     // Clean skill value display - modern, minimalist approach
                     Text(String(format: "%.1f", overallSkill))
@@ -171,7 +171,7 @@ struct OverallSkillIndicator: View {
                         )
                 }
             }
-            
+
             // Enhanced progress visualization
             VStack(spacing: DesignSystem.Spacing.xs) {
                 // Progress bar with continuous gradient
@@ -190,7 +190,7 @@ struct OverallSkillIndicator: View {
                                 )
                             )
                             .frame(height: DesignSystem.ComponentSize.progressBarStandard)
-                        
+
                         // Filled portion with gradient color and glow effect
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.progressBar)
                             .fill(
@@ -208,7 +208,7 @@ struct OverallSkillIndicator: View {
                                 height: DesignSystem.ComponentSize.progressBarStandard
                             )
                             .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion), value: overallSkill)
-                        
+
                         // Highlight overlay
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.progressBar)
                             .fill(
@@ -229,7 +229,7 @@ struct OverallSkillIndicator: View {
                     }
                 }
                 .frame(height: DesignSystem.ComponentSize.progressBarStandard)
-                
+
                 // Scale markers
                 HStack {
                     ForEach([1, 2.5, 5, 7.5, 10], id: \.self) { marker in
@@ -237,12 +237,12 @@ struct OverallSkillIndicator: View {
                             Rectangle()
                                 .fill(DesignSystem.Colors.tertiaryText)
                                 .frame(width: DesignSystem.ComponentSize.scaleMarkerWidth, height: DesignSystem.ComponentSize.scaleMarkerHeight)
-                            
+
                             Text(marker == 10 ? "10" : String(format: "%.1f", marker))
                                 .font(DesignSystem.Typography.caption2)
                                 .foregroundColor(DesignSystem.Colors.tertiaryText)
                         }
-                        
+
                         if marker != 10 {
                             Spacer()
                         }
@@ -253,14 +253,14 @@ struct OverallSkillIndicator: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
     }
-    
+
     private var minimalView: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             // Small skill indicator
             Circle()
                 .fill(continuousColor)
                 .frame(width: DesignSystem.ComponentSize.smallIndicator, height: DesignSystem.ComponentSize.smallIndicator)
-            
+
             if showValue {
                 Text(String(format: "%.1f", overallSkill))
                     .font(DesignSystem.Typography.caption2)
@@ -271,29 +271,29 @@ struct OverallSkillIndicator: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
     }
-    
+
     // MARK: - Computed Properties
-    
+
     private var skillLevel: SkillLevel {
         PlayerSkillPresentation.skillLevel(from: overallSkill)
     }
-    
+
     private var continuousColor: Color {
         PlayerSkillPresentation.rankColor(overallSkill)
     }
-    
+
     private var continuousTextColor: Color {
         PlayerSkillPresentation.textColor(for: overallSkill)
     }
-    
+
     private var continuousBackgroundColor: Color {
         PlayerSkillPresentation.backgroundColorLight(for: overallSkill)
     }
-    
+
     private var fillPercentage: Double {
         return overallSkill / 10.0
     }
-    
+
     private var accessibilityDescription: String {
         let levelText = skillLevel.displayName
         let valueText = String(format: "%.1f", overallSkill)
@@ -317,9 +317,9 @@ enum IndicatorStyle {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 Text("Skill Level: \(String(format: "%.1f", skill))")
                     .font(DesignSystem.Typography.title3)
-                
+
                 OverallSkillIndicator(overallSkill: skill, style: .detailed)
-                
+
                 HStack {
                     OverallSkillIndicator(overallSkill: skill, style: .compact)
                     Spacer()
@@ -332,4 +332,4 @@ enum IndicatorStyle {
         }
     }
     .padding()
-} 
+}

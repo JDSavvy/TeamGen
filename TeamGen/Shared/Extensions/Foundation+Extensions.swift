@@ -5,7 +5,7 @@ extension String {
     /// Validates if string is a valid player name
     var isValidPlayerName: Bool {
         let trimmed = self.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.count >= AppConstants.Player.minNameLength && 
+        return trimmed.count >= AppConstants.Player.minNameLength &&
                trimmed.count <= AppConstants.Player.maxNameLength &&
                !trimmed.isEmpty
     }
@@ -27,4 +27,3 @@ extension Double {
     }
 }
 
- 

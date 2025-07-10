@@ -11,7 +11,7 @@ extension View {
             self
         }
     }
-    
+
     /// Applies conditional modifier with else clause
     @ViewBuilder
     func `if`<TrueContent: View, FalseContent: View>(
@@ -25,7 +25,7 @@ extension View {
             falseTransform(self)
         }
     }
-    
+
     /// Applies standard card styling
     func cardStyle() -> some View {
         self
@@ -33,26 +33,26 @@ extension View {
             .cornerRadius(AppConstants.UI.cornerRadius)
             .shadow(radius: AppConstants.UI.shadowRadius)
     }
-    
+
     /// Applies standard button styling
     func buttonStyle(isEnabled: Bool = true) -> some View {
         self
             .foregroundColor(isEnabled ? .accentColor : .secondary)
             .opacity(isEnabled ? 1.0 : 0.6)
     }
-    
+
     /// Applies accessibility minimum tap target
     func accessibleTapTarget() -> some View {
         self
             .frame(minWidth: AppConstants.Accessibility.minimumTapTargetSize,
                    minHeight: AppConstants.Accessibility.minimumTapTargetSize)
     }
-    
+
     /// Applies standard spacing
     func standardSpacing() -> some View {
         self.padding(AppConstants.UI.Spacing.md)
     }
-    
+
     /// Applies loading state overlay
     func loadingOverlay(isLoading: Bool) -> some View {
         self.overlay(
@@ -76,11 +76,11 @@ extension Color {
             traitCollection.userInterfaceStyle == .dark ? UIColor(dark) : UIColor(light)
         })
     }
-    
+
     /// Skill level color based on value
     static func skillLevel(_ value: Int) -> Color {
         let normalizedValue = Double(value) / Double(AppConstants.Player.maxSkillLevel)
-        
+
         switch normalizedValue {
         case 0.0..<0.3:
             return .red
@@ -107,10 +107,10 @@ extension Font {
 extension Animation {
     /// Standard app animation
     static let appDefault = Animation.easeInOut(duration: AppConstants.UI.animationDuration)
-    
+
     /// Spring animation for interactive elements
     static let appSpring = Animation.spring(response: 0.5, dampingFraction: 0.8)
-    
+
     /// Quick animation for state changes
     static let appQuick = Animation.easeInOut(duration: 0.15)
 }
@@ -124,7 +124,7 @@ extension EdgeInsets {
         bottom: AppConstants.UI.Spacing.md,
         trailing: AppConstants.UI.Spacing.md
     )
-    
+
     /// Compact padding for dense layouts
     static let appCompact = EdgeInsets(
         top: AppConstants.UI.Spacing.sm,
@@ -132,4 +132,4 @@ extension EdgeInsets {
         bottom: AppConstants.UI.Spacing.sm,
         trailing: AppConstants.UI.Spacing.sm
     )
-} 
+}

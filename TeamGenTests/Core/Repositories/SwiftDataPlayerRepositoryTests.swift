@@ -291,8 +291,8 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
         let allPlayers = try await repository.fetchAll()
         XCTAssertTrue(allPlayers.allSatisfy { !$0.isSelected })
         
-        let selectedPlayers = try await repository.fetchSelected()
-        XCTAssertEqual(selectedPlayers.count, 0)
+        let fetchedSelectedPlayers = try await repository.fetchSelected()
+        XCTAssertEqual(fetchedSelectedPlayers.count, 0)
     }
     
     // MARK: - Utility Tests
