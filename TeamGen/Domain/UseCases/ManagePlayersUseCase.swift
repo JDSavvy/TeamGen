@@ -117,7 +117,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
 
 // MARK: - Validation Errors
 
-public enum ValidationError: LocalizedError {
+public enum ValidationError: LocalizedError, Equatable {
     case invalidPlayerName
     case invalidSkillValue(Int)
     case duplicatePlayerName(String)

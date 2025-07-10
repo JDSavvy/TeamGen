@@ -59,7 +59,7 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
 
     private func getDefaultTeamCount() -> Int {
         let count = userDefaults.integer(forKey: Keys.defaultTeamCount)
-        return count != 0 ? count : 2
+        return count != 0 ? count : 2 // swiftlint:disable:this empty_count
     }
 
     private func getDefaultGenerationMode() -> TeamGenerationMode {
