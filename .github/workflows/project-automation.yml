@@ -1,0 +1,155 @@
+name: Project Automation
+
+on:
+  issues:
+    types: [opened, labeled, assigned, closed]
+  pull_request:
+    types: [opened, ready_for_review, closed]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  auto-assign-project:
+    name: Auto-assign to Project Board
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    
+    steps:
+    - name: Add Issue to Project
+      uses: actions/add-to-project@v0.4.0
+      with:
+        project-url: https://github.com/users/JDSavvy/projects/1
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-label:
+    name: Auto-label Issues
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' && github.event.issue
+    
+    steps:
+    - name: Label iOS specific issues
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const title = context.payload.issue.title.toLowerCase();
+          const body = context.payload.issue.body?.toLowerCase() || '';
+          
+          const labels = [];
+          
+          // Feature area labels
+          if (title.includes('player') || body.includes('player')) {
+            labels.push('area:player-management');
+          }
+          if (title.includes('team') || body.includes('team')) {
+            labels.push('area:team-generation');
+          }
+          if (title.includes('ui') || title.includes('interface') || body.includes('interface')) {
+            labels.push('area:ui-ux');
+          }
+          if (title.includes('performance') || body.includes('performance')) {
+            labels.push('area:performance');
+          }
+          
+          // Technology labels
+          if (body.includes('swiftui')) {
+            labels.push('tech:swiftui');
+          }
+          if (body.includes('swiftdata')) {
+            labels.push('tech:swiftdata');
+          }
+          
+          // Priority based on template
+          if (title.includes('[BUG]')) {
+            labels.push('priority:high');
+          } else if (title.includes('[FEATURE]')) {
+            labels.push('priority:medium');
+          } else if (title.includes('[TECH DEBT]')) {
+            labels.push('priority:low');
+          }
+          
+          if (labels.length > 0) {
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              labels: labels
+            });
+          }
+
+  notify-claude:
+    name: Notify Claude for Complex Issues
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' && github.event.issue
+    
+    steps:
+    - name: Tag Claude for high priority issues
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const title = context.payload.issue.title.toLowerCase();
+          const labels = context.payload.issue.labels?.map(l => l.name) || [];
+          
+          // Tag Claude for critical bugs, epics, or complex features
+          const shouldTagClaude = 
+            title.includes('[epic]') ||
+            title.includes('critical') ||
+            labels.includes('priority:high') ||
+            title.includes('architecture') ||
+            title.includes('performance');
+          
+          if (shouldTagClaude) {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: `@claude This issue has been flagged for AI assistance due to its complexity or priority. Please review and provide technical guidance.`
+            });
+          }
+
+  update-project-status:
+    name: Update Project Board Status
+    runs-on: ubuntu-latest
+    if: github.event.pull_request
+    
+    steps:
+    - name: Update status based on PR state
+      uses: actions/github-script@v7
+      with:
+        script: |
+          // This would update project board fields based on PR status
+          // Implementation depends on the specific project board setup
+          console.log('PR status changed:', context.payload.action);
+
+  celebrate-milestones:
+    name: Celebrate Completed Milestones
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed' && github.event.issue
+    
+    steps:
+    - name: Check if milestone completed
+      uses: actions/github-script@v7
+      with:
+        script: |
+          if (context.payload.issue.milestone) {
+            const milestone = context.payload.issue.milestone;
+            
+            // Get all issues in milestone
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              milestone: milestone.number,
+              state: 'all'
+            });
+            
+            const openIssues = issues.data.filter(issue => issue.state === 'open');
+            
+            if (openIssues.length === 0) {
+              // Milestone completed!
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                body: `🎉 Milestone "${milestone.title}" has been completed! Great work team! 🚀`
+              });
+            }
+          }

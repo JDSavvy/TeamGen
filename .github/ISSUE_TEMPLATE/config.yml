@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussion Forum
+    url: https://github.com/JDSavvy/TeamGen/discussions
+    about: For questions, ideas, and general discussion about TeamGen
+  - name: 📖 Documentation
+    url: https://github.com/JDSavvy/TeamGen/blob/main/CLAUDE.md
+    about: Read the project documentation and development guidelines
+  - name: 🤖 Claude AI Assistant
+    url: https://github.com/JDSavvy/TeamGen/issues/new
+    about: Tag @claude in any issue for AI-powered development assistance

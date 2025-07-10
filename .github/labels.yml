@@ -1,0 +1,186 @@
+# GitHub Labels Configuration for TeamGen
+# Run: gh label create --file .github/labels.yml
+
+# Priority Labels
+- name: "priority:critical"
+  color: "d73a4a"
+  description: "Critical issues that block releases or cause data loss"
+
+- name: "priority:high"
+  color: "e99695"
+  description: "High priority issues that should be addressed soon"
+
+- name: "priority:medium"
+  color: "fbca04"
+  description: "Medium priority issues for normal development cycle"
+
+- name: "priority:low"
+  color: "0e8a16"
+  description: "Low priority issues that can be addressed when time permits"
+
+# Type Labels
+- name: "type:bug"
+  color: "d73a4a"
+  description: "Something isn't working correctly"
+
+- name: "type:feature"
+  color: "0052cc"
+  description: "New feature or enhancement request"
+
+- name: "type:epic"
+  color: "5319e7"
+  description: "Large feature or initiative spanning multiple issues"
+
+- name: "type:tech-debt"
+  color: "6f42c1"
+  description: "Technical debt or refactoring work"
+
+- name: "type:documentation"
+  color: "006b75"
+  description: "Documentation improvements or additions"
+
+- name: "type:testing"
+  color: "1d76db"
+  description: "Testing improvements or test-related issues"
+
+# Area Labels
+- name: "area:player-management"
+  color: "f9d0c4"
+  description: "Player creation, editing, and management features"
+
+- name: "area:team-generation"
+  color: "c2e0c6"
+  description: "Team generation algorithms and related features"
+
+- name: "area:ui-ux"
+  color: "bfd4f2"
+  description: "User interface and user experience improvements"
+
+- name: "area:performance"
+  color: "d4c5f9"
+  description: "Performance optimization and monitoring"
+
+- name: "area:accessibility"
+  color: "c5def5"
+  description: "Accessibility features and compliance"
+
+- name: "area:settings"
+  color: "f1f8ff"
+  description: "App settings and configuration"
+
+- name: "area:data-storage"
+  color: "e1f5fe"
+  description: "Data persistence and SwiftData related issues"
+
+- name: "area:error-handling"
+  color: "fce4ec"
+  description: "Error handling and validation"
+
+# Technology Labels
+- name: "tech:swiftui"
+  color: "0366d6"
+  description: "SwiftUI related issues"
+
+- name: "tech:swiftdata"
+  color: "28a745"
+  description: "SwiftData persistence related issues"
+
+- name: "tech:combine"
+  color: "6f42c1"
+  description: "Combine framework related issues"
+
+- name: "tech:async-await"
+  color: "e36209"
+  description: "Async/await concurrency related issues"
+
+- name: "tech:clean-architecture"
+  color: "586069"
+  description: "Clean architecture pattern related issues"
+
+# Status Labels
+- name: "status:triage"
+  color: "fef2c0"
+  description: "Needs triage and initial assessment"
+
+- name: "status:ready"
+  color: "c2e0c6"
+  description: "Ready for development"
+
+- name: "status:in-progress"
+  color: "0052cc"
+  description: "Currently being worked on"
+
+- name: "status:blocked"
+  color: "d73a4a"
+  description: "Blocked by dependencies or other issues"
+
+- name: "status:needs-review"
+  color: "fbca04"
+  description: "Needs code review or design review"
+
+- name: "status:needs-testing"
+  color: "f9d0c4"
+  description: "Needs testing or QA validation"
+
+# Size/Effort Labels
+- name: "size:xs"
+  color: "c5def5"
+  description: "Extra small: 1-2 hours"
+
+- name: "size:s"
+  color: "bfd4f2"
+  description: "Small: 3-8 hours (1 day)"
+
+- name: "size:m"
+  color: "1d76db"
+  description: "Medium: 1-3 days"
+
+- name: "size:l"
+  color: "0052cc"
+  description: "Large: 4-10 days (1-2 weeks)"
+
+- name: "size:xl"
+  color: "0366d6"
+  description: "Extra large: 2+ weeks"
+
+# Release Labels
+- name: "v1.0"
+  color: "d73a4a"
+  description: "MVP release milestone"
+
+- name: "v1.1"
+  color: "fbca04"
+  description: "Polish and enhancement release"
+
+- name: "v1.2"
+  color: "0e8a16"
+  description: "Advanced features release"
+
+- name: "backlog"
+  color: "ededed"
+  description: "Future consideration, not scheduled"
+
+# Special Labels
+- name: "good-first-issue"
+  color: "7057ff"
+  description: "Good for newcomers to the project"
+
+- name: "help-wanted"
+  color: "008672"
+  description: "Extra attention is needed from community"
+
+- name: "question"
+  color: "d876e3"
+  description: "Further information is requested"
+
+- name: "wontfix"
+  color: "ffffff"
+  description: "This will not be worked on"
+
+- name: "duplicate"
+  color: "cfd3d7"
+  description: "This issue or pull request already exists"
+
+- name: "claude-assist"
+  color: "5319e7"
+  description: "Issue tagged for Claude AI assistance"

@@ -1,0 +1,145 @@
+name: 🔧 Technical Debt / Refactoring
+description: Address technical debt or propose refactoring
+title: "[TECH DEBT] "
+labels: ["tech-debt", "refactoring"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Technical debt items help maintain code quality and developer productivity.
+
+  - type: dropdown
+    id: debt-type
+    attributes:
+      label: Type of Technical Debt
+      description: What kind of technical debt is this?
+      options:
+        - Code Quality (messy code, duplications)
+        - Architecture (design issues, coupling)
+        - Performance (inefficient algorithms, memory leaks)
+        - Testing (missing tests, flaky tests)
+        - Dependencies (outdated libraries, security)
+        - Documentation (missing or outdated docs)
+        - Build/CI (slow builds, unreliable tests)
+        - Security (vulnerabilities, best practices)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this technical debt?
+      options:
+        - Critical - Blocking development or causing bugs
+        - High - Significantly slowing development
+        - Medium - Noticeable impact on productivity
+        - Low - Minor quality improvement
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-situation
+    attributes:
+      label: Current Situation
+      description: Describe the current technical debt
+      placeholder: |
+        - File/Class: ...
+        - Issue: ...
+        - Impact: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problems-caused
+    attributes:
+      label: Problems Caused
+      description: What problems does this technical debt cause?
+      placeholder: |
+        - Slower development when...
+        - Difficult to test because...
+        - Risk of bugs when...
+        - Performance issues with...
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like to address this technical debt?
+      placeholder: |
+        - Refactor class X to...
+        - Extract interface for...
+        - Replace algorithm with...
+        - Add tests for...
+    validations:
+      required: true
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Expected Benefits
+      description: What benefits will addressing this debt provide?
+      placeholder: |
+        - Easier to add new features in area X
+        - Reduced risk of bugs in...
+        - Improved performance by...
+        - Better test coverage for...
+
+  - type: dropdown
+    id: effort-estimate
+    attributes:
+      label: Effort Estimate
+      description: How much work do you estimate this will take?
+      options:
+        - Small (few hours)
+        - Medium (1-2 days)
+        - Large (3-5 days)
+        - Extra Large (1+ weeks)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: breaking-changes
+    attributes:
+      label: Breaking Changes
+      description: Will this refactoring introduce breaking changes?
+      options:
+        - No breaking changes expected
+        - Minor breaking changes (internal APIs)
+        - Major breaking changes (public APIs)
+        - Unsure - needs investigation
+    validations:
+      required: true
+
+  - type: textarea
+    id: testing-strategy
+    attributes:
+      label: Testing Strategy
+      description: How will you ensure the refactoring doesn't break existing functionality?
+      placeholder: |
+        - Existing unit tests should pass
+        - Add integration tests for...
+        - Manual testing of...
+
+  - type: textarea
+    id: migration-plan
+    attributes:
+      label: Migration/Implementation Plan
+      description: What's your plan for implementing this refactoring?
+      placeholder: |
+        1. Phase 1: ...
+        2. Phase 2: ...
+        3. Phase 3: ...
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      description: Please confirm the following
+      options:
+        - label: The benefits outweigh the implementation cost
+          required: true
+        - label: This refactoring aligns with the current architecture
+          required: true
+        - label: I have considered the impact on existing features
+          required: true

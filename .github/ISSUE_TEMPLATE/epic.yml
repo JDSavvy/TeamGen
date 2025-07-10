@@ -1,0 +1,143 @@
+name: 🚀 Epic
+description: Create an epic for large features or initiatives
+title: "[EPIC] "
+labels: ["epic", "planning"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Epics are large features or initiatives that span multiple issues and potentially multiple releases.
+
+  - type: input
+    id: epic-name
+    attributes:
+      label: Epic Name
+      description: Short, descriptive name for this epic
+      placeholder: "e.g., Advanced Player Statistics System"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: target-release
+    attributes:
+      label: Target Release
+      description: Which release is this epic planned for?
+      options:
+        - v1.0 (MVP)
+        - v1.1 (Polish)
+        - v1.2 (Advanced)
+        - v2.0 (Major)
+        - Future/Backlog
+    validations:
+      required: true
+
+  - type: textarea
+    id: epic-description
+    attributes:
+      label: Epic Description
+      description: High-level description of what this epic will accomplish
+      placeholder: "This epic will enable users to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business Value
+      description: Why is this epic important? What value does it provide?
+      placeholder: |
+        - Improves user retention by...
+        - Reduces support requests by...
+        - Enables new use cases like...
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-personas
+    attributes:
+      label: User Personas
+      description: Which types of users will benefit from this epic?
+      placeholder: |
+        - Team coaches
+        - Sports organizers
+        - Casual users
+        - Tournament organizers
+
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: How will you measure the success of this epic?
+      placeholder: |
+        - User engagement increases by X%
+        - Feature adoption rate of Y%
+        - Reduced time to complete task Z
+
+  - type: textarea
+    id: high-level-requirements
+    attributes:
+      label: High-Level Requirements
+      description: What are the main requirements for this epic?
+      placeholder: |
+        - Must support...
+        - Should integrate with...
+        - Must maintain performance standards...
+
+  - type: textarea
+    id: potential-issues
+    attributes:
+      label: Child Issues/Stories
+      description: List the main issues/stories that will make up this epic
+      placeholder: |
+        - [ ] #XX - Story 1: ...
+        - [ ] #XX - Story 2: ...
+        - [ ] #XX - Story 3: ...
+        - [ ] Future issues to be created
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What other epics, features, or external factors does this depend on?
+      placeholder: |
+        - Depends on Epic #XX
+        - Requires iOS 18+ features
+        - Needs third-party integration with...
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks & Mitigation
+      description: What risks do you foresee and how might they be mitigated?
+      placeholder: |
+        - Risk: Technical complexity might delay timeline
+          Mitigation: Break into smaller, incremental deliveries
+        
+        - Risk: User adoption might be slow
+          Mitigation: Conduct user testing early
+
+  - type: dropdown
+    id: effort-estimate
+    attributes:
+      label: Effort Estimate
+      description: Rough estimate of development effort
+      options:
+        - Small (1-2 weeks)
+        - Medium (3-4 weeks)
+        - Large (1-2 months)
+        - Extra Large (2+ months)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      description: Please confirm the following
+      options:
+        - label: This epic provides clear business value
+          required: true
+        - label: The scope is well-defined but flexible
+          required: true
+        - label: Success can be measured objectively
+          required: true
