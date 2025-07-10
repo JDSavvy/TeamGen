@@ -384,37 +384,15 @@ public final class MockNetworkService: NetworkServiceProtocol {
 
 @MainActor
 public final class MockPerformanceService: SimplePerformanceServiceProtocol {
-    public func trackUserAction(_: String) async {
+    public func logAppLaunch(duration: TimeInterval) async {
         // Mock implementation
     }
 
-    public func trackAppLaunch() async {
+    public func logTeamGeneration(playerCount: Int, duration: TimeInterval) async {
         // Mock implementation
     }
 
-    public func trackViewLoad(_: String) async {
-        // Mock implementation
-    }
-
-    public func trackDataOperation(_: String) async {
-        // Mock implementation
-    }
-
-    public func getPerformanceMetrics() async -> PerformanceMetrics {
-        PerformanceMetrics(
-            appLaunchTime: 0.5,
-            memoryUsage: 50.0,
-            cpuUsage: 10.0,
-            batteryLevel: 80.0,
-            thermalState: "optimal"
-        )
-    }
-
-    public func startSession() async {
-        // Mock implementation
-    }
-
-    public func endSession() async {
+    public func logUserAction(_ action: String, duration: TimeInterval) async {
         // Mock implementation
     }
 }
