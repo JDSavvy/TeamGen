@@ -51,8 +51,7 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
 
     private func getLanguage() -> AppLanguage {
         if let languageCode = userDefaults.string(forKey: Keys.language),
-           let language = AppLanguage(rawValue: languageCode)
-        {
+           let language = AppLanguage(rawValue: languageCode) {
             return language
         }
         return .english
@@ -65,8 +64,7 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
 
     private func getDefaultGenerationMode() -> TeamGenerationMode {
         if let modeString = userDefaults.string(forKey: Keys.defaultGenerationMode),
-           let mode = TeamGenerationMode(rawValue: modeString)
-        {
+           let mode = TeamGenerationMode(rawValue: modeString) {
             return mode
         }
         return .fair
@@ -74,8 +72,7 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
 
     private func getColorSchemePreference() -> ColorSchemeOption {
         if let preferenceString = userDefaults.string(forKey: Keys.colorSchemePreference),
-           let preference = ColorSchemeOption(rawValue: preferenceString)
-        {
+           let preference = ColorSchemeOption(rawValue: preferenceString) {
             return preference
         }
         return .system

@@ -31,7 +31,7 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
 
         let expectedTeams = [
             TeamEntity(players: Array(players[0 ..< 3])),
-            TeamEntity(players: Array(players[3 ..< 6])),
+            TeamEntity(players: Array(players[3 ..< 6]))
         ]
         mockTeamGenerationService.mockTeams = expectedTeams
 
@@ -137,8 +137,7 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
 
         // Then
         if case let .invalid(error) = result,
-           case let .insufficientPlayers(required, available) = error
-        {
+           case let .insufficientPlayers(required, available) = error {
             XCTAssertEqual(required, 4)
             XCTAssertEqual(available, 2)
         } else {
@@ -196,8 +195,7 @@ private class MockTeamGenerationService: TeamGenerationServiceProtocol {
     var lastGenerateCall: (players: [PlayerEntity], teamCount: Int, mode: TeamGenerationMode)?
 
     func generateTeams(from players: [PlayerEntity], count: Int,
-                       mode: TeamGenerationMode) async throws -> [TeamEntity]
-    {
+                       mode: TeamGenerationMode) async throws -> [TeamEntity] {
         lastGenerateCall = (players, count, mode)
 
         // Basic validation

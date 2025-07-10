@@ -108,8 +108,7 @@ struct PlayerView: View {
             }
             Button("Delete", role: .destructive) {
                 if let player = presentationState.playerToDelete,
-                   let viewModel
-                {
+                   let viewModel {
                     Task {
                         await viewModel.deletePlayer(player.id)
                         presentationState.playerToDelete = nil
@@ -157,7 +156,7 @@ private struct PlayerContentView: View {
             Group {
                 switch viewModel.currentViewState {
                 case .loading:
-                    LoadingStateView()
+                    loadingStateView()
                 case .loaded:
                     PlayerListContentView(
                         viewModel: viewModel,
@@ -172,7 +171,7 @@ private struct PlayerContentView: View {
                         expandedPlayerIDs: $expandedPlayerIDs
                     )
                 case .error:
-                    ErrorStateView(viewModel: viewModel)
+                    errorStateView(viewModel: viewModel)
                 default:
                     EmptyView()
                 }
@@ -183,12 +182,12 @@ private struct PlayerContentView: View {
     // MARK: - State Views
 
     @ViewBuilder
-    private func LoadingStateView() -> some View {
+    private func loadingStateView() -> some View {
         LoadingStateContent()
     }
 
     @ViewBuilder
-    private func ErrorStateView(viewModel: PlayerManagementViewModel) -> some View {
+    private func errorStateView(viewModel: PlayerManagementViewModel) -> some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 Image(systemName: "exclamationmark.triangle")
@@ -255,7 +254,7 @@ private struct LoadingStateContent: View {
                         LinearGradient(
                             colors: [
                                 DesignSystem.Colors.primary,
-                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading),
+                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading)
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing

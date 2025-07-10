@@ -4,7 +4,7 @@ import OSLog
 // MARK: - iOS Analytics Service Implementation
 
 @MainActor
-public final class iOSAnalyticsService: AnalyticsServiceProtocol {
+public final class IOSAnalyticsService: AnalyticsServiceProtocol {
     private let logger = Logger(subsystem: "com.teamgen.analytics", category: "Analytics")
 
     public func track(event: AnalyticsEvent) async {

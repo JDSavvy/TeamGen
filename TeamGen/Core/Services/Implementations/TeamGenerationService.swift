@@ -263,8 +263,7 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
 
     /// Distributes a skill tier across teams with balanced team sizes and optional randomized assignment
     private func distributeTierToTeams(tier: [PlayerEntity], teams: [TeamBuilder],
-                                       useRandomizedAssignment: Bool) -> [TeamBuilder]
-    {
+                                       useRandomizedAssignment: Bool) -> [TeamBuilder] {
         let mutableTeams = teams // Already mutable through reference semantics
 
         if useRandomizedAssignment {
@@ -297,17 +296,13 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
     /// Finds the next team with available capacity
     private func findNextTeamWithCapacity(teams: [TeamBuilder], preferredOrder: [Int]) -> Int {
         // First try preferred order
-        for teamIndex in preferredOrder {
-            if teams[teamIndex].players.count < teams[teamIndex].capacity - 1 {
-                return teamIndex
-            }
+        for teamIndex in preferredOrder where teams[teamIndex].players.count < teams[teamIndex].capacity - 1 {
+            return teamIndex
         }
 
         // Fallback: find any available team
-        for (index, team) in teams.enumerated() {
-            if team.players.count < team.capacity - 1 {
-                return index
-            }
+        for (index, team) in teams.enumerated() where team.players.count < team.capacity - 1 {
+            return index
         }
 
         // Emergency fallback: return team with minimum players
@@ -352,14 +347,12 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
                 // Randomize team pair order for variation in optimization
                 let teamPairs = generateRandomizedTeamPairs(teamCount: currentTeams.count)
 
-                for (i, j) in teamPairs {
-                    if await trySwapPlayersForBalance(
-                        between: currentTeams[i],
-                        and: currentTeams[j],
-                        currentBalance: currentBalance
-                    ) {
-                        passImproved = true
-                    }
+                for (i, j) in teamPairs where await trySwapPlayersForBalance(
+                    between: currentTeams[i],
+                    and: currentTeams[j],
+                    currentBalance: currentBalance
+                ) {
+                    passImproved = true
                 }
 
                 passIteration += 1

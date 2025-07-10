@@ -42,7 +42,7 @@ final class PlayerManagementViewModelTests: XCTestCase {
         // Given
         let mockPlayers = [
             createTestPlayer(name: "Player 1"),
-            createTestPlayer(name: "Player 2", isSelected: true),
+            createTestPlayer(name: "Player 2", isSelected: true)
         ]
         mockManagePlayersUseCase.mockPlayers = mockPlayers
 
@@ -252,7 +252,7 @@ final class PlayerManagementViewModelTests: XCTestCase {
         // Given
         let players = [
             createTestPlayer(name: "Player 1", isSelected: true),
-            createTestPlayer(name: "Player 2", isSelected: true),
+            createTestPlayer(name: "Player 2", isSelected: true)
         ]
         let unselectedPlayers = players.map { player in
             PlayerEntity(
@@ -293,7 +293,7 @@ final class PlayerManagementViewModelTests: XCTestCase {
         let players = [
             createTestPlayer(name: "John Doe"),
             createTestPlayer(name: "Jane Smith"),
-            createTestPlayer(name: "Bob Johnson"),
+            createTestPlayer(name: "Bob Johnson")
         ]
         mockManagePlayersUseCase.mockPlayers = players
         await viewModel.loadPlayers()
@@ -312,7 +312,7 @@ final class PlayerManagementViewModelTests: XCTestCase {
         // Given
         let players = [
             createTestPlayer(name: "Player 1"),
-            createTestPlayer(name: "Player 2"),
+            createTestPlayer(name: "Player 2")
         ]
         mockManagePlayersUseCase.mockPlayers = players
         await viewModel.loadPlayers()
@@ -348,7 +348,7 @@ final class PlayerManagementViewModelTests: XCTestCase {
         let players = [
             createTestPlayer(name: "Selected 1", isSelected: true),
             createTestPlayer(name: "Selected 2", isSelected: true),
-            createTestPlayer(name: "Unselected", isSelected: false),
+            createTestPlayer(name: "Unselected", isSelected: false)
         ]
         mockManagePlayersUseCase.mockPlayers = players
         await viewModel.loadPlayers()

@@ -113,7 +113,7 @@ struct OverallSkillIndicator: View {
                                 colors: [
                                     Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayMedium),
                                     Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayLight),
-                                    Color.clear,
+                                    Color.clear
                                 ],
                                 startPoint: .top,
                                 endPoint: .bottom
@@ -191,7 +191,7 @@ struct OverallSkillIndicator: View {
                                         DesignSystem.Colors.separatorColor
                                             .opacity(DesignSystem.VisualConsistency.opacitySkillBackground),
                                         DesignSystem.Colors.separatorColor
-                                            .opacity(DesignSystem.VisualConsistency.opacitySeparator),
+                                            .opacity(DesignSystem.VisualConsistency.opacitySeparator)
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom
@@ -205,7 +205,7 @@ struct OverallSkillIndicator: View {
                                 LinearGradient(
                                     colors: [
                                         continuousColor,
-                                        continuousColor.opacity(DesignSystem.VisualConsistency.opacityDominant),
+                                        continuousColor.opacity(DesignSystem.VisualConsistency.opacityDominant)
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom
@@ -228,7 +228,7 @@ struct OverallSkillIndicator: View {
                                     colors: [
                                         Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayStrong),
                                         Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayMedium),
-                                        Color.clear,
+                                        Color.clear
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom

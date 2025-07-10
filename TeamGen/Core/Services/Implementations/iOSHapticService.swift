@@ -3,7 +3,7 @@ import UIKit
 // MARK: - iOS Haptic Service
 
 /// Concrete implementation of haptic feedback for iOS
-public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable {
+public final class IOSHapticService: HapticServiceProtocol, @unchecked Sendable {
     // Feedback generators
     private let impactLight = UIImpactFeedbackGenerator(style: .light)
     private let impactMedium = UIImpactFeedbackGenerator(style: .medium)

@@ -40,7 +40,7 @@ public struct PerformanceMetric: Sendable {
 // MARK: - iOS Performance Monitoring Service
 
 @MainActor
-public final class iOSPerformanceMonitoringService: NSObject, PerformanceMonitoringServiceProtocol {
+public final class IOSPerformanceMonitoringService: NSObject, PerformanceMonitoringServiceProtocol {
     private let logger = Logger(subsystem: "com.savvydev.TeamGen", category: "Performance")
     private var isMonitoring = false
 
@@ -201,7 +201,7 @@ public final class iOSPerformanceMonitoringService: NSObject, PerformanceMonitor
 
 // MARK: - MetricKit Delegate
 
-extension iOSPerformanceMonitoringService: MXMetricManagerSubscriber {
+extension IOSPerformanceMonitoringService: MXMetricManagerSubscriber {
     public nonisolated func didReceive(_ payloads: [MXMetricPayload]) {
         for payload in payloads {
             processMetricPayload(payload)

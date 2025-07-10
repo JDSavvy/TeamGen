@@ -30,8 +30,8 @@ extension View {
     /// Applies standard card styling
     func cardStyle() -> some View {
         background(Color(.systemBackground))
-            .cornerRadius(AppConstants.UI.cornerRadius)
-            .shadow(radius: AppConstants.UI.shadowRadius)
+            .cornerRadius(AppConstants.UserInterface.cornerRadius)
+            .shadow(radius: AppConstants.UserInterface.shadowRadius)
     }
 
     /// Applies standard button styling
@@ -48,7 +48,7 @@ extension View {
 
     /// Applies standard spacing
     func standardSpacing() -> some View {
-        padding(AppConstants.UI.Spacing.md)
+        padding(AppConstants.UserInterface.Spacing.md)
     }
 
     /// Applies loading state overlay
@@ -98,17 +98,17 @@ extension Color {
 
 extension Font {
     /// Standard app fonts
-    static let appCaption = Font.system(size: AppConstants.UI.FontSize.caption)
-    static let appBody = Font.system(size: AppConstants.UI.FontSize.body)
-    static let appTitle = Font.system(size: AppConstants.UI.FontSize.title, weight: .semibold)
-    static let appLargeTitle = Font.system(size: AppConstants.UI.FontSize.largeTitle, weight: .bold)
+    static let appCaption = Font.system(size: AppConstants.UserInterface.FontSize.caption)
+    static let appBody = Font.system(size: AppConstants.UserInterface.FontSize.body)
+    static let appTitle = Font.system(size: AppConstants.UserInterface.FontSize.title, weight: .semibold)
+    static let appLargeTitle = Font.system(size: AppConstants.UserInterface.FontSize.largeTitle, weight: .bold)
 }
 
 // MARK: - Animation Extensions
 
 extension Animation {
     /// Standard app animation
-    static let appDefault = Animation.easeInOut(duration: AppConstants.UI.animationDuration)
+    static let appDefault = Animation.easeInOut(duration: AppConstants.UserInterface.animationDuration)
 
     /// Spring animation for interactive elements
     static let appSpring = Animation.spring(response: 0.5, dampingFraction: 0.8)
@@ -122,17 +122,17 @@ extension Animation {
 extension EdgeInsets {
     /// Standard app padding
     static let appStandard = EdgeInsets(
-        top: AppConstants.UI.Spacing.md,
-        leading: AppConstants.UI.Spacing.md,
-        bottom: AppConstants.UI.Spacing.md,
-        trailing: AppConstants.UI.Spacing.md
+        top: AppConstants.UserInterface.Spacing.md,
+        leading: AppConstants.UserInterface.Spacing.md,
+        bottom: AppConstants.UserInterface.Spacing.md,
+        trailing: AppConstants.UserInterface.Spacing.md
     )
 
     /// Compact padding for dense layouts
     static let appCompact = EdgeInsets(
-        top: AppConstants.UI.Spacing.sm,
-        leading: AppConstants.UI.Spacing.sm,
-        bottom: AppConstants.UI.Spacing.sm,
-        trailing: AppConstants.UI.Spacing.sm
+        top: AppConstants.UserInterface.Spacing.sm,
+        leading: AppConstants.UserInterface.Spacing.sm,
+        bottom: AppConstants.UserInterface.Spacing.sm,
+        trailing: AppConstants.UserInterface.Spacing.sm
     )
 }

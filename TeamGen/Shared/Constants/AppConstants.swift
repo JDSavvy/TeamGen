@@ -14,7 +14,7 @@ enum AppConstants {
 
     // MARK: - UI Constants
 
-    enum UI {
+    enum UserInterface {
         static let cornerRadius: CGFloat = 12
         static let shadowRadius: CGFloat = 4
         static let animationDuration: Double = 0.3

@@ -54,7 +54,7 @@ public protocol NetworkServiceProtocol {
 // MARK: - iOS Network Service Implementation
 
 @MainActor
-public final class iOSNetworkService: NetworkServiceProtocol {
+public final class IOSNetworkService: NetworkServiceProtocol {
     private let session: URLSession
     private let logger = Logger(subsystem: "com.teamgen.networking", category: "Network")
 

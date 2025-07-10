@@ -21,7 +21,7 @@ public final class LiveDependencyContainer: DependencyContainerProtocol {
 
     public lazy var settingsRepository: SettingsRepositoryProtocol = UserDefaultsSettingsRepository()
 
-    public lazy var hapticService: HapticServiceProtocol = iOSHapticService()
+    public lazy var hapticService: HapticServiceProtocol = IOSHapticService()
 
     public lazy var teamGenerationService: TeamGenerationServiceProtocol = TeamGenerationService()
 
@@ -30,11 +30,11 @@ public final class LiveDependencyContainer: DependencyContainerProtocol {
         hapticService: hapticService
     )
 
-    public lazy var analyticsService: AnalyticsServiceProtocol = iOSAnalyticsService()
+    public lazy var analyticsService: AnalyticsServiceProtocol = IOSAnalyticsService()
 
     public lazy var performanceService: SimplePerformanceServiceProtocol = SimplePerformanceService()
 
-    public lazy var networkService: NetworkServiceProtocol = iOSNetworkService()
+    public lazy var networkService: NetworkServiceProtocol = IOSNetworkService()
 
     public lazy var generateTeamsUseCase: GenerateTeamsUseCaseProtocol = GenerateTeamsUseCase(
         playerRepository: playerRepository,
@@ -184,7 +184,7 @@ public final class MockPlayerRepository: PlayerRepositoryProtocol {
                 name: "Jane Smith",
                 skills: PlayerSkills(technical: 7, agility: 8, endurance: 7, teamwork: 8),
                 isSelected: true
-            ),
+            )
         ]
     }
 
@@ -263,8 +263,7 @@ public final class MockSettingsRepository: SettingsRepositoryProtocol {
 @MainActor
 public final class MockTeamGenerationService: TeamGenerationServiceProtocol {
     public func generateTeams(from players: [PlayerEntity], count: Int,
-                              mode _: TeamGenerationMode) async throws -> [TeamEntity]
-    {
+                              mode _: TeamGenerationMode) async throws -> [TeamEntity] {
         // Mock implementation - create balanced teams
         let playersPerTeam = players.count / count
         var teams: [TeamEntity] = []
