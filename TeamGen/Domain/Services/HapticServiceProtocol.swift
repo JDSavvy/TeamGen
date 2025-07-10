@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Haptic Service Protocol
+
 /// Defines the contract for haptic feedback operations
 public protocol HapticServiceProtocol: Sendable {
     /// Provides selection feedback
@@ -26,6 +27,7 @@ public protocol HapticServiceProtocol: Sendable {
 }
 
 // MARK: - Haptic Types
+
 public enum HapticIntensity {
     case light
     case medium

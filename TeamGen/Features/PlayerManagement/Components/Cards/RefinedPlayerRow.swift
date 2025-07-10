@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Refined Player Row
+
 /// Minimalist player row following Apple's design principles
 /// Enhanced with guaranteed static header using ZStack-based fixed positioning
 /// Implements iOS 18 best practices for completely flicker-free header layout
@@ -47,68 +48,71 @@ struct RefinedPlayerRow: View {
                 onTap()
             }
         }) {
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    // Player initial with skill color
-                    playerInitial
+            HStack(spacing: DesignSystem.Spacing.md) {
+                // Player initial with skill color
+                playerInitial
 
-                    // Player information - clean hierarchy
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(player.name)
-                            .font(DesignSystem.Typography.listItemTitle)
-                            .foregroundColor(DesignSystem.Colors.primaryText)
-                            .lineLimit(1)
+                // Player information - clean hierarchy
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(player.name)
+                        .font(DesignSystem.Typography.listItemTitle)
+                        .foregroundColor(DesignSystem.Colors.primaryText)
+                        .lineLimit(1)
 
-                        Text(skillLevelText)
-                            .font(DesignSystem.Typography.listItemSubtitle)
-                            .foregroundColor(DesignSystem.Colors.secondaryText)
-                    }
+                    Text(skillLevelText)
+                        .font(DesignSystem.Typography.listItemSubtitle)
+                        .foregroundColor(DesignSystem.Colors.secondaryText)
+                }
 
-                    Spacer()
+                Spacer()
 
-                    // Skill score - prominent but not overwhelming
-                    Text(String(format: "%.1f", player.skills.overall))
-                        .font(DesignSystem.Typography.headlineEmphasized)
-                        .foregroundColor(skillColor)
-                        .monospacedDigit()
+                // Skill score - prominent but not overwhelming
+                Text(String(format: "%.1f", player.skills.overall))
+                    .font(DesignSystem.Typography.headlineEmphasized)
+                    .foregroundColor(skillColor)
+                    .monospacedDigit()
 
                 // Enhanced expansion indicator with smooth rotation
-                    Image(systemName: DesignSystem.Symbols.chevronDown)
-                        .font(.system(size: DesignSystem.IconSize.sm, weight: DesignSystem.Symbols.symbolWeight(for: .icon)))
-                        .foregroundColor(DesignSystem.Colors.tertiaryText)
-                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                        .animation(
+                Image(systemName: DesignSystem.Symbols.chevronDown)
+                    .font(.system(
+                        size: DesignSystem.IconSize.sm,
+                        weight: DesignSystem.Symbols.symbolWeight(for: .icon)
+                    ))
+                    .foregroundColor(DesignSystem.Colors.tertiaryText)
+                    .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                    .animation(
                         DesignSystem.Animation.accessible(
                             .interactiveSpring(response: 0.25, dampingFraction: 0.92, blendDuration: 0.04),
                             reduceMotion: reduceMotion
                         ),
-                            value: isExpanded
-                        )
-                }
-                .padding(DesignSystem.Spacing.md)
+                        value: isExpanded
+                    )
+            }
+            .padding(DesignSystem.Spacing.md)
             .frame(height: headerHeight)
             .frame(maxWidth: .infinity)
-                .contentShape(Rectangle())
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .contextMenu {
+            Button {
+                onEdit()
+            } label: {
+                Label("Edit Player", systemImage: "pencil")
             }
-            .buttonStyle(.plain)
-            .contextMenu {
-                Button {
-                    onEdit()
-                } label: {
-                    Label("Edit Player", systemImage: "pencil")
-                }
 
-                Button(role: .destructive) {
-                    onDelete()
-                } label: {
-                    Label("Delete Player", systemImage: "trash")
-                }
+            Button(role: .destructive) {
+                onDelete()
+            } label: {
+                Label("Delete Player", systemImage: "trash")
             }
+        }
     }
 
     // MARK: - Expandable Content
 
     private var expandableContent: some View {
-                ExpandedSkillsView(player: player, onEdit: onEdit, onDelete: onDelete)
+        ExpandedSkillsView(player: player, onEdit: onEdit, onDelete: onDelete)
     }
 
     // MARK: - Component Views
@@ -144,6 +148,7 @@ struct RefinedPlayerRow: View {
 }
 
 // MARK: - Expanded Skills View
+
 /// Simple and reliable expanded content without state modification issues
 struct ExpandedSkillsView: View {
     let player: PlayerEntity
@@ -163,15 +168,23 @@ struct ExpandedSkillsView: View {
             // Content container with skills and actions
             VStack(spacing: DesignSystem.Spacing.sm) {
                 // Skills list
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                    SkillRowView(name: "Technical", value: player.skills.technical, icon: DesignSystem.Symbols.technical)
+                VStack(spacing: DesignSystem.Spacing.xs) {
+                    SkillRowView(
+                        name: "Technical",
+                        value: player.skills.technical,
+                        icon: DesignSystem.Symbols.technical
+                    )
                     SkillRowView(name: "Agility", value: player.skills.agility, icon: DesignSystem.Symbols.agility)
-                    SkillRowView(name: "Endurance", value: player.skills.endurance, icon: DesignSystem.Symbols.endurance)
+                    SkillRowView(
+                        name: "Endurance",
+                        value: player.skills.endurance,
+                        icon: DesignSystem.Symbols.endurance
+                    )
                     SkillRowView(name: "Teamwork", value: player.skills.teamwork, icon: DesignSystem.Symbols.teamwork)
-            }
+                }
 
-            // Action buttons
-            HStack(spacing: DesignSystem.Spacing.md) {
+                // Action buttons
+                HStack(spacing: DesignSystem.Spacing.md) {
                     SimpleActionButton(title: "Edit", icon: "pencil", color: .blue, action: onEdit)
                     SimpleActionButton(title: "Delete", icon: "trash", color: .red, action: onDelete)
                     Spacer()
@@ -188,6 +201,7 @@ struct ExpandedSkillsView: View {
 }
 
 // MARK: - Simple Skill Row
+
 /// Simple skill row without complex animations that cause state modification warnings
 struct SkillRowView: View {
     let name: String
@@ -211,7 +225,7 @@ struct SkillRowView: View {
 
             // Progress indicator
             HStack(spacing: 4) {
-                ForEach(1...10, id: \.self) { index in
+                ForEach(1 ... 10, id: \.self) { index in
                     Circle()
                         .fill(index <= value ? skillColor : DesignSystem.Colors.separatorColor.opacity(0.3))
                         .frame(width: 6, height: 6)
@@ -235,6 +249,7 @@ struct SkillRowView: View {
 }
 
 // MARK: - Simple Action Button
+
 /// Simple action button without complex animations
 struct SimpleActionButton: View {
     let title: String

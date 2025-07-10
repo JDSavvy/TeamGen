@@ -1,8 +1,9 @@
 import Foundation
-import SwiftUI
 import Observation
+import SwiftUI
 
 // MARK: - Team Generation State
+
 enum TeamGenerationState: Equatable {
     case idle
     case loading
@@ -13,20 +14,21 @@ enum TeamGenerationState: Equatable {
     static func == (lhs: TeamGenerationState, rhs: TeamGenerationState) -> Bool {
         switch (lhs, rhs) {
         case (.idle, .idle), (.loading, .loading), (.generating, .generating):
-            return true
-        case (.success(let lhsTeams), .success(let rhsTeams)):
-            return lhsTeams == rhsTeams
-        case (.error(let lhsError), .error(let rhsError)):
-            return lhsError.localizedDescription == rhsError.localizedDescription
+            true
+        case let (.success(lhsTeams), .success(rhsTeams)):
+            lhsTeams == rhsTeams
+        case let (.error(lhsError), .error(rhsError)):
+            lhsError.localizedDescription == rhsError.localizedDescription
         default:
-            return false
+            false
         }
     }
 }
 
 // MARK: - Cache State Management
+
 private struct CacheState {
-    var lastPlayerLoadTime: Date = Date.distantPast
+    var lastPlayerLoadTime: Date = .distantPast
     var cachedPlayers: [PlayerEntity] = []
     var cacheVersion: Int = 0
     var isValid: Bool = false
@@ -45,11 +47,13 @@ private struct CacheState {
 }
 
 // MARK: - Team Generation View Model
+
 /// Modern ViewModel using pure @Observable for automatic state observation
 @Observable
 @MainActor
 public final class TeamGenerationViewModel {
     // MARK: - Observable Properties
+
     private(set) var state: TeamGenerationState = .idle {
         didSet {
             validateState()
@@ -69,10 +73,12 @@ public final class TeamGenerationViewModel {
     var shouldShowPlayerSelection = false
 
     // MARK: - Private Properties
+
     private var cacheState = CacheState()
     private let playerCacheValidityDuration: TimeInterval = 30.0 // 30 seconds cache
 
     // MARK: - Dependencies (injected via constructor)
+
     private let generateTeamsUseCase: GenerateTeamsUseCaseProtocol
     private let managePlayersUseCase: ManagePlayersUseCaseProtocol
     private let hapticService: HapticServiceProtocol
@@ -92,9 +98,9 @@ public final class TeamGenerationViewModel {
         let maxTeams = max(2, selectedPlayers.count / 2)
         // Ensure minimum range is valid (at least 2 teams)
         guard maxTeams >= 2 else {
-            return 2...2  // Default to 2 teams when not enough players
+            return 2 ... 2 // Default to 2 teams when not enough players
         }
-        return 2...maxTeams
+        return 2 ... maxTeams
     }
 
     /// Validated team count that automatically adjusts when player count changes (minimum 2 players per team)
@@ -108,7 +114,7 @@ public final class TeamGenerationViewModel {
     }
 
     var generatedTeams: [TeamEntity] {
-        if case .success(let teams) = state {
+        if case let .success(teams) = state {
             return teams
         }
         return []
@@ -119,7 +125,7 @@ public final class TeamGenerationViewModel {
     }
 
     var errorMessage: String? {
-        if case .error(let error) = state {
+        if case let .error(error) = state {
             return error.localizedDescription
         }
         return nil
@@ -141,6 +147,7 @@ public final class TeamGenerationViewModel {
     }
 
     // MARK: - Initialization
+
     public init(
         generateTeamsUseCase: GenerateTeamsUseCaseProtocol,
         managePlayersUseCase: ManagePlayersUseCaseProtocol,
@@ -157,9 +164,10 @@ public final class TeamGenerationViewModel {
     func loadPlayers() async {
         // Check cache validity with version control
         let timeSinceLastLoad = Date().timeIntervalSince(cacheState.lastPlayerLoadTime)
-        if timeSinceLastLoad < playerCacheValidityDuration &&
-           cacheState.isValid &&
-           !cacheState.cachedPlayers.isEmpty {
+        if timeSinceLastLoad < playerCacheValidityDuration,
+           cacheState.isValid,
+           !cacheState.cachedPlayers.isEmpty
+        {
             // Use cached data and update selected players
             availablePlayers = cacheState.cachedPlayers
             return
@@ -260,7 +268,7 @@ public final class TeamGenerationViewModel {
 
     /// Deselect all players with batch operations
     func deselectAllPlayers() async {
-        let selectedPlayers = availablePlayers.filter { $0.isSelected }
+        let selectedPlayers = availablePlayers.filter(\.isSelected)
         guard !selectedPlayers.isEmpty else { return }
 
         // Optimistic update
@@ -350,7 +358,7 @@ public final class TeamGenerationViewModel {
 
             // Only reset to idle if we don't have generated teams
             switch preservedState {
-            case .success(let teams):
+            case let .success(teams):
                 // Keep the teams if they exist, just refresh the player data
                 state = .success(teams)
             default:
@@ -364,13 +372,13 @@ public final class TeamGenerationViewModel {
     }
 
     private func updateSelectedPlayers() {
-        selectedPlayers = availablePlayers.filter { $0.isSelected }
+        selectedPlayers = availablePlayers.filter(\.isSelected)
         adjustTeamCountIfNeeded() // Manual call instead of didSet
     }
 
     private func adjustTeamCountIfNeeded() {
         let maxPossibleTeams = selectedPlayers.count / 2
-        if teamCount > maxPossibleTeams && selectedPlayers.count >= 2 {
+        if teamCount > maxPossibleTeams, selectedPlayers.count >= 2 {
             teamCount = min(teamCount, maxPossibleTeams)
             validateTeamCount() // Manual call instead of didSet
         }
@@ -383,7 +391,7 @@ public final class TeamGenerationViewModel {
     private func validateState() {
         // Ensure state consistency
         switch state {
-        case .success(let teams):
+        case let .success(teams):
             if teams.isEmpty {
                 state = .idle
             }
@@ -403,6 +411,7 @@ public final class TeamGenerationViewModel {
 }
 
 // MARK: - View Model Error
+
 /// Custom error types for view model operations
 enum ViewModelError: Error, LocalizedError {
     case insufficientPlayers
@@ -413,13 +422,13 @@ enum ViewModelError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .insufficientPlayers:
-            return "Not enough players selected for team generation"
+            "Not enough players selected for team generation"
         case .invalidTeamCount:
-            return "Invalid team count specified"
+            "Invalid team count specified"
         case .generationFailed:
-            return "Failed to generate balanced teams"
-        case .custom(let message):
-            return message
+            "Failed to generate balanced teams"
+        case let .custom(message):
+            message
         }
     }
 }

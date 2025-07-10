@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Player View
+
 /// Modern player management view using @Observable ViewModels
 /// Features collapsible rows, intuitive editing, and clean navigation
 /// NavigationStack and title handled at TabView level for proper isolation
@@ -11,6 +12,7 @@ struct PlayerView: View {
     @State private var isInitialized = false
 
     // MARK: - Player Details Display
+
     // Current: Expandable rows with tap-to-expand functionality
     // Alternative: Consider using NavigationLink to dedicated PlayerDetailView for better UX
     // This would provide more space for detailed information and editing capabilities
@@ -18,7 +20,7 @@ struct PlayerView: View {
 
     var body: some View {
         Group {
-            if let viewModel = viewModel {
+            if let viewModel {
                 PlayerContentView(
                     viewModel: viewModel,
                     presentationState: $presentationState,
@@ -44,7 +46,7 @@ struct PlayerView: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 // Sort control - only show when there are players to sort
-                if let viewModel = viewModel, !viewModel.players.isEmpty {
+                if let viewModel, !viewModel.players.isEmpty {
                     Menu {
                         Picker("Sort by", selection: Binding(
                             get: { viewModel.sortOption },
@@ -74,7 +76,7 @@ struct PlayerView: View {
             }
         }
         .refreshable {
-            if let viewModel = viewModel {
+            if let viewModel {
                 await viewModel.loadPlayers()
             }
         }
@@ -83,7 +85,7 @@ struct PlayerView: View {
         }
         .sheet(isPresented: $presentationState.showingAddPlayer) {
             PlayerFormView(mode: .add) {
-                if let viewModel = viewModel {
+                if let viewModel {
                     // Add a small delay to ensure SwiftData save is committed
                     try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 second
                     await viewModel.loadPlayers()
@@ -93,7 +95,7 @@ struct PlayerView: View {
         .sheet(isPresented: $presentationState.showingEditPlayer) {
             if let player = presentationState.editingPlayer {
                 PlayerFormView(mode: .edit(player)) {
-                    if let viewModel = viewModel {
+                    if let viewModel {
                         await viewModel.loadPlayers()
                     }
                     presentationState.editingPlayer = nil
@@ -106,7 +108,8 @@ struct PlayerView: View {
             }
             Button("Delete", role: .destructive) {
                 if let player = presentationState.playerToDelete,
-                   let viewModel = viewModel {
+                   let viewModel
+                {
                     Task {
                         await viewModel.deletePlayer(player.id)
                         presentationState.playerToDelete = nil
@@ -136,9 +139,8 @@ struct PlayerView: View {
     }
 }
 
-
-
 // MARK: - Player Content View
+
 /// Separated content view to prevent navigation title conflicts
 private struct PlayerContentView: View {
     let viewModel: PlayerManagementViewModel
@@ -238,20 +240,32 @@ private struct LoadingStateContent: View {
             // Modern loading indicator with subtle animation
             ZStack {
                 Circle()
-                    .stroke(DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLight), lineWidth: DesignSystem.VisualConsistency.borderBold)
-                    .frame(width: DesignSystem.ComponentSize.loadingIndicatorStandard, height: DesignSystem.ComponentSize.loadingIndicatorStandard)
+                    .stroke(
+                        DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLight),
+                        lineWidth: DesignSystem.VisualConsistency.borderBold
+                    )
+                    .frame(
+                        width: DesignSystem.ComponentSize.loadingIndicatorStandard,
+                        height: DesignSystem.ComponentSize.loadingIndicatorStandard
+                    )
 
                 Circle()
                     .trim(from: 0, to: 0.7)
                     .stroke(
                         LinearGradient(
-                            colors: [DesignSystem.Colors.primary, DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading)],
+                            colors: [
+                                DesignSystem.Colors.primary,
+                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading),
+                            ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
                         style: StrokeStyle(lineWidth: DesignSystem.VisualConsistency.borderBold, lineCap: .round)
                     )
-                    .frame(width: DesignSystem.ComponentSize.loadingIndicatorStandard, height: DesignSystem.ComponentSize.loadingIndicatorStandard)
+                    .frame(
+                        width: DesignSystem.ComponentSize.loadingIndicatorStandard,
+                        height: DesignSystem.ComponentSize.loadingIndicatorStandard
+                    )
                     .rotationEffect(.degrees(-90))
                     .rotationEffect(.degrees(isRotating ? 360 : 0))
                     .onAppear {
@@ -291,10 +305,6 @@ private struct LoadingStateContent: View {
 
 // PlayerPresentationState is now defined in States/PlayerPresentationState.swift
 
-
-
-
-
 // MARK: - Supporting Components
 
 // Action Button (reused from TeamView)
@@ -309,15 +319,15 @@ private struct ActionButton: View {
 
         var foregroundColor: Color {
             switch self {
-            case .primary: return DesignSystem.Colors.primary
-            case .secondary: return DesignSystem.Colors.secondaryText
+            case .primary: DesignSystem.Colors.primary
+            case .secondary: DesignSystem.Colors.secondaryText
             }
         }
 
         var backgroundColor: Color {
             switch self {
-            case .primary: return DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacitySkillBackground)
-            case .secondary: return DesignSystem.Colors.tertiaryBackground
+            case .primary: DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacitySkillBackground)
+            case .secondary: DesignSystem.Colors.tertiaryBackground
             }
         }
     }
@@ -416,8 +426,6 @@ private struct LoadingPlayersState: View {
     }
 }
 
-
-
 // Empty State
 private struct EmptyPlayersState: View {
     let onAddPlayer: () -> Void
@@ -437,11 +445,13 @@ private struct EmptyPlayersState: View {
                         .foregroundColor(DesignSystem.Colors.primaryText)
                         .accessibilityAddTraits(.isHeader)
 
-                    Text("Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution.")
-                        .font(DesignSystem.Typography.body)
-                        .foregroundColor(DesignSystem.Colors.secondaryText)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
+                    Text(
+                        "Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution."
+                    )
+                    .font(DesignSystem.Typography.body)
+                    .foregroundColor(DesignSystem.Colors.secondaryText)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
                 }
             }
 
@@ -522,6 +532,7 @@ private struct ErrorPlayersState: View {
 }
 
 // MARK: - Helpful Tip Component
+
 /// Refined tip component with better visual hierarchy
 private struct HelpfulTip: View {
     let icon: String
@@ -556,6 +567,7 @@ private struct HelpfulTip: View {
 }
 
 // MARK: - Player Card Wrapper
+
 /// Wrapper for the existing EnhancedPlayerCard with custom actions
 private struct PlayerCardWithActions: View {
     let player: PlayerEntity
@@ -569,15 +581,7 @@ private struct PlayerCardWithActions: View {
 
 // MARK: - Enhanced Sheets
 
-
-
 // MARK: - Form Components
-
-
-
-
-
-
 
 // MARK: - Supporting Components (Reused)
 
@@ -597,6 +601,5 @@ private struct StatItem: View {
                 .foregroundColor(DesignSystem.Colors.tertiaryText)
                 .textCase(.uppercase)
         }
-
-}
+    }
 }

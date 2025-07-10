@@ -1,19 +1,20 @@
 import Foundation
 
 // MARK: - Team Strength Level
+
 public enum TeamStrengthLevel: String, CaseIterable, Sendable {
-    case weak = "weak"
-    case average = "average"
-    case strong = "strong"
-    case elite = "elite"
+    case weak
+    case average
+    case strong
+    case elite
 
     public init(from averageRank: Double) {
         switch averageRank {
-        case 0..<4.0:
+        case 0 ..< 4.0:
             self = .weak
-        case 4.0..<6.0:
+        case 4.0 ..< 6.0:
             self = .average
-        case 6.0..<8.0:
+        case 6.0 ..< 8.0:
             self = .strong
         default:
             self = .elite
@@ -23,44 +24,45 @@ public enum TeamStrengthLevel: String, CaseIterable, Sendable {
     public var displayName: String {
         switch self {
         case .weak:
-            return "Developing"
+            "Developing"
         case .average:
-            return "Balanced"
+            "Balanced"
         case .strong:
-            return "Strong"
+            "Strong"
         case .elite:
-            return "Elite"
+            "Elite"
         }
     }
 
     public var color: String {
         switch self {
         case .weak:
-            return "orange"
+            "orange"
         case .average:
-            return "blue"
+            "blue"
         case .strong:
-            return "green"
+            "green"
         case .elite:
-            return "purple"
+            "purple"
         }
     }
 
     public var description: String {
         switch self {
         case .weak:
-            return "Team with developing skills"
+            "Team with developing skills"
         case .average:
-            return "Well-balanced team"
+            "Well-balanced team"
         case .strong:
-            return "High-performing team"
+            "High-performing team"
         case .elite:
-            return "Elite-level team"
+            "Elite-level team"
         }
     }
 }
 
 // MARK: - Team Entity
+
 /// Represents a generated team with players and calculated metrics
 /// Follows domain-driven design principles with rich business logic
 public struct TeamEntity: Identifiable, Equatable, Sendable {
@@ -142,26 +144,26 @@ public struct TeamEntity: Identifiable, Equatable, Sendable {
     // Team balance quality indicators
     public var balanceQuality: BalanceQuality {
         switch balanceScore {
-        case 0.9...1.0:
-            return .excellent
-        case 0.8..<0.9:
-            return .good
-        case 0.6..<0.8:
-            return .fair
-        case 0.4..<0.6:
-            return .poor
+        case 0.9 ... 1.0:
+            .excellent
+        case 0.8 ..< 0.9:
+            .good
+        case 0.6 ..< 0.8:
+            .fair
+        case 0.4 ..< 0.6:
+            .poor
         default:
-            return .veryPoor
+            .veryPoor
         }
     }
 
     public init(players: [PlayerEntity]) {
-        self.id = UUID()
+        id = UUID()
         self.players = players
-        self.averageRank = 0.0
-        self.balanceScore = 0.0
-        self.strengthLevel = .average
-        self.createdAt = Date()
+        averageRank = 0.0
+        balanceScore = 0.0
+        strengthLevel = .average
+        createdAt = Date()
 
         // Calculate initial metrics
         calculateMetrics()
@@ -260,7 +262,7 @@ public struct TeamEntity: Identifiable, Equatable, Sendable {
 
     /// Gets team summary for display
     public func getSummary() -> TeamSummary {
-        return TeamSummary(
+        TeamSummary(
             id: id,
             playerCount: totalPlayers,
             averageSkill: averageRank,
@@ -286,6 +288,7 @@ public struct TeamEntity: Identifiable, Equatable, Sendable {
     }
 
     // MARK: - Equatable
+
     public static func == (lhs: TeamEntity, rhs: TeamEntity) -> Bool {
         lhs.id == rhs.id
     }
@@ -328,39 +331,39 @@ public struct TeamComposition: Sendable {
 }
 
 public enum BalanceQuality: String, CaseIterable, Sendable {
-    case excellent = "excellent"
-    case good = "good"
-    case fair = "fair"
-    case poor = "poor"
+    case excellent
+    case good
+    case fair
+    case poor
     case veryPoor = "very_poor"
 
     public var displayName: String {
         switch self {
         case .excellent:
-            return "Excellent"
+            "Excellent"
         case .good:
-            return "Good"
+            "Good"
         case .fair:
-            return "Fair"
+            "Fair"
         case .poor:
-            return "Poor"
+            "Poor"
         case .veryPoor:
-            return "Very Poor"
+            "Very Poor"
         }
     }
 
     public var color: String {
         switch self {
         case .excellent:
-            return "green"
+            "green"
         case .good:
-            return "blue"
+            "blue"
         case .fair:
-            return "yellow"
+            "yellow"
         case .poor:
-            return "orange"
+            "orange"
         case .veryPoor:
-            return "red"
+            "red"
         }
     }
 }
@@ -386,9 +389,9 @@ public enum TeamValidationIssue: Sendable {
     public var description: String {
         switch self {
         case .emptyTeam:
-            return "Team cannot be empty"
+            "Team cannot be empty"
         case .duplicatePlayers:
-            return "Team contains duplicate players"
+            "Team contains duplicate players"
         }
     }
 }
@@ -401,11 +404,11 @@ public enum TeamValidationWarning: Sendable {
     public var description: String {
         switch self {
         case .singlePlayer:
-            return "Team has only one player"
-        case .largeSkillGap(let range):
-            return "Large skill gap in team (range: \(String(format: "%.1f", range)))"
-        case .highVariance(let standardDeviation):
-            return "High skill variance (σ: \(String(format: "%.1f", standardDeviation)))"
+            "Team has only one player"
+        case let .largeSkillGap(range):
+            "Large skill gap in team (range: \(String(format: "%.1f", range)))"
+        case let .highVariance(standardDeviation):
+            "High skill variance (σ: \(String(format: "%.1f", standardDeviation)))"
         }
     }
 }
@@ -417,12 +420,12 @@ public enum TeamValidationError: Error, LocalizedError {
 
     public var errorDescription: String? {
         switch self {
-        case .playerAlreadyInTeam(let playerName):
-            return "\(playerName) is already in this team"
+        case let .playerAlreadyInTeam(playerName):
+            "\(playerName) is already in this team"
         case .playerNotFound:
-            return "Player not found in team"
+            "Player not found in team"
         case .invalidTeamSize:
-            return "Invalid team size"
+            "Invalid team size"
         }
     }
 }
@@ -487,16 +490,17 @@ public enum BalanceRecommendation: Sendable {
     public var description: String {
         switch self {
         case .excellent:
-            return "Teams are excellently balanced"
+            "Teams are excellently balanced"
         case .acceptable:
-            return "Teams are acceptably balanced"
+            "Teams are acceptably balanced"
         case .rebalanceNeeded:
-            return "Teams need rebalancing"
+            "Teams need rebalancing"
         }
     }
 }
 
 // MARK: - Team Generation Mode
+
 public enum TeamGenerationMode: String, CaseIterable, Sendable, Codable {
     case fair = "Fair"
     case random = "Random"
@@ -504,10 +508,9 @@ public enum TeamGenerationMode: String, CaseIterable, Sendable, Codable {
     public var description: String {
         switch self {
         case .fair:
-            return "Creates balanced teams based on player skills"
+            "Creates balanced teams based on player skills"
         case .random:
-            return "Randomly distributes players across teams"
+            "Randomly distributes players across teams"
         }
     }
 }
-

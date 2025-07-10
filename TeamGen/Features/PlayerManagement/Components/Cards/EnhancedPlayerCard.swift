@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Enhanced Player Card Component
+
 /// A comprehensive player card showcasing continuous gradient colors for skills and overall rating
 struct EnhancedPlayerCard: View {
     let player: PlayerEntity
@@ -81,6 +82,7 @@ struct EnhancedPlayerCard: View {
 }
 
 // MARK: - Compact Player Score Component
+
 /// A compact component showing just the player's overall score with gradient color
 struct CompactPlayerScore: View {
     let player: PlayerEntity
@@ -132,6 +134,7 @@ struct CompactPlayerScore: View {
 }
 
 // MARK: - Player Card Style Configuration
+
 enum PlayerCardStyle {
     case compact
     case detailed
@@ -139,6 +142,7 @@ enum PlayerCardStyle {
 }
 
 // MARK: - Score Size Configuration
+
 enum ScoreSize {
     case small
     case medium
@@ -146,54 +150,55 @@ enum ScoreSize {
 
     var dotSize: CGFloat {
         switch self {
-        case .small: return 6
-        case .medium: return 8
-        case .large: return 10
+        case .small: 6
+        case .medium: 8
+        case .large: 10
         }
     }
 
     var spacing: CGFloat {
         switch self {
-        case .small: return DesignSystem.Spacing.xs
-        case .medium: return DesignSystem.Spacing.sm
-        case .large: return DesignSystem.Spacing.md
+        case .small: DesignSystem.Spacing.xs
+        case .medium: DesignSystem.Spacing.sm
+        case .large: DesignSystem.Spacing.md
         }
     }
 
     var padding: CGFloat {
         switch self {
-        case .small: return DesignSystem.Spacing.xs
-        case .medium: return DesignSystem.Spacing.sm
-        case .large: return DesignSystem.Spacing.md
+        case .small: DesignSystem.Spacing.xs
+        case .medium: DesignSystem.Spacing.sm
+        case .large: DesignSystem.Spacing.md
         }
     }
 
     var cornerRadius: CGFloat {
         switch self {
-        case .small: return DesignSystem.CornerRadius.small
-        case .medium: return DesignSystem.CornerRadius.medium
-        case .large: return DesignSystem.CornerRadius.large
+        case .small: DesignSystem.CornerRadius.small
+        case .medium: DesignSystem.CornerRadius.medium
+        case .large: DesignSystem.CornerRadius.large
         }
     }
 
     var nameFont: Font {
         switch self {
-        case .small: return DesignSystem.Typography.caption1
-        case .medium: return DesignSystem.Typography.subheadline
-        case .large: return DesignSystem.Typography.body
+        case .small: DesignSystem.Typography.caption1
+        case .medium: DesignSystem.Typography.subheadline
+        case .large: DesignSystem.Typography.body
         }
     }
 
     var scoreFont: Font {
         switch self {
-        case .small: return DesignSystem.Typography.caption1
-        case .medium: return DesignSystem.Typography.subheadline
-        case .large: return DesignSystem.Typography.title3
+        case .small: DesignSystem.Typography.caption1
+        case .medium: DesignSystem.Typography.subheadline
+        case .large: DesignSystem.Typography.title3
         }
     }
 }
 
 // MARK: - Preview
+
 #Preview("Enhanced Player Card") {
     let samplePlayer = PlayerEntity(
         id: UUID(),

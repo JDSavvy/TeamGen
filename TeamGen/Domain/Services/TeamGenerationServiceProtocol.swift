@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Team Generation Service Protocol
+
 /// Defines the contract for team generation algorithms
 public protocol TeamGenerationServiceProtocol: Sendable {
     /// Generates teams from the given players
@@ -29,6 +30,7 @@ public protocol TeamGenerationServiceProtocol: Sendable {
 }
 
 // MARK: - Validation Result
+
 public struct ValidationResult: Sendable {
     public let isValid: Bool
     public let error: TeamGenerationError?
@@ -48,6 +50,7 @@ public struct ValidationResult: Sendable {
 }
 
 // MARK: - Team Generation Errors
+
 public enum TeamGenerationError: LocalizedError, Sendable {
     case insufficientPlayers(required: Int, available: Int)
     case invalidTeamCount(Int)
@@ -56,19 +59,20 @@ public enum TeamGenerationError: LocalizedError, Sendable {
 
     public var errorDescription: String? {
         switch self {
-        case .insufficientPlayers(let required, let available):
-            return "Need at least \(required) players, but only \(available) available"
-        case .invalidTeamCount(let count):
-            return "Invalid team count: \(count). Must be at least 2"
+        case let .insufficientPlayers(required, available):
+            "Need at least \(required) players, but only \(available) available"
+        case let .invalidTeamCount(count):
+            "Invalid team count: \(count). Must be at least 2"
         case .emptyPlayerList:
-            return "No players available for team generation"
-        case .generationFailed(let reason):
-            return "Team generation failed: \(reason)"
+            "No players available for team generation"
+        case let .generationFailed(reason):
+            "Team generation failed: \(reason)"
         }
     }
 }
 
 // MARK: - Team Balance Metrics
+
 public struct TeamBalanceMetrics: Sendable {
     public let averageSkillDeviation: Double
     public let maxSkillDifference: Double
@@ -80,14 +84,14 @@ public struct TeamBalanceMetrics: Sendable {
 
     public var balanceDescription: String {
         switch balanceScore {
-        case 0.9...1.0:
-            return "Perfectly balanced"
-        case 0.7..<0.9:
-            return "Well balanced"
-        case 0.5..<0.7:
-            return "Moderately balanced"
+        case 0.9 ... 1.0:
+            "Perfectly balanced"
+        case 0.7 ..< 0.9:
+            "Well balanced"
+        case 0.5 ..< 0.7:
+            "Moderately balanced"
         default:
-            return "Poorly balanced"
+            "Poorly balanced"
         }
     }
 }

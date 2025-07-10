@@ -3,6 +3,7 @@ import MetricKit
 import OSLog
 
 // MARK: - Performance Monitoring Service Protocol
+
 public protocol PerformanceMonitoringServiceProtocol: Sendable {
     func startMonitoring() async
     func stopMonitoring() async
@@ -11,6 +12,7 @@ public protocol PerformanceMonitoringServiceProtocol: Sendable {
 }
 
 // MARK: - Performance Event
+
 public enum PerformanceEvent: Sendable {
     case appLaunch(duration: TimeInterval)
     case viewLoad(viewName: String, duration: TimeInterval)
@@ -20,6 +22,7 @@ public enum PerformanceEvent: Sendable {
 }
 
 // MARK: - Performance Metric
+
 public struct PerformanceMetric: Sendable {
     public let name: String
     public let value: Double
@@ -35,15 +38,17 @@ public struct PerformanceMetric: Sendable {
 }
 
 // MARK: - iOS Performance Monitoring Service
+
 @MainActor
 public final class iOSPerformanceMonitoringService: NSObject, PerformanceMonitoringServiceProtocol {
     private let logger = Logger(subsystem: "com.savvydev.TeamGen", category: "Performance")
     private var isMonitoring = false
 
     // MARK: - Performance Tracking
+
     private var eventStartTimes: [String: Date] = [:]
 
-    public override init() {
+    override public init() {
         super.init()
     }
 
@@ -73,30 +78,36 @@ public final class iOSPerformanceMonitoringService: NSObject, PerformanceMonitor
 
     public func logEvent(_ event: PerformanceEvent) async {
         switch event {
-        case .appLaunch(let duration):
+        case let .appLaunch(duration):
             logger.info("App launch completed in \(duration, privacy: .public)s")
             await recordMetric(PerformanceMetric(name: "app_launch_time", value: duration, unit: "seconds"))
 
-        case .viewLoad(let viewName, let duration):
+        case let .viewLoad(viewName, duration):
             logger.info("View '\(viewName, privacy: .public)' loaded in \(duration, privacy: .public)s")
             await recordMetric(PerformanceMetric(name: "view_load_time", value: duration, unit: "seconds"))
 
-        case .dataLoad(let operation, let duration):
+        case let .dataLoad(operation, duration):
             logger.info("Data operation '\(operation, privacy: .public)' completed in \(duration, privacy: .public)s")
             await recordMetric(PerformanceMetric(name: "data_load_time", value: duration, unit: "seconds"))
 
-        case .teamGeneration(let playerCount, let duration):
-            logger.info("Team generation for \(playerCount, privacy: .public) players completed in \(duration, privacy: .public)s")
+        case let .teamGeneration(playerCount, duration):
+            logger
+                .info(
+                    "Team generation for \(playerCount, privacy: .public) players completed in \(duration, privacy: .public)s"
+                )
             await recordMetric(PerformanceMetric(name: "team_generation_time", value: duration, unit: "seconds"))
 
-        case .userAction(let action, let duration):
+        case let .userAction(action, duration):
             logger.info("User action '\(action, privacy: .public)' completed in \(duration, privacy: .public)s")
             await recordMetric(PerformanceMetric(name: "user_action_time", value: duration, unit: "seconds"))
         }
     }
 
     public func recordMetric(_ metric: PerformanceMetric) async {
-        logger.info("📊 Metric: \(metric.name, privacy: .public) = \(metric.value, privacy: .public) \(metric.unit, privacy: .public)")
+        logger
+            .info(
+                "📊 Metric: \(metric.name, privacy: .public) = \(metric.value, privacy: .public) \(metric.unit, privacy: .public)"
+            )
 
         // You could also send metrics to analytics services here
         // analyticsService.recordMetric(metric)
@@ -153,14 +164,14 @@ public final class iOSPerformanceMonitoringService: NSObject, PerformanceMonitor
 
     public func recordMemoryUsage() async {
         var memoryInfo = mach_task_basic_info()
-        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size)/4
+        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
 
         let kerr: kern_return_t = withUnsafeMutablePointer(to: &memoryInfo) {
             $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
                 task_info(mach_task_self_,
-                         task_flavor_t(MACH_TASK_BASIC_INFO),
-                         $0,
-                         &count)
+                          task_flavor_t(MACH_TASK_BASIC_INFO),
+                          $0,
+                          &count)
             }
         }
 
@@ -180,7 +191,7 @@ public final class iOSPerformanceMonitoringService: NSObject, PerformanceMonitor
         // Extract player count from event string if it contains "players"
         let components = event.components(separatedBy: " ")
         for (index, component) in components.enumerated() {
-            if component.lowercased().contains("player") && index > 0 {
+            if component.lowercased().contains("player"), index > 0 {
                 return Int(components[index - 1])
             }
         }
@@ -189,23 +200,26 @@ public final class iOSPerformanceMonitoringService: NSObject, PerformanceMonitor
 }
 
 // MARK: - MetricKit Delegate
-extension iOSPerformanceMonitoringService: MXMetricManagerSubscriber {
 
-    nonisolated public func didReceive(_ payloads: [MXMetricPayload]) {
+extension iOSPerformanceMonitoringService: MXMetricManagerSubscriber {
+    public nonisolated func didReceive(_ payloads: [MXMetricPayload]) {
         for payload in payloads {
             processMetricPayload(payload)
         }
     }
 
-    nonisolated public func didReceive(_ payloads: [MXDiagnosticPayload]) {
+    public nonisolated func didReceive(_ payloads: [MXDiagnosticPayload]) {
         for payload in payloads {
             processDiagnosticPayload(payload)
         }
     }
 
-    nonisolated private func processMetricPayload(_ payload: MXMetricPayload) {
+    private nonisolated func processMetricPayload(_ payload: MXMetricPayload) {
         Task { @MainActor in
-            logger.info("📈 Received MetricKit payload for timerange: \(payload.timeStampBegin, privacy: .public) - \(payload.timeStampEnd, privacy: .public)")
+            logger
+                .info(
+                    "📈 Received MetricKit payload for timerange: \(payload.timeStampBegin, privacy: .public) - \(payload.timeStampEnd, privacy: .public)"
+                )
         }
 
         // Process app launch metrics
@@ -253,7 +267,7 @@ extension iOSPerformanceMonitoringService: MXMetricManagerSubscriber {
         }
     }
 
-    nonisolated private func processDiagnosticPayload(_ payload: MXDiagnosticPayload) {
+    private nonisolated func processDiagnosticPayload(_ payload: MXDiagnosticPayload) {
         Task { @MainActor in
             logger.warning("🚨 Received diagnostic payload: \(payload.debugDescription, privacy: .public)")
         }
@@ -274,7 +288,6 @@ extension iOSPerformanceMonitoringService: MXMetricManagerSubscriber {
 // MARK: - Performance Monitoring Extensions
 
 public extension PerformanceMonitoringServiceProtocol {
-
     /// Measures execution time of an async operation
     func measure<T>(_ operation: () async throws -> T, event: String, category: String = "general") async throws -> T {
         let startTime = Date()
@@ -297,7 +310,7 @@ public extension PerformanceMonitoringServiceProtocol {
     }
 
     /// Measures execution time of a synchronous operation
-    func measureSync<T>(_ operation: () throws -> T, event: String, category: String = "general") throws -> T {
+    func measureSync<T>(_ operation: () throws -> T, event: String, category _: String = "general") throws -> T {
         let startTime = Date()
         let result = try operation()
         let duration = Date().timeIntervalSince(startTime)

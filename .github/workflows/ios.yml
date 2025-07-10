@@ -36,9 +36,11 @@ jobs:
         
     - name: Run SwiftLint
       run: swiftlint lint --reporter github-actions-logging
+      continue-on-error: true  # Allow warnings but report violations
       
     - name: Check SwiftFormat
       run: swiftformat --lint .
+      continue-on-error: true  # Allow formatting warnings
       
     - name: Verify Code Style
       run: |

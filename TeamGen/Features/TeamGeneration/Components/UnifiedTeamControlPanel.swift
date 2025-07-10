@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Unified Team Control Panel
+
 /// Modern, unified interface combining player selection and team configuration
 /// Follows Apple's design principles for clarity and purposeful interaction
 struct UnifiedTeamControlPanel: View {
@@ -11,11 +12,15 @@ struct UnifiedTeamControlPanel: View {
     @Bindable private var bindableViewModel: TeamGenerationViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    init(viewModel: TeamGenerationViewModel, onSelectPlayers: @escaping () -> Void, onGenerateTeams: @escaping () async -> Void) {
+    init(
+        viewModel: TeamGenerationViewModel,
+        onSelectPlayers: @escaping () -> Void,
+        onGenerateTeams: @escaping () async -> Void
+    ) {
         self.viewModel = viewModel
         self.onSelectPlayers = onSelectPlayers
         self.onGenerateTeams = onGenerateTeams
-        self.bindableViewModel = viewModel
+        bindableViewModel = viewModel
     }
 
     var body: some View {
@@ -85,7 +90,7 @@ struct UnifiedTeamControlPanel: View {
                 )
                 .accessibilityValue("Currently set to \(viewModel.validatedTeamCount) teams")
                 .accessibilityHint("Swipe up or down to adjust team count")
-                .onChange(of: bindableViewModel.teamCount) { oldValue, newValue in
+                .onChange(of: bindableViewModel.teamCount) { _, newValue in
                     // Provide haptic feedback on value change
                     let impact = UIImpactFeedbackGenerator(style: .light)
                     impact.impactOccurred()
@@ -120,8 +125,6 @@ struct UnifiedTeamControlPanel: View {
         }
     }
 
-
-
     private var teamDistributionIndicator: some View {
         let playersPerTeam = viewModel.selectedPlayersCount / viewModel.validatedTeamCount
         let remainingPlayers = viewModel.selectedPlayersCount % viewModel.validatedTeamCount
@@ -130,7 +133,7 @@ struct UnifiedTeamControlPanel: View {
         return VStack(spacing: DesignSystem.Spacing.xs) {
             // Multi-row team visualization
             VStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(0..<teamRows.count, id: \.self) { rowIndex in
+                ForEach(0 ..< teamRows.count, id: \.self) { rowIndex in
                     let rowTeams = teamRows[rowIndex]
 
                     HStack(spacing: DesignSystem.Spacing.xs) {
@@ -179,12 +182,12 @@ struct UnifiedTeamControlPanel: View {
     private func calculateTeamRows(for teamCount: Int) -> [[Int]] {
         guard teamCount > 6 else {
             // Single row for 6 or fewer teams
-            return [Array(0..<teamCount)]
+            return [Array(0 ..< teamCount)]
         }
 
         let (firstRowCount, _) = calculateRowDistribution(for: teamCount)
-        let firstRow = Array(0..<firstRowCount)
-        let secondRow = Array(firstRowCount..<teamCount)
+        let firstRow = Array(0 ..< firstRowCount)
+        let secondRow = Array(firstRowCount ..< teamCount)
 
         return [firstRow, secondRow]
     }
@@ -194,15 +197,15 @@ struct UnifiedTeamControlPanel: View {
     /// - Returns: Tuple with (firstRowCount, secondRowCount)
     private func calculateRowDistribution(for teamCount: Int) -> (Int, Int) {
         switch teamCount {
-        case 7: return (4, 3)   // 7 teams: 4 + 3
-        case 8: return (4, 4)   // 8 teams: 4 + 4
-        case 9: return (5, 4)   // 9 teams: 5 + 4
-        case 10: return (5, 5)  // 10 teams: 5 + 5
-        case 11: return (6, 5)  // 11 teams: 6 + 5
-        case 12: return (6, 6)  // 12 teams: 6 + 6
+        case 7: return (4, 3) // 7 teams: 4 + 3
+        case 8: return (4, 4) // 8 teams: 4 + 4
+        case 9: return (5, 4) // 9 teams: 5 + 4
+        case 10: return (5, 5) // 10 teams: 5 + 5
+        case 11: return (6, 5) // 11 teams: 6 + 5
+        case 12: return (6, 6) // 12 teams: 6 + 6
         default:
             // For cases beyond 12, use a general rule: max 6 per row
-            let firstRowCount = min(6, teamCount - teamCount/2)
+            let firstRowCount = min(6, teamCount - teamCount / 2)
             return (firstRowCount, teamCount - firstRowCount)
         }
     }
@@ -249,23 +252,24 @@ struct UnifiedTeamControlPanel: View {
     private var playerCountColor: Color {
         switch viewModel.selectedPlayersCount {
         case 0:
-            return DesignSystem.Colors.tertiaryText
+            DesignSystem.Colors.tertiaryText
         case 1:
-            return DesignSystem.Colors.warning
+            DesignSystem.Colors.warning
         default:
-            return DesignSystem.Colors.success
+            DesignSystem.Colors.success
         }
     }
 
     private var canGenerateTeams: Bool {
         viewModel.selectedPlayersCount >= 2 &&
-        viewModel.validatedTeamCount >= 2 &&
-        viewModel.validTeamCountRange.contains(viewModel.validatedTeamCount) &&
-        viewModel.state != .generating
+            viewModel.validatedTeamCount >= 2 &&
+            viewModel.validTeamCountRange.contains(viewModel.validatedTeamCount) &&
+            viewModel.state != .generating
     }
 }
 
 // MARK: - Configuration Control Wrapper
+
 struct ConfigurationControl<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content

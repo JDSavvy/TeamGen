@@ -2,6 +2,7 @@ import Foundation
 import OSLog
 
 // MARK: - Network Error
+
 public enum NetworkError: Error, LocalizedError {
     case invalidURL
     case noData
@@ -12,28 +13,30 @@ public enum NetworkError: Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Invalid URL"
+            "Invalid URL"
         case .noData:
-            return "No data received"
+            "No data received"
         case .decodingError:
-            return "Failed to decode response"
-        case .serverError(let code):
-            return "Server error with code: \(code)"
+            "Failed to decode response"
+        case let .serverError(code):
+            "Server error with code: \(code)"
         case .networkUnavailable:
-            return "Network unavailable"
+            "Network unavailable"
         }
     }
 }
 
 // MARK: - HTTP Method
+
 public enum HTTPMethod: String {
-    case GET = "GET"
-    case POST = "POST"
-    case PUT = "PUT"
-    case DELETE = "DELETE"
+    case GET
+    case POST
+    case PUT
+    case DELETE
 }
 
 // MARK: - Network Request Protocol
+
 public protocol NetworkRequest {
     var url: URL { get }
     var method: HTTPMethod { get }
@@ -42,12 +45,14 @@ public protocol NetworkRequest {
 }
 
 // MARK: - Network Service Protocol
+
 public protocol NetworkServiceProtocol {
     func request<T: Codable>(_ request: NetworkRequest, responseType: T.Type) async throws -> T
     func request(_ request: NetworkRequest) async throws -> Data
 }
 
 // MARK: - iOS Network Service Implementation
+
 @MainActor
 public final class iOSNetworkService: NetworkServiceProtocol {
     private let session: URLSession
@@ -90,7 +95,7 @@ public final class iOSNetworkService: NetworkServiceProtocol {
 
             logger.info("Network Response: \(httpResponse.statusCode)")
 
-            guard 200...299 ~= httpResponse.statusCode else {
+            guard 200 ... 299 ~= httpResponse.statusCode else {
                 throw NetworkError.serverError(httpResponse.statusCode)
             }
 

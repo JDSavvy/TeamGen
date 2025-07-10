@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Color Scheme Aware View Modifier
+
 /// A view modifier that applies color scheme and accessibility settings system-wide
 /// Ensures consistent appearance across all views with proper accessibility support
 struct ColorSchemeAwareModifier: ViewModifier {
@@ -31,6 +32,7 @@ struct ColorSchemeAwareModifier: ViewModifier {
 }
 
 // MARK: - View Extension
+
 public extension View {
     /// Applies system-wide color scheme and accessibility settings
     func colorSchemeAware() -> some View {
@@ -39,6 +41,7 @@ public extension View {
 }
 
 // MARK: - Environment Values Extension
+
 /// Custom environment values for color scheme and accessibility state
 private struct ColorSchemeEnvironmentKey: EnvironmentKey {
     static let defaultValue: (any ColorSchemeServiceProtocol)? = nil
@@ -61,6 +64,7 @@ extension EnvironmentValues {
 }
 
 // MARK: - Accessibility-Aware Color Provider
+
 /// Provides colors that automatically adapt to accessibility settings
 @MainActor
 public struct AccessibilityAwareColors {
@@ -112,6 +116,7 @@ public struct AccessibilityAwareColors {
 }
 
 // MARK: - Smooth Color Transition View Modifier
+
 /// Provides smooth transitions between color schemes
 struct SmoothColorTransitionModifier: ViewModifier {
     @Environment(\.dependencies) private var dependencies

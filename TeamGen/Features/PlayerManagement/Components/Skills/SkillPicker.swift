@@ -1,12 +1,13 @@
 import SwiftUI
 
 // MARK: - Modern Skill Picker (iOS 18 Design Standards)
+
 /// Enhanced skill picker component following Apple's latest HIG standards
 /// Features modern visual design, improved accessibility, and seamless animations
 struct SkillPicker: View {
     let title: String
     @Binding var value: Int
-    let range: ClosedRange<Int> = 1...10
+    let range: ClosedRange<Int> = 1 ... 10
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dependencies) private var dependencies
@@ -51,7 +52,7 @@ struct SkillPicker: View {
                     .symbolRenderingMode(.hierarchical)
             }
 
-                Spacer()
+            Spacer()
 
             // Quick level indicators
             skillLevelIndicators
@@ -102,7 +103,7 @@ struct SkillPicker: View {
                     )
             )
             .animation(DesignSystem.Animation.spring, value: value)
-            }
+    }
 
     // MARK: - Modern Slider
 
@@ -111,16 +112,16 @@ struct SkillPicker: View {
             // Slider track with custom styling
             Slider(
                 value: Binding(
-                get: { Double(value) },
-                set: { newValue in
-                    let rounded = Int(newValue.rounded())
-                    if rounded != value {
-                        value = rounded
+                    get: { Double(value) },
+                    set: { newValue in
+                        let rounded = Int(newValue.rounded())
+                        if rounded != value {
+                            value = rounded
                             provideTactileFeedback(for: rounded)
+                        }
                     }
-                }
                 ),
-                in: Double(range.lowerBound)...Double(range.upperBound),
+                in: Double(range.lowerBound) ... Double(range.upperBound),
                 step: 1.0
             ) {
                 Text(title)
@@ -149,7 +150,7 @@ struct SkillPicker: View {
             .fontWeight(.medium)
             .foregroundStyle(DesignSystem.Colors.secondaryText)
             .frame(minWidth: 20)
-            }
+    }
 
     private var valueMarkers: some View {
         HStack {
@@ -173,7 +174,7 @@ struct SkillPicker: View {
 
     private var skillLevelIndicators: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
-            ForEach(1...5, id: \.self) { level in
+            ForEach(1 ... 5, id: \.self) { level in
                 Circle()
                     .fill(level <= skillLevel ? skillColor : DesignSystem.Colors.fillSecondary)
                     .frame(width: 8, height: 8)
@@ -209,33 +210,33 @@ struct SkillPicker: View {
 
     private var skillLevelText: String {
         switch value {
-        case 1...2: return "Beginner"
-        case 3...4: return "Novice"
-        case 5...6: return "Intermediate"
-        case 7...8: return "Advanced"
-        case 9...10: return "Expert"
-        default: return "Unknown"
+        case 1 ... 2: "Beginner"
+        case 3 ... 4: "Novice"
+        case 5 ... 6: "Intermediate"
+        case 7 ... 8: "Advanced"
+        case 9 ... 10: "Expert"
+        default: "Unknown"
         }
     }
 
     private var skillDescription: String {
         switch value {
-        case 1...2: return "Just starting out, learning the basics"
-        case 3...4: return "Getting comfortable with fundamentals"
-        case 5...6: return "Solid foundation, developing consistency"
-        case 7...8: return "Strong skills, ready for challenges"
-        case 9...10: return "Exceptional ability, natural talent"
-        default: return ""
+        case 1 ... 2: "Just starting out, learning the basics"
+        case 3 ... 4: "Getting comfortable with fundamentals"
+        case 5 ... 6: "Solid foundation, developing consistency"
+        case 7 ... 8: "Strong skills, ready for challenges"
+        case 9 ... 10: "Exceptional ability, natural talent"
+        default: ""
         }
     }
 
     private var skillIcon: String {
         switch title.lowercased() {
-        case "technical": return "cpu"
-        case "agility": return "figure.run"
-        case "endurance": return "heart.fill"
-        case "teamwork": return "person.2.fill"
-        default: return "star.fill"
+        case "technical": "cpu"
+        case "agility": "figure.run"
+        case "endurance": "heart.fill"
+        case "teamwork": "person.2.fill"
+        default: "star.fill"
         }
     }
 
@@ -247,8 +248,8 @@ struct SkillPicker: View {
                 await dependencies.hapticService.selection()
             }
             lastHapticValue = newValue
+        }
     }
-}
 }
 
 // MARK: - Enhanced Multi-Skill Picker
@@ -283,12 +284,12 @@ struct MultiSkillPicker: View {
         EnhancedCard(style: .prominent, elevation: .medium) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 // Header
-            HStack {
+                HStack {
                     Label("Overall Rating", systemImage: "star.circle.fill")
                         .font(DesignSystem.Typography.headlineEmphasized)
                         .foregroundStyle(DesignSystem.Colors.primaryText)
 
-                Spacer()
+                    Spacer()
 
                     // Quick visual indicator
                     overallRatingIndicator
@@ -331,7 +332,7 @@ struct MultiSkillPicker: View {
 
     private var overallRatingIndicator: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
-            ForEach(1...10, id: \.self) { level in
+            ForEach(1 ... 10, id: \.self) { level in
                 Circle()
                     .fill(Double(level) <= overallRating ? overallRatingColor : DesignSystem.Colors.fillSecondary)
                     .frame(width: 6, height: 6)
@@ -343,8 +344,8 @@ struct MultiSkillPicker: View {
                         ),
                         value: overallRating
                     )
-                }
             }
+        }
         .accessibilityHidden(true)
     }
 
@@ -373,11 +374,11 @@ struct MultiSkillPicker: View {
 
     private var skillPickersSection: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-                SkillPicker(title: "Technical", value: $technicalSkill)
-                SkillPicker(title: "Agility", value: $agilityLevel)
-                SkillPicker(title: "Endurance", value: $enduranceLevel)
-                SkillPicker(title: "Teamwork", value: $teamworkRating)
-            }
+            SkillPicker(title: "Technical", value: $technicalSkill)
+            SkillPicker(title: "Agility", value: $agilityLevel)
+            SkillPicker(title: "Endurance", value: $enduranceLevel)
+            SkillPicker(title: "Teamwork", value: $teamworkRating)
+        }
     }
 
     // MARK: - Computed Properties
@@ -388,11 +389,11 @@ struct MultiSkillPicker: View {
 
     private var overallSkillLevelText: String {
         switch overallRating {
-        case 1.0..<2.5: return "Beginner"
-        case 2.5..<5.0: return "Novice"
-        case 5.0..<7.5: return "Intermediate"
-        case 7.5..<9.0: return "Advanced"
-        default: return "Expert"
+        case 1.0 ..< 2.5: "Beginner"
+        case 2.5 ..< 5.0: "Novice"
+        case 5.0 ..< 7.5: "Intermediate"
+        case 7.5 ..< 9.0: "Advanced"
+        default: "Expert"
         }
     }
 }
@@ -400,24 +401,24 @@ struct MultiSkillPicker: View {
 // MARK: - Preview
 
 #if DEBUG
-struct SkillPicker_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            // Single skill picker
-            SkillPicker(title: "Technical", value: .constant(7))
+    struct SkillPicker_Previews: PreviewProvider {
+        static var previews: some View {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                // Single skill picker
+                SkillPicker(title: "Technical", value: .constant(7))
 
-            Divider()
+                Divider()
 
-            // Multi-skill picker
-            MultiSkillPicker(
-                technicalSkill: .constant(8),
-                agilityLevel: .constant(6),
-                enduranceLevel: .constant(7),
-                teamworkRating: .constant(9)
-            )
+                // Multi-skill picker
+                MultiSkillPicker(
+                    technicalSkill: .constant(8),
+                    agilityLevel: .constant(6),
+                    enduranceLevel: .constant(7),
+                    teamworkRating: .constant(9)
+                )
+            }
+            .padding()
+            .previewDisplayName("Modern Skill Pickers")
         }
-        .padding()
-        .previewDisplayName("Modern Skill Pickers")
     }
-}
 #endif

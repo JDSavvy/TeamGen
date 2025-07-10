@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Skill Level Badge Component
+
 struct SkillLevelBadge: View {
     let skillLevel: SkillLevel
     let size: BadgeSize
@@ -40,6 +41,7 @@ struct SkillLevelBadge: View {
     }
 
     // MARK: - Continuous Gradient Colors
+
     /// Uses the skill level's representative value for perfect gradient synchronization
     private var continuousColor: Color {
         skillLevel.designSystemColor
@@ -54,21 +56,19 @@ struct SkillLevelBadge: View {
     }
 
     // MARK: - Skill Level Icon (Shape Differentiation)
+
     private var skillLevelIcon: Image {
         switch skillLevel {
         case .beginner:
-            return Image(systemName: "triangle.fill")
+            Image(systemName: "triangle.fill")
         case .novice:
-            return Image(systemName: "diamond.fill")
+            Image(systemName: "diamond.fill")
         case .intermediate:
-            return Image(systemName: "circle.fill")
+            Image(systemName: "circle.fill")
         case .advanced:
-            return Image(systemName: "square.fill")
+            Image(systemName: "square.fill")
         case .expert:
-            return Image(systemName: "star.fill")
+            Image(systemName: "star.fill")
         }
     }
 }
-
-
-

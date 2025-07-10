@@ -1,12 +1,12 @@
-import SwiftUI
 import Observation
+import SwiftUI
 
 struct MainTabView: View {
     @Environment(\.colorScheme) var systemColorScheme
     @Environment(\.dependencies) var dependencies
     @State private var selectedTab = 0
     @State private var isInitialized = false
-    @State private var lastImpactTime: Date = Date.distantPast
+    @State private var lastImpactTime: Date = .distantPast
 
     private let impactCooldown: TimeInterval = 0.1 // Prevent rapid haptic feedback
 
@@ -27,7 +27,11 @@ struct MainTabView: View {
                     TeamViewContent(selectedTab: $selectedTab)
                 }
                 .tabItem {
-                    Label("Teams", systemImage: selectedTab == 0 ? DesignSystem.Symbols.personGroupFill : DesignSystem.Symbols.personGroup)
+                    Label(
+                        "Teams",
+                        systemImage: selectedTab == 0 ? DesignSystem.Symbols.personGroupFill : DesignSystem.Symbols
+                            .personGroup
+                    )
                 }
                 .tag(0)
 
@@ -36,7 +40,11 @@ struct MainTabView: View {
                     PlayerViewContent()
                 }
                 .tabItem {
-                    Label("Players", systemImage: selectedTab == 1 ? DesignSystem.Symbols.personStackFill : DesignSystem.Symbols.personStack)
+                    Label(
+                        "Players",
+                        systemImage: selectedTab == 1 ? DesignSystem.Symbols.personStackFill : DesignSystem.Symbols
+                            .personStack
+                    )
                 }
                 .tag(1)
 
@@ -45,7 +53,10 @@ struct MainTabView: View {
                     SettingsViewContent()
                 }
                 .tabItem {
-                    Label("Settings", systemImage: selectedTab == 2 ? DesignSystem.Symbols.gearFill : DesignSystem.Symbols.gear)
+                    Label(
+                        "Settings",
+                        systemImage: selectedTab == 2 ? DesignSystem.Symbols.gearFill : DesignSystem.Symbols.gear
+                    )
                 }
                 .tag(2)
             }
@@ -66,11 +77,12 @@ struct MainTabView: View {
     }
 
     // MARK: - Background Gradient
+
     private var backgroundGradient: some View {
         LinearGradient(
             colors: [
                 DesignSystem.Colors.primaryBackground,
-                DesignSystem.Colors.secondaryBackground.opacity(0.3)
+                DesignSystem.Colors.secondaryBackground.opacity(0.3),
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -78,6 +90,7 @@ struct MainTabView: View {
     }
 
     // MARK: - Configuration Methods
+
     private func configureTabBarAppearance() {
         // Configure modern tab bar appearance following Apple's latest HIG
         let appearance = UITabBarAppearance()
@@ -91,13 +104,13 @@ struct MainTabView: View {
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.systemFont(ofSize: 10, weight: .medium)
+            .font: UIFont.systemFont(ofSize: 10, weight: .medium),
         ]
 
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor.systemBlue
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
             .foregroundColor: UIColor.systemBlue,
-            .font: UIFont.systemFont(ofSize: 10, weight: .semibold)
+            .font: UIFont.systemFont(ofSize: 10, weight: .semibold),
         ]
 
         // Compact appearance (iPhone landscape)
@@ -114,6 +127,7 @@ struct MainTabView: View {
     }
 
     // MARK: - Event Handlers
+
     private func handleTabChange(from oldTab: Int, to newTab: Int) {
         // Haptic feedback with cooldown following Apple's guidelines
         let now = Date()
@@ -128,21 +142,22 @@ struct MainTabView: View {
         trackTabChange(from: oldTab, to: newTab)
     }
 
-    private func trackTabChange(from oldTab: Int, to newTab: Int) {
+    private func trackTabChange(from _: Int, to _: Int) {
         // Analytics tracking following Apple's privacy guidelines
         // Tab change logged for analytics
     }
 
     private func tabName(for index: Int) -> String {
         switch index {
-        case 0: return "Teams"
-        case 1: return "Players"
-        case 2: return "Settings"
-        default: return "Unknown"
+        case 0: "Teams"
+        case 1: "Players"
+        case 2: "Settings"
+        default: "Unknown"
         }
     }
 
     // MARK: - Initialization & State Management
+
     private func initializeView() async {
         if !isInitialized {
             await loadColorScheme()
@@ -155,12 +170,13 @@ struct MainTabView: View {
         await dependencies.colorSchemeService.loadPreferences()
     }
 
-    private func updateTabBarStyle(for colorScheme: ColorScheme) {
+    private func updateTabBarStyle(for _: ColorScheme) {
         // Implementation of updateTabBarStyle method
     }
 }
 
 // MARK: - Content Views (NavigationStack-free)
+
 /// Content views without NavigationStack to prevent nesting issues
 
 private struct TeamViewContent: View {
@@ -190,10 +206,11 @@ private struct SettingsViewContent: View {
 }
 
 // MARK: - Preview
+
 #if DEBUG
-struct MainTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainTabView()
+    struct MainTabView_Previews: PreviewProvider {
+        static var previews: some View {
+            MainTabView()
+        }
     }
-}
 #endif

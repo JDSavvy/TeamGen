@@ -1,11 +1,12 @@
 import SwiftUI
 
 // MARK: - Enhanced Transitions (iOS 18)
+
 /// A comprehensive collection of HIG-compliant transitions for various UI contexts
 /// Enhanced with modern iOS 18 motion design principles and accessibility features
-public struct EnhancedTransitions {
-
+public enum EnhancedTransitions {
     // MARK: - List Transitions (Enhanced)
+
     /// Smooth slide transition for list items with improved physics
     public static let listItemSlide: AnyTransition = .asymmetric(
         insertion: .move(edge: .trailing).combined(with: .opacity).combined(with: .scale(scale: 0.95)),
@@ -19,7 +20,7 @@ public struct EnhancedTransitions {
 
     /// Staggered list transition with improved timing
     public static func staggeredListItem(index: Int, baseDelay: Double = 0.03) -> AnyTransition {
-        return .asymmetric(
+        .asymmetric(
             insertion: .scale(scale: 0.9, anchor: .center)
                 .combined(with: .opacity)
                 .combined(with: .move(edge: .top))
@@ -40,6 +41,7 @@ public struct EnhancedTransitions {
     )
 
     // MARK: - Modal Transitions (Enhanced)
+
     /// Smooth modal presentation with improved spring physics
     public static let modalPresentation: AnyTransition = .asymmetric(
         insertion: .move(edge: .bottom)
@@ -68,6 +70,7 @@ public struct EnhancedTransitions {
     )
 
     // MARK: - Content State Transitions (Enhanced)
+
     /// Loading to content transition with improved visual continuity
     public static let contentAppear: AnyTransition = .asymmetric(
         insertion: .scale(scale: 0.95, anchor: .center)
@@ -95,6 +98,7 @@ public struct EnhancedTransitions {
         .animation(DesignSystem.Animation.successFeedback)
 
     // MARK: - Navigation Transitions (Enhanced)
+
     /// Forward navigation with improved depth perception
     public static let navigationForward: AnyTransition = .asymmetric(
         insertion: .move(edge: .trailing)
@@ -128,6 +132,7 @@ public struct EnhancedTransitions {
     )
 
     // MARK: - Contextual Transitions (Enhanced)
+
     /// Skill expansion transition with natural unfold
     public static let skillExpansion: AnyTransition = .asymmetric(
         insertion: .move(edge: .top)
@@ -167,6 +172,7 @@ public struct EnhancedTransitions {
 }
 
 // MARK: - Interactive Feedback Modifiers (Enhanced iOS 18)
+
 /// Provides consistent interactive feedback across the app with modern iOS 18 patterns
 public struct InteractiveFeedbackModifier: ViewModifier {
     let style: FeedbackStyle
@@ -181,37 +187,37 @@ public struct InteractiveFeedbackModifier: ViewModifier {
 
         var pressedScale: CGFloat {
             switch self {
-            case .subtle: return DesignSystem.VisualConsistency.scalePressedSubtle
-            case .standard: return DesignSystem.VisualConsistency.scalePressed
-            case .prominent: return 0.96
-            case .dramatic: return 0.94
+            case .subtle: DesignSystem.VisualConsistency.scalePressedSubtle
+            case .standard: DesignSystem.VisualConsistency.scalePressed
+            case .prominent: 0.96
+            case .dramatic: 0.94
             }
         }
 
         var hoverScale: CGFloat {
             switch self {
-            case .subtle: return 1.01
-            case .standard: return DesignSystem.VisualConsistency.scaleHover
-            case .prominent: return 1.08
-            case .dramatic: return 1.12
+            case .subtle: 1.01
+            case .standard: DesignSystem.VisualConsistency.scaleHover
+            case .prominent: 1.08
+            case .dramatic: 1.12
             }
         }
 
         var animation: SwiftUI.Animation {
             switch self {
-            case .subtle: return DesignSystem.Animation.ultraQuick
-            case .standard: return DesignSystem.Animation.interactive
-            case .prominent: return DesignSystem.Animation.spring
-            case .dramatic: return DesignSystem.Animation.bouncy
+            case .subtle: DesignSystem.Animation.ultraQuick
+            case .standard: DesignSystem.Animation.interactive
+            case .prominent: DesignSystem.Animation.spring
+            case .dramatic: DesignSystem.Animation.bouncy
             }
         }
 
         var shadowIntensity: Double {
             switch self {
-            case .subtle: return 0.05
-            case .standard: return 0.1
-            case .prominent: return 0.15
-            case .dramatic: return 0.2
+            case .subtle: 0.05
+            case .standard: 0.1
+            case .prominent: 0.15
+            case .dramatic: 0.2
             }
         }
     }
@@ -235,7 +241,10 @@ public struct InteractiveFeedbackModifier: ViewModifier {
             )
             .onHover { hovering in
                 guard isEnabled else { return }
-                withAnimation(DesignSystem.Animation.accessible(.easeInOut(duration: 0.2), reduceMotion: reduceMotion)) {
+                withAnimation(DesignSystem.Animation.accessible(
+                    .easeInOut(duration: 0.2),
+                    reduceMotion: reduceMotion
+                )) {
                     isHovered = hovering
                 }
             }
@@ -250,47 +259,48 @@ public struct InteractiveFeedbackModifier: ViewModifier {
     }
 
     private var effectiveScale: CGFloat {
-        if isPressed && isEnabled {
-            return style.pressedScale
-        } else if isHovered && isEnabled {
-            return style.hoverScale
+        if isPressed, isEnabled {
+            style.pressedScale
+        } else if isHovered, isEnabled {
+            style.hoverScale
         } else {
-            return 1.0
+            1.0
         }
     }
 
     private var effectiveShadowOpacity: Double {
-        if isPressed && isEnabled {
-            return style.shadowIntensity * 0.5
-        } else if isHovered && isEnabled {
-            return style.shadowIntensity * 1.5
+        if isPressed, isEnabled {
+            style.shadowIntensity * 0.5
+        } else if isHovered, isEnabled {
+            style.shadowIntensity * 1.5
         } else {
-            return style.shadowIntensity
+            style.shadowIntensity
         }
     }
 
     private var effectiveShadowRadius: CGFloat {
-        if isPressed && isEnabled {
-            return 2
-        } else if isHovered && isEnabled {
-            return 8
+        if isPressed, isEnabled {
+            2
+        } else if isHovered, isEnabled {
+            8
         } else {
-            return 4
+            4
         }
     }
 
     private var effectiveShadowOffset: CGFloat {
-        if isPressed && isEnabled {
-            return 1
-        } else if isHovered && isEnabled {
-            return 4
+        if isPressed, isEnabled {
+            1
+        } else if isHovered, isEnabled {
+            4
         } else {
-            return 2
+            2
         }
     }
 }
 
 // MARK: - Hover Effect Modifier (Enhanced iOS 18)
+
 /// Provides smooth hover effects for interactive elements with modern physics
 public struct HoverEffectModifier: ViewModifier {
     let style: HoverStyle
@@ -304,36 +314,36 @@ public struct HoverEffectModifier: ViewModifier {
 
         var hoverScale: CGFloat {
             switch self {
-            case .lift, .glow, .float, .pulse: return 1.0
-            case .scale: return DesignSystem.VisualConsistency.scaleHover
+            case .lift, .glow, .float, .pulse: 1.0
+            case .scale: DesignSystem.VisualConsistency.scaleHover
             }
         }
 
         var shadowRadius: CGFloat {
             switch self {
-            case .lift: return 12
-            case .scale: return 6
-            case .glow: return 16
-            case .float: return 20
-            case .pulse: return 8
+            case .lift: 12
+            case .scale: 6
+            case .glow: 16
+            case .float: 20
+            case .pulse: 8
             }
         }
 
         var shadowOpacity: Double {
             switch self {
-            case .lift: return 0.15
-            case .scale: return 0.1
-            case .glow: return 0.2
-            case .float: return 0.25
-            case .pulse: return 0.12
+            case .lift: 0.15
+            case .scale: 0.1
+            case .glow: 0.2
+            case .float: 0.25
+            case .pulse: 0.12
             }
         }
 
         var yOffset: CGFloat {
             switch self {
-            case .lift: return -2
-            case .float: return -4
-            case .scale, .glow, .pulse: return 0
+            case .lift: -2
+            case .float: -4
+            case .scale, .glow, .pulse: 0
             }
         }
     }
@@ -351,13 +361,13 @@ public struct HoverEffectModifier: ViewModifier {
             .overlay(
                 // Glow effect for glow style
                 Group {
-                    if style == .glow && isHovered && isEnabled {
+                    if style == .glow, isHovered, isEnabled {
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
                             .stroke(
                                 LinearGradient(
                                     colors: [
                                         DesignSystem.Colors.primary.opacity(0.6),
-                                        DesignSystem.Colors.primary.opacity(0.2)
+                                        DesignSystem.Colors.primary.opacity(0.2),
                                     ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
@@ -369,12 +379,18 @@ public struct HoverEffectModifier: ViewModifier {
                 }
             )
             .animation(
-                DesignSystem.Animation.accessible(.interactiveSpring(response: 0.4, dampingFraction: 0.7), reduceMotion: reduceMotion),
+                DesignSystem.Animation.accessible(
+                    .interactiveSpring(response: 0.4, dampingFraction: 0.7),
+                    reduceMotion: reduceMotion
+                ),
                 value: isHovered
             )
             .onHover { hovering in
                 guard isEnabled else { return }
-                withAnimation(DesignSystem.Animation.accessible(.interactiveSpring(response: 0.4, dampingFraction: 0.7), reduceMotion: reduceMotion)) {
+                withAnimation(DesignSystem.Animation.accessible(
+                    .interactiveSpring(response: 0.4, dampingFraction: 0.7),
+                    reduceMotion: reduceMotion
+                )) {
                     isHovered = hovering
                 }
             }
@@ -382,6 +398,7 @@ public struct HoverEffectModifier: ViewModifier {
 }
 
 // MARK: - Shimmer Loading Effect (Enhanced iOS 18)
+
 /// Creates a smooth shimmer effect for loading states with modern design
 public struct ShimmerModifier: ViewModifier {
     @State private var phase: CGFloat = 0
@@ -406,7 +423,7 @@ public struct ShimmerModifier: ViewModifier {
                             colors: [
                                 Color.clear,
                                 Color.white.opacity(opacity),
-                                Color.clear
+                                Color.clear,
                             ],
                             startPoint: .init(x: phase - 0.3, y: 0),
                             endPoint: .init(x: phase + 0.3, y: 0)
@@ -420,7 +437,7 @@ public struct ShimmerModifier: ViewModifier {
                 if !reduceMotion {
                     withAnimation(
                         .linear(duration: duration)
-                        .repeatForever(autoreverses: false)
+                            .repeatForever(autoreverses: false)
                     ) {
                         phase = 2.0
                     }
@@ -430,6 +447,7 @@ public struct ShimmerModifier: ViewModifier {
 }
 
 // MARK: - Pulse Effect Modifier (iOS 18)
+
 /// Creates a subtle pulse effect for attention-grabbing elements
 public struct PulseModifier: ViewModifier {
     @State private var isPulsing = false
@@ -459,6 +477,7 @@ public struct PulseModifier: ViewModifier {
 }
 
 // MARK: - Breathing Effect Modifier (iOS 18)
+
 /// Creates a gentle breathing effect for ambient animations
 public struct BreathingModifier: ViewModifier {
     @State private var isBreathing = false
@@ -489,6 +508,7 @@ public struct BreathingModifier: ViewModifier {
 }
 
 // MARK: - Smooth Appearance Modifier (iOS 18)
+
 /// Creates smooth appearance animations for views with staggered timing
 public struct SmoothAppearanceModifier: ViewModifier {
     @State private var hasAppeared = false
@@ -526,9 +546,10 @@ public struct SmoothAppearanceModifier: ViewModifier {
 }
 
 // MARK: - View Extensions for Enhanced Transitions
-extension View {
+
+public extension View {
     /// Applies interactive feedback with specified style
-    public func interactiveFeedback(
+    func interactiveFeedback(
         style: InteractiveFeedbackModifier.FeedbackStyle = .standard,
         isEnabled: Bool = true
     ) -> some View {
@@ -536,7 +557,7 @@ extension View {
     }
 
     /// Applies hover effect with specified style
-    public func hoverEffect(
+    func hoverEffect(
         style: HoverEffectModifier.HoverStyle = .lift,
         isEnabled: Bool = true
     ) -> some View {
@@ -544,7 +565,7 @@ extension View {
     }
 
     /// Applies shimmer loading effect
-    public func shimmer(
+    func shimmer(
         duration: Double = 1.5,
         angle: Double = 70,
         opacity: Double = 0.3
@@ -553,7 +574,7 @@ extension View {
     }
 
     /// Applies pulse effect
-    public func pulse(
+    func pulse(
         intensity: Double = 0.05,
         duration: Double = 1.0
     ) -> some View {
@@ -561,7 +582,7 @@ extension View {
     }
 
     /// Applies breathing effect
-    public func breathing(
+    func breathing(
         intensity: Double = 0.03,
         duration: Double = 2.0
     ) -> some View {
@@ -569,7 +590,7 @@ extension View {
     }
 
     /// Applies smooth appearance animation
-    public func smoothAppearance(
+    func smoothAppearance(
         delay: Double = 0,
         duration: Double = 0.5,
         transition: AnyTransition = .opacity.combined(with: .scale(scale: 0.95))
@@ -578,9 +599,9 @@ extension View {
     }
 
     /// Applies accessibility-aware animation
-    public func accessibleAnimation<V: Equatable>(
+    func accessibleAnimation(
         _ animation: SwiftUI.Animation?,
-        value: V,
+        value: some Equatable,
         reduceMotion: Bool = false
     ) -> some View {
         self.animation(
@@ -591,109 +612,110 @@ extension View {
 }
 
 // MARK: - Preview
+
 #if DEBUG
-struct EnhancedTransitions_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                // Interactive feedback examples
-                VStack(spacing: DesignSystem.Spacing.md) {
-                    Text("Interactive Feedback")
-                        .font(DesignSystem.Typography.headline)
+    struct EnhancedTransitions_Previews: PreviewProvider {
+        static var previews: some View {
+            ScrollView {
+                VStack(spacing: DesignSystem.Spacing.xl) {
+                    // Interactive feedback examples
+                    VStack(spacing: DesignSystem.Spacing.md) {
+                        Text("Interactive Feedback")
+                            .font(DesignSystem.Typography.headline)
 
-                    HStack(spacing: DesignSystem.Spacing.md) {
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.primary)
-                            .frame(width: 60, height: 60)
-                            .interactiveFeedback(style: .subtle)
+                        HStack(spacing: DesignSystem.Spacing.md) {
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.primary)
+                                .frame(width: 60, height: 60)
+                                .interactiveFeedback(style: .subtle)
 
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.success)
-                            .frame(width: 60, height: 60)
-                            .interactiveFeedback(style: .standard)
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.success)
+                                .frame(width: 60, height: 60)
+                                .interactiveFeedback(style: .standard)
 
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.warning)
-                            .frame(width: 60, height: 60)
-                            .interactiveFeedback(style: .prominent)
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.warning)
+                                .frame(width: 60, height: 60)
+                                .interactiveFeedback(style: .prominent)
 
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.error)
-                            .frame(width: 60, height: 60)
-                            .interactiveFeedback(style: .dramatic)
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.error)
+                                .frame(width: 60, height: 60)
+                                .interactiveFeedback(style: .dramatic)
+                        }
+                    }
+
+                    // Hover effects examples
+                    VStack(spacing: DesignSystem.Spacing.md) {
+                        Text("Hover Effects")
+                            .font(DesignSystem.Typography.headline)
+
+                        HStack(spacing: DesignSystem.Spacing.md) {
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.accent)
+                                .frame(width: 60, height: 60)
+                                .hoverEffect(style: .lift)
+
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.mint)
+                                .frame(width: 60, height: 60)
+                                .hoverEffect(style: .scale)
+
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.teal)
+                                .frame(width: 60, height: 60)
+                                .hoverEffect(style: .glow)
+
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.indigo)
+                                .frame(width: 60, height: 60)
+                                .hoverEffect(style: .float)
+                        }
+                    }
+
+                    // Animation effects examples
+                    VStack(spacing: DesignSystem.Spacing.md) {
+                        Text("Animation Effects")
+                            .font(DesignSystem.Typography.headline)
+
+                        HStack(spacing: DesignSystem.Spacing.md) {
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.primary.opacity(0.7))
+                                .frame(width: 60, height: 60)
+                                .shimmer()
+
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.success.opacity(0.7))
+                                .frame(width: 60, height: 60)
+                                .pulse()
+
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.warning.opacity(0.7))
+                                .frame(width: 60, height: 60)
+                                .breathing()
+                        }
+                    }
+
+                    // Smooth appearance examples
+                    VStack(spacing: DesignSystem.Spacing.md) {
+                        Text("Smooth Appearance")
+                            .font(DesignSystem.Typography.headline)
+
+                        ForEach(0 ..< 3, id: \.self) { index in
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
+                                .fill(DesignSystem.Colors.cardBackground)
+                                .frame(height: 60)
+                                .overlay(
+                                    Text("Item \(index + 1)")
+                                        .font(DesignSystem.Typography.body)
+                                )
+                                .smoothAppearance(delay: Double(index) * 0.1)
+                        }
                     }
                 }
-
-                // Hover effects examples
-                VStack(spacing: DesignSystem.Spacing.md) {
-                    Text("Hover Effects")
-                        .font(DesignSystem.Typography.headline)
-
-                    HStack(spacing: DesignSystem.Spacing.md) {
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.accent)
-                            .frame(width: 60, height: 60)
-                            .hoverEffect(style: .lift)
-
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.mint)
-                            .frame(width: 60, height: 60)
-                            .hoverEffect(style: .scale)
-
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.teal)
-                            .frame(width: 60, height: 60)
-                            .hoverEffect(style: .glow)
-
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.indigo)
-                            .frame(width: 60, height: 60)
-                            .hoverEffect(style: .float)
-                    }
-                }
-
-                // Animation effects examples
-                VStack(spacing: DesignSystem.Spacing.md) {
-                    Text("Animation Effects")
-                        .font(DesignSystem.Typography.headline)
-
-                    HStack(spacing: DesignSystem.Spacing.md) {
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.primary.opacity(0.7))
-                            .frame(width: 60, height: 60)
-                            .shimmer()
-
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.success.opacity(0.7))
-                            .frame(width: 60, height: 60)
-                            .pulse()
-
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.warning.opacity(0.7))
-                            .frame(width: 60, height: 60)
-                            .breathing()
-                    }
-                }
-
-                // Smooth appearance examples
-                VStack(spacing: DesignSystem.Spacing.md) {
-                    Text("Smooth Appearance")
-                        .font(DesignSystem.Typography.headline)
-
-                    ForEach(0..<3, id: \.self) { index in
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.transition)
-                            .fill(DesignSystem.Colors.cardBackground)
-                            .frame(height: 60)
-                            .overlay(
-                                Text("Item \(index + 1)")
-                                    .font(DesignSystem.Typography.body)
-                            )
-                            .smoothAppearance(delay: Double(index) * 0.1)
-                    }
-                }
+                .padding()
             }
-            .padding()
         }
     }
-}
 #endif

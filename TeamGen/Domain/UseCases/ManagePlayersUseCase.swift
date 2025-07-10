@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Manage Players Use Case Protocol
+
 public protocol ManagePlayersUseCaseProtocol {
     func addPlayer(name: String, skills: PlayerSkills) async throws -> PlayerEntity
     func updatePlayer(_ player: PlayerEntity) async throws
@@ -13,6 +14,7 @@ public protocol ManagePlayersUseCaseProtocol {
 }
 
 // MARK: - Manage Players Use Case Implementation
+
 public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
     private let playerRepository: PlayerRepositoryProtocol
 
@@ -49,7 +51,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
 
     public func deletePlayer(id: UUID) async throws {
         // Verify player exists
-        guard (try await playerRepository.fetch(id: id)) != nil else {
+        guard try await (playerRepository.fetch(id: id)) != nil else {
             throw RepositoryError.notFound(id: id)
         }
 
@@ -72,7 +74,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
 
     public func updatePlayerSelection(id: UUID, isSelected: Bool) async throws {
         // Verify player exists
-        guard (try await playerRepository.fetch(id: id)) != nil else {
+        guard try await (playerRepository.fetch(id: id)) != nil else {
             throw RepositoryError.notFound(id: id)
         }
 
@@ -88,7 +90,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
     }
 
     public func getAllPlayers() async throws -> [PlayerEntity] {
-        return try await playerRepository.fetchAll()
+        try await playerRepository.fetchAll()
     }
 
     public func getSelectedPlayers() async throws -> [PlayerEntity] {
@@ -96,6 +98,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
     }
 
     // MARK: - Validation
+
     private func validatePlayer(_ player: PlayerEntity) throws {
         // Validate name
         guard !player.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
@@ -105,7 +108,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
         // Validate skills
         let skills = [player.skills.technical, player.skills.agility, player.skills.endurance, player.skills.teamwork]
         for skill in skills {
-            guard (1...10).contains(skill) else {
+            guard (1 ... 10).contains(skill) else {
                 throw ValidationError.invalidSkillValue(skill)
             }
         }
@@ -113,6 +116,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
 }
 
 // MARK: - Validation Errors
+
 public enum ValidationError: LocalizedError {
     case invalidPlayerName
     case invalidSkillValue(Int)
@@ -121,11 +125,11 @@ public enum ValidationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidPlayerName:
-            return "Player name cannot be empty"
-        case .invalidSkillValue(let value):
-            return "Skill value \(value) must be between 1 and 10"
-        case .duplicatePlayerName(let name):
-            return "A player named '\(name)' already exists"
+            "Player name cannot be empty"
+        case let .invalidSkillValue(value):
+            "Skill value \(value) must be between 1 and 10"
+        case let .duplicatePlayerName(name):
+            "A player named '\(name)' already exists"
         }
     }
 }

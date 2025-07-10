@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Player Form View
+
 /// Dedicated view for player form operations (Add/Edit)
 /// Extracted from PlayerView.swift for better modularity and maintainability
 struct PlayerFormView: View {
@@ -19,15 +20,15 @@ struct PlayerFormView: View {
 
         var title: String {
             switch self {
-            case .add: return "Add Player"
-            case .edit: return "Edit Player"
+            case .add: "Add Player"
+            case .edit: "Edit Player"
             }
         }
 
         var confirmationButtonTitle: String {
             switch self {
-            case .add: return "Add"
-            case .edit: return "Save"
+            case .add: "Add"
+            case .edit: "Save"
             }
         }
     }
@@ -38,9 +39,9 @@ struct PlayerFormView: View {
 
         switch mode {
         case .add:
-            self._formModel = State(wrappedValue: PlayerFormModel())
-        case .edit(let player):
-            self._formModel = State(wrappedValue: PlayerFormModel(player: player))
+            _formModel = State(wrappedValue: PlayerFormModel())
+        case let .edit(player):
+            _formModel = State(wrappedValue: PlayerFormModel(player: player))
         }
     }
 
@@ -53,7 +54,7 @@ struct PlayerFormView: View {
                         isNameFieldFocused: $isNameFieldFocused
                     )
 
-                    if case .edit(let player) = mode, player.statistics.gamesPlayed > 0 {
+                    if case let .edit(player) = mode, player.statistics.gamesPlayed > 0 {
                         PlayerStatisticsSection(player: player)
                     }
 
@@ -112,7 +113,7 @@ struct PlayerFormView: View {
                     name: formModel.name.trimmingCharacters(in: .whitespacesAndNewlines),
                     skills: skills
                 )
-            case .edit(let player):
+            case let .edit(player):
                 var updatedPlayer = player
                 updatedPlayer.name = formModel.name
                 updatedPlayer.skills = skills
@@ -129,7 +130,7 @@ struct PlayerFormView: View {
     }
 
     private func deletePlayer() async {
-        guard case .edit(let player) = mode else { return }
+        guard case let .edit(player) = mode else { return }
 
         do {
             try await dependencies.managePlayersUseCase.deletePlayer(id: player.id)
@@ -144,6 +145,7 @@ struct PlayerFormView: View {
 }
 
 // MARK: - Player Form Model
+
 @Observable
 @MainActor
 final class PlayerFormModel {
@@ -157,11 +159,11 @@ final class PlayerFormModel {
     init() {}
 
     init(player: PlayerEntity) {
-        self.name = player.name
-        self.technicalSkill = player.skills.technical
-        self.agilityLevel = player.skills.agility
-        self.enduranceLevel = player.skills.endurance
-        self.teamworkRating = player.skills.teamwork
+        name = player.name
+        technicalSkill = player.skills.technical
+        agilityLevel = player.skills.agility
+        enduranceLevel = player.skills.endurance
+        teamworkRating = player.skills.teamwork
     }
 
     var isValid: Bool {
@@ -204,11 +206,11 @@ private struct PlayerFormSection: View {
             // Enhanced text field container
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 // Field label with enhanced typography
-                                 Label("Player Name", systemImage: "person.text.rectangle")
-                     .font(DesignSystem.Typography.subheadline)
-                     .fontWeight(.semibold)
-                     .foregroundStyle(DesignSystem.Colors.primaryText)
-                     .labelStyle(.titleAndIcon)
+                Label("Player Name", systemImage: "person.text.rectangle")
+                    .font(DesignSystem.Typography.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Colors.primaryText)
+                    .labelStyle(.titleAndIcon)
 
                 // Modern text field with enhanced styling
                 ZStack(alignment: .leading) {
@@ -216,12 +218,12 @@ private struct PlayerFormSection: View {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                         .fill(textFieldBackgroundColor)
                         .stroke(textFieldBorderColor, lineWidth: textFieldBorderWidth)
-                                                 .shadow(
-                             color: textFieldShadowColor,
-                             radius: 2,
-                             x: 0,
-                             y: 1
-                         )
+                        .shadow(
+                            color: textFieldShadowColor,
+                            radius: 2,
+                            x: 0,
+                            y: 1
+                        )
 
                     // Text field with modern styling
                     TextField("Enter player name", text: $formModel.name, prompt: textFieldPrompt)
@@ -237,7 +239,10 @@ private struct PlayerFormSection: View {
                         .accessibilityHint("Enter the player's name")
                 }
                 .frame(height: 44) // Standard iOS touch target
-                .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.spring, reduceMotion: reduceMotion), value: formModel.name.isEmpty)
+                .animation(
+                    DesignSystem.Animation.accessible(DesignSystem.Animation.spring, reduceMotion: reduceMotion),
+                    value: formModel.name.isEmpty
+                )
 
                 // Character count indicator
                 if !formModel.name.isEmpty {
@@ -248,7 +253,10 @@ private struct PlayerFormSection: View {
                             .foregroundStyle(DesignSystem.Colors.tertiaryText)
                             .transition(.opacity)
                     }
-                    .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion), value: formModel.name.count)
+                    .animation(
+                        DesignSystem.Animation.accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion),
+                        value: formModel.name.count
+                    )
                 }
 
                 // Enhanced error display
@@ -257,18 +265,18 @@ private struct PlayerFormSection: View {
                 }
             }
         }
-                 .padding(DesignSystem.Spacing.lg)
-         .background(
-             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                 .fill(DesignSystem.Colors.cardBackground)
-                 .stroke(DesignSystem.Colors.separatorColor.opacity(0.3), lineWidth: 1)
-                 .shadow(
-                     color: Color.black.opacity(0.08),
-                     radius: 8,
-                     x: 0,
-                     y: 4
-                 )
-         )
+        .padding(DesignSystem.Spacing.lg)
+        .background(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                .fill(DesignSystem.Colors.cardBackground)
+                .stroke(DesignSystem.Colors.separatorColor.opacity(0.3), lineWidth: 1)
+                .shadow(
+                    color: Color.black.opacity(0.08),
+                    radius: 8,
+                    x: 0,
+                    y: 4
+                )
+        )
     }
 
     // MARK: - Modern Skills Section
@@ -355,11 +363,11 @@ private struct PlayerFormSection: View {
 
     private var textFieldBorderColor: Color {
         if formModel.errorMessage != nil {
-            return DesignSystem.Colors.error.opacity(0.6)
+            DesignSystem.Colors.error.opacity(0.6)
         } else if !formModel.name.isEmpty {
-            return DesignSystem.Colors.primary.opacity(0.3)
+            DesignSystem.Colors.primary.opacity(0.3)
         } else {
-            return DesignSystem.Colors.separatorColor
+            DesignSystem.Colors.separatorColor
         }
     }
 

@@ -1,10 +1,11 @@
 import SwiftUI
 
 // MARK: - View Extensions
+
 extension View {
     /// Applies conditional modifier
     @ViewBuilder
-    func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+    func `if`(_ condition: Bool, transform: (Self) -> some View) -> some View {
         if condition {
             transform(self)
         } else {
@@ -14,10 +15,10 @@ extension View {
 
     /// Applies conditional modifier with else clause
     @ViewBuilder
-    func `if`<TrueContent: View, FalseContent: View>(
+    func `if`(
         _ condition: Bool,
-        if trueTransform: (Self) -> TrueContent,
-        else falseTransform: (Self) -> FalseContent
+        if trueTransform: (Self) -> some View,
+        else falseTransform: (Self) -> some View
     ) -> some View {
         if condition {
             trueTransform(self)
@@ -28,40 +29,38 @@ extension View {
 
     /// Applies standard card styling
     func cardStyle() -> some View {
-        self
-            .background(Color(.systemBackground))
+        background(Color(.systemBackground))
             .cornerRadius(AppConstants.UI.cornerRadius)
             .shadow(radius: AppConstants.UI.shadowRadius)
     }
 
     /// Applies standard button styling
     func buttonStyle(isEnabled: Bool = true) -> some View {
-        self
-            .foregroundColor(isEnabled ? .accentColor : .secondary)
+        foregroundColor(isEnabled ? .accentColor : .secondary)
             .opacity(isEnabled ? 1.0 : 0.6)
     }
 
     /// Applies accessibility minimum tap target
     func accessibleTapTarget() -> some View {
-        self
-            .frame(minWidth: AppConstants.Accessibility.minimumTapTargetSize,
-                   minHeight: AppConstants.Accessibility.minimumTapTargetSize)
+        frame(minWidth: AppConstants.Accessibility.minimumTapTargetSize,
+              minHeight: AppConstants.Accessibility.minimumTapTargetSize)
     }
 
     /// Applies standard spacing
     func standardSpacing() -> some View {
-        self.padding(AppConstants.UI.Spacing.md)
+        padding(AppConstants.UI.Spacing.md)
     }
 
     /// Applies loading state overlay
     func loadingOverlay(isLoading: Bool) -> some View {
-        self.overlay(
+        overlay(
             Group {
                 if isLoading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(1.2)
-                        .background(DesignSystem.Colors.primaryBackground.opacity(DesignSystem.VisualConsistency.opacitySkillBackground))
+                        .background(DesignSystem.Colors.primaryBackground
+                            .opacity(DesignSystem.VisualConsistency.opacitySkillBackground))
                 }
             }
         )
@@ -69,10 +68,11 @@ extension View {
 }
 
 // MARK: - Color Extensions
+
 extension Color {
     /// Dynamic color that adapts to color scheme
     static func dynamic(light: Color, dark: Color) -> Color {
-        return Color(UIColor { traitCollection in
+        Color(UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? UIColor(dark) : UIColor(light)
         })
     }
@@ -82,11 +82,11 @@ extension Color {
         let normalizedValue = Double(value) / Double(AppConstants.Player.maxSkillLevel)
 
         switch normalizedValue {
-        case 0.0..<0.3:
+        case 0.0 ..< 0.3:
             return .red
-        case 0.3..<0.6:
+        case 0.3 ..< 0.6:
             return .orange
-        case 0.6..<0.8:
+        case 0.6 ..< 0.8:
             return .yellow
         default:
             return .green
@@ -95,6 +95,7 @@ extension Color {
 }
 
 // MARK: - Font Extensions
+
 extension Font {
     /// Standard app fonts
     static let appCaption = Font.system(size: AppConstants.UI.FontSize.caption)
@@ -104,6 +105,7 @@ extension Font {
 }
 
 // MARK: - Animation Extensions
+
 extension Animation {
     /// Standard app animation
     static let appDefault = Animation.easeInOut(duration: AppConstants.UI.animationDuration)
@@ -116,6 +118,7 @@ extension Animation {
 }
 
 // MARK: - EdgeInsets Extensions
+
 extension EdgeInsets {
     /// Standard app padding
     static let appStandard = EdgeInsets(

@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 // MARK: - Dependency Container Protocol
+
 /// Defines the contract for application-wide dependency injection
 @MainActor
 public protocol DependencyContainerProtocol {
@@ -29,6 +30,7 @@ public protocol DependencyContainerProtocol {
 }
 
 // MARK: - Color Scheme Service Protocol
+
 /// Service for managing system-wide color scheme preferences and state
 @MainActor
 public protocol ColorSchemeServiceProtocol {
@@ -61,52 +63,56 @@ public protocol ColorSchemeServiceProtocol {
 }
 
 // MARK: - Settings Repository Protocol
+
 public protocol SettingsRepositoryProtocol: Sendable {
     func getSettings() async throws -> AppSettings
     func saveSettings(_ settings: AppSettings) async throws
 }
 
 // MARK: - App Language
+
 public enum AppLanguage: String, CaseIterable, Identifiable, Sendable, Codable {
     case english = "en"
     case german = "de"
 
-    public var id: String { self.rawValue }
+    public var id: String { rawValue }
 
     public var displayName: String {
         switch self {
-        case .english: return "English"
-        case .german: return "Deutsch"
+        case .english: "English"
+        case .german: "Deutsch"
         }
     }
 }
 
 // MARK: - Color Scheme Options
+
 public enum ColorSchemeOption: String, CaseIterable, Identifiable, Sendable, Codable {
     case system = "System"
     case light = "Light"
     case dark = "Dark"
 
-    public var id: String { self.rawValue }
+    public var id: String { rawValue }
 
     public var displayName: String {
         switch self {
-        case .system: return "Automatic"
-        case .light: return "Light"
-        case .dark: return "Dark"
+        case .system: "Automatic"
+        case .light: "Light"
+        case .dark: "Dark"
         }
     }
 
     public var systemColorScheme: ColorScheme? {
         switch self {
-        case .system: return nil
-        case .light: return .light
-        case .dark: return .dark
+        case .system: nil
+        case .light: .light
+        case .dark: .dark
         }
     }
 }
 
 // MARK: - App Settings
+
 public struct AppSettings: Equatable, Sendable, Codable {
     public var isDarkModeEnabled: Bool
     public var language: AppLanguage

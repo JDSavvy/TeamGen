@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Team Count Control
+
 struct TeamCountControl: View {
     @Binding var teamCount: Int
     let maxPlayers: Int
@@ -11,9 +12,9 @@ struct TeamCountControl: View {
     }
 
     var body: some View {
-        if maxPlayers >= 2 && maxTeams <= 4 {
+        if maxPlayers >= 2, maxTeams <= 4 {
             Picker("Teams", selection: $teamCount) {
-                ForEach(2...maxTeams, id: \.self) { count in
+                ForEach(2 ... maxTeams, id: \.self) { count in
                     Text("\(count)")
                         .tag(count)
                 }
@@ -56,6 +57,7 @@ struct TeamCountControl: View {
 }
 
 // MARK: - Generation Mode Control
+
 struct GenerationModeControl: View {
     @Binding var mode: TeamGenerationMode
     let isEnabled: Bool
@@ -75,6 +77,7 @@ struct GenerationModeControl: View {
 }
 
 // MARK: - Stepper Button
+
 struct StepperButton: View {
     let systemImage: String
     let isEnabled: Bool
@@ -92,7 +95,12 @@ struct StepperButton: View {
                 )
                 .overlay(
                     Circle()
-                        .strokeBorder(isEnabled ? DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacitySeparator) : DesignSystem.Colors.separatorColor, lineWidth: 1)
+                        .strokeBorder(
+                            isEnabled ? DesignSystem.Colors.primary
+                                .opacity(DesignSystem.VisualConsistency.opacitySeparator) : DesignSystem.Colors
+                                .separatorColor,
+                            lineWidth: 1
+                        )
                 )
         }
         .disabled(!isEnabled)
@@ -106,9 +114,9 @@ struct StepperButton: View {
 
     private var accessibilityLabel: String {
         switch systemImage {
-        case "plus": return "Increase team count"
-        case "minus": return "Decrease team count"
-        default: return "Adjust team count"
+        case "plus": "Increase team count"
+        case "minus": "Decrease team count"
+        default: "Adjust team count"
         }
     }
 

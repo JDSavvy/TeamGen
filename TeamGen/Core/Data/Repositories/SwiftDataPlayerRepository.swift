@@ -2,6 +2,7 @@ import Foundation
 import SwiftData
 
 // MARK: - SwiftData Player Repository
+
 /// Concrete implementation of PlayerRepositoryProtocol using SwiftData
 @MainActor
 public final class SwiftDataPlayerRepository: PlayerRepositoryProtocol {
@@ -58,7 +59,7 @@ public final class SwiftDataPlayerRepository: PlayerRepositoryProtocol {
 
     public func saveAll(_ players: [PlayerEntity]) async throws {
         // Optimize batch operations by fetching all existing players at once
-        let playerIds = players.map { $0.id }
+        let playerIds = players.map(\.id)
         let descriptor = FetchDescriptor<SchemaV3.PlayerV3>(
             predicate: #Predicate { playerIds.contains($0.id) }
         )

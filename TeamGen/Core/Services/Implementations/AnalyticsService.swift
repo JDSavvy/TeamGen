@@ -2,6 +2,7 @@ import Foundation
 import OSLog
 
 // MARK: - iOS Analytics Service Implementation
+
 @MainActor
 public final class iOSAnalyticsService: AnalyticsServiceProtocol {
     private let logger = Logger(subsystem: "com.teamgen.analytics", category: "Analytics")

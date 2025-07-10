@@ -1,7 +1,8 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 // MARK: - Team View
+
 /// Main view for team generation and player management
 /// Follows MVVM architecture with clean separation of concerns
 /// NavigationStack and title handled at TabView level for proper isolation
@@ -22,7 +23,7 @@ struct TeamView: View {
     }
 
     init(selectedTab: Binding<Int> = .constant(0)) {
-        self._selectedTab = selectedTab
+        _selectedTab = selectedTab
     }
 
     var body: some View {
@@ -54,12 +55,10 @@ struct TeamView: View {
     private var baseContent: some View {
         ScrollView {
             LazyVStack(spacing: DesignSystem.Spacing.lg) {
-
                 TeamContentView(
                     viewModel: viewModel,
                     presentationState: $presentationState
                 )
-
             }
             .padding(.horizontal, DesignSystem.Spacing.screenPadding)
             .padding(.bottom, DesignSystem.Spacing.xxxl)
@@ -86,12 +85,14 @@ struct TeamView: View {
 }
 
 // MARK: - Presentation State
+
 /// Encapsulates all presentation-related state for better organization
-fileprivate struct PresentationState {
+private struct PresentationState {
     var showingPlayerSelection = false
 }
 
 // MARK: - Team Content View with Optimized State Observation
+
 /// Separated content view to prevent navigation title conflicts
 private struct TeamContentView: View {
     let viewModel: TeamGenerationViewModel
@@ -130,13 +131,13 @@ private struct TeamContentView: View {
                 case .generating:
                     GeneratingView()
                         .transition(.opacity.combined(with: .scale(scale: 1.05)))
-                case .success(let teams):
+                case let .success(teams):
                     TeamsDisplayView(teams: teams, viewModel: viewModel)
                         .transition(.asymmetric(
                             insertion: .opacity.combined(with: .move(edge: .bottom)),
                             removal: .opacity.combined(with: .scale(scale: 0.95))
                         ))
-                case .error(let error):
+                case let .error(error):
                     ErrorView(error: error, viewModel: viewModel)
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
@@ -177,7 +178,7 @@ private struct TeamContentView: View {
 
 // MARK: - Optimized Modifiers with Reduced Change Handlers
 
-fileprivate struct SheetsModifier: ViewModifier {
+private struct SheetsModifier: ViewModifier {
     @Binding fileprivate var presentationState: PresentationState
     fileprivate let viewModel: TeamGenerationViewModel
 
@@ -203,7 +204,7 @@ fileprivate struct SheetsModifier: ViewModifier {
     }
 }
 
-fileprivate struct AlertsModifier: ViewModifier {
+private struct AlertsModifier: ViewModifier {
     @Binding fileprivate var presentationState: PresentationState
     fileprivate let viewModel: TeamGenerationViewModel
 
@@ -223,14 +224,15 @@ fileprivate struct AlertsModifier: ViewModifier {
 }
 
 // MARK: - Optimized Change Handlers with Debouncing
-fileprivate struct ChangeHandlersModifier: ViewModifier {
+
+private struct ChangeHandlersModifier: ViewModifier {
     @Binding fileprivate var presentationState: PresentationState
     fileprivate let viewModel: TeamGenerationViewModel
     @Binding fileprivate var selectedTab: Int
 
     // Debouncing state
     @State private var navigationDebounceTask: Task<Void, Never>?
-    @State private var lastNavigationTrigger: Date = Date()
+    @State private var lastNavigationTrigger: Date = .init()
 
     func body(content: Content) -> some View {
         content
@@ -382,16 +384,14 @@ private struct TeamsDisplayView: View {
     let teams: [TeamEntity]
     let viewModel: TeamGenerationViewModel
 
-
-
     private var adaptiveColumnCount: Int {
         #if os(iOS)
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            // On iPad, use 2 columns for many teams to reduce scroll length
-            return teams.count > 4 ? 2 : 3
-        }
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                // On iPad, use 2 columns for many teams to reduce scroll length
+                return teams.count > 4 ? 2 : 3
+            }
         #endif
-        return 1  // Single column for portrait iPhone to prevent compression
+        return 1 // Single column for portrait iPhone to prevent compression
     }
 
     private var maxPlayersPerTeam: Int {
@@ -405,7 +405,10 @@ private struct TeamsDisplayView: View {
 
             // Teams Grid - Optimized for scroll efficiency
             LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.md), count: adaptiveColumnCount),
+                columns: Array(
+                    repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.md),
+                    count: adaptiveColumnCount
+                ),
                 spacing: DesignSystem.Spacing.lg
             ) {
                 ForEach(teams.indices, id: \.self) { index in
@@ -415,7 +418,7 @@ private struct TeamsDisplayView: View {
                         teamNumber: index + 1,
                         maxPlayersPerTeam: maxPlayersPerTeam
                     )
-                    .frame(maxWidth: .infinity)  // Ensure full width usage
+                    .frame(maxWidth: .infinity) // Ensure full width usage
                     .id(team.id) // Explicit ID for better diffing
                 }
             }
@@ -423,6 +426,7 @@ private struct TeamsDisplayView: View {
     }
 
     // MARK: - Enhanced Header with Global Expansion Controls
+
     private var enhancedTeamsSummaryHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             // Main summary row
@@ -444,16 +448,12 @@ private struct TeamsDisplayView: View {
         .padding(.horizontal, DesignSystem.Spacing.sm)
     }
 
-
-
     // MARK: - Helper Properties
 
     private var totalPlayers: Int {
         teams.reduce(0) { $0 + $1.players.count }
     }
 }
-
-
 
 // Error View with Recovery Actions
 private struct ErrorView: View {
@@ -499,6 +499,7 @@ private struct ErrorView: View {
 }
 
 // MARK: - Player Selection Sheet
+
 private struct PlayerSelectionSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.dependencies) private var dependencies
@@ -597,9 +598,9 @@ private struct PlayerSelectionSheet: View {
 
     private var filteredPlayers: [PlayerEntity] {
         if searchText.isEmpty {
-            return players
+            players
         } else {
-            return players.filter { player in
+            players.filter { player in
                 player.name.localizedCaseInsensitiveContains(searchText)
             }
         }
@@ -609,13 +610,13 @@ private struct PlayerSelectionSheet: View {
         do {
             let loadedPlayers = try await dependencies.managePlayersUseCase.getAllPlayers()
             await MainActor.run {
-                self.players = loadedPlayers
-                self.isLoading = false
+                players = loadedPlayers
+                isLoading = false
             }
         } catch {
             await MainActor.run {
-                self.players = []
-                self.isLoading = false
+                players = []
+                isLoading = false
             }
         }
     }
@@ -639,6 +640,7 @@ private struct PlayerSelectionSheet: View {
 }
 
 // MARK: - Player Selection Row
+
 private struct PlayerSelectionRow: View {
     let player: PlayerEntity
     let onSelectionChanged: (Bool) -> Void
@@ -685,6 +687,7 @@ private struct PlayerSelectionRow: View {
 }
 
 // MARK: - Preview Support
+
 #Preview {
     TeamView()
         .environment(\.dependencies, MockDependencyContainer())

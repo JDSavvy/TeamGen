@@ -1,9 +1,9 @@
 import UIKit
 
 // MARK: - iOS Haptic Service
+
 /// Concrete implementation of haptic feedback for iOS
 public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable {
-
     // Feedback generators
     private let impactLight = UIImpactFeedbackGenerator(style: .light)
     private let impactMedium = UIImpactFeedbackGenerator(style: .medium)
@@ -68,11 +68,11 @@ public final class iOSHapticService: HapticServiceProtocol, @unchecked Sendable 
 
     public func provideGenerationFeedback(balanceScore: Double) async {
         switch balanceScore {
-        case 0.9...1.0:
+        case 0.9 ... 1.0:
             await success()
-        case 0.7..<0.9:
+        case 0.7 ..< 0.9:
             await impact(.medium)
-        case 0.5..<0.7:
+        case 0.5 ..< 0.7:
             await impact(.light)
         default:
             await warning()

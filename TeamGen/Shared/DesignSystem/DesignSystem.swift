@@ -1,19 +1,22 @@
 import SwiftUI
 
 // MARK: - Design System
+
 /// Centralized design system following Apple Human Interface Guidelines iOS 18
 /// Enhanced with modern accessibility features and unified visual language
-public struct DesignSystem {
-
+public enum DesignSystem {
     // MARK: - Colors
-    public struct Colors {
+
+    public enum Colors {
         // MARK: - Primary Colors (iOS 18 Enhanced)
+
         public static let primary = Color.accentColor
         public static let primaryBackground = Color(.systemBackground)
         public static let secondaryBackground = Color(.secondarySystemBackground)
         public static let tertiaryBackground = Color(.tertiarySystemBackground)
 
         // MARK: - Semantic Colors (Enhanced for iOS 18)
+
         public static let success = Color(.systemGreen)
         public static let warning = Color(.systemOrange)
         public static let error = Color(.systemRed)
@@ -25,6 +28,7 @@ public struct DesignSystem {
         public static let cyan = Color(.systemCyan)
 
         // MARK: - Text Colors (Enhanced Hierarchy)
+
         public static let primaryText = Color(.label)
         public static let secondaryText = Color(.secondaryLabel)
         public static let tertiaryText = Color(.tertiaryLabel)
@@ -32,6 +36,7 @@ public struct DesignSystem {
         public static let placeholderText = Color(.placeholderText)
 
         // MARK: - Enhanced UI Colors (iOS 18 Material Design)
+
         public static let cardBackground = Color(.secondarySystemBackground)
         public static let elevatedCardBackground = Color(.tertiarySystemBackground)
         public static let separatorColor = Color(.separator)
@@ -41,6 +46,7 @@ public struct DesignSystem {
         public static let tertiaryGroupedBackground = Color(.tertiarySystemGroupedBackground)
 
         // MARK: - Interactive Colors (Modern iOS 18)
+
         public static let buttonBackground = Color(.systemBlue)
         public static let buttonBackgroundPressed = Color(.systemBlue).opacity(0.8)
         public static let destructiveButton = Color(.systemRed)
@@ -52,6 +58,7 @@ public struct DesignSystem {
         public static let fillQuaternary = Color(.quaternarySystemFill)
 
         // MARK: - Accessibility Colors (WCAG 2.2 Compliant)
+
         public static let highContrastPrimary = Color(.label)
         public static let highContrastSecondary = Color(.secondaryLabel)
         public static let focusRing = Color(.systemBlue)
@@ -61,34 +68,35 @@ public struct DesignSystem {
 
         /// Returns appropriate text color based on accessibility settings
         public static func accessibleTextColor(isHighContrast: Bool = false) -> Color {
-            return isHighContrast ? highContrastPrimary : primaryText
+            isHighContrast ? highContrastPrimary : primaryText
         }
 
         /// Returns appropriate secondary text color based on accessibility settings
         public static func accessibleSecondaryTextColor(isHighContrast: Bool = false) -> Color {
-            return isHighContrast ? highContrastSecondary : secondaryText
+            isHighContrast ? highContrastSecondary : secondaryText
         }
 
         /// Returns appropriate background color based on accessibility settings
         public static func accessibleBackgroundColor(isHighContrast: Bool = false) -> Color {
-            return isHighContrast ? Color(.systemBackground) : primaryBackground
+            isHighContrast ? Color(.systemBackground) : primaryBackground
         }
 
         /// Returns appropriate card background color based on accessibility settings
         public static func accessibleCardBackground(isHighContrast: Bool = false) -> Color {
-            return isHighContrast ? Color(.systemBackground) : cardBackground
+            isHighContrast ? Color(.systemBackground) : cardBackground
         }
 
         // MARK: - Enhanced Continuous Gradient Color System (WCAG 2.2 Compliant)
+
         // Seamless transitions across red → orange → yellow → green spectrum
         // Enhanced for better accessibility and visual distinction
 
         // Anchor colors for the continuous gradient (Enhanced contrast ratios)
-        public static let gradientRed = Color(red: 0.89, green: 0.18, blue: 0.18)       // Pure red (#E32E2E)
-        public static let gradientOrange = Color(red: 0.95, green: 0.42, blue: 0.13)    // Red-orange (#F26B21)
-        public static let gradientYellow = Color(red: 0.98, green: 0.65, blue: 0.09)    // Orange-yellow (#FA9917)
+        public static let gradientRed = Color(red: 0.89, green: 0.18, blue: 0.18) // Pure red (#E32E2E)
+        public static let gradientOrange = Color(red: 0.95, green: 0.42, blue: 0.13) // Red-orange (#F26B21)
+        public static let gradientYellow = Color(red: 0.98, green: 0.65, blue: 0.09) // Orange-yellow (#FA9917)
         public static let gradientYellowGreen = Color(red: 0.85, green: 0.75, blue: 0.15) // Yellow-green (#D9BF26)
-        public static let gradientGreen = Color(red: 0.20, green: 0.78, blue: 0.35)     // Pure green (#33C759)
+        public static let gradientGreen = Color(red: 0.20, green: 0.78, blue: 0.35) // Pure green (#33C759)
 
         // Legacy discrete skill level colors (maintained for compatibility)
         public static let skillBeginner = gradientRed
@@ -98,6 +106,7 @@ public struct DesignSystem {
         public static let skillExpert = gradientGreen
 
         // MARK: - Surface Colors (iOS 18 Material Design)
+
         public static let overlayBackground = Color(.tertiarySystemBackground)
         public static let dividerColor = Color(.opaqueSeparator)
         public static let glassMorphismBackground = Color(.systemBackground).opacity(0.8)
@@ -105,8 +114,10 @@ public struct DesignSystem {
     }
 
     // MARK: - Typography (iOS 18 Enhanced)
-    public struct Typography {
+
+    public enum Typography {
         // MARK: - Semantic Text Styles (Apple HIG Compliant)
+
         /// Use these exclusively for perfect Dynamic Type support
         public static let largeTitle = Font.largeTitle
         public static let title1 = Font.title
@@ -121,15 +132,18 @@ public struct DesignSystem {
         public static let caption2 = Font.caption2
 
         // MARK: - Emphasized Variants (Semantic Weight Only)
+
         public static let bodyEmphasized = Font.body.weight(.medium)
         public static let headlineEmphasized = Font.headline.weight(.semibold)
         public static let calloutEmphasized = Font.callout.weight(.medium)
 
         // MARK: - Monospaced (For Data Display)
+
         public static let monospacedDigit = Font.body.monospacedDigit()
         public static let monospacedCaption = Font.caption.monospacedDigit()
 
         // MARK: - Contextual Typography (Semantic Usage)
+
         public static let navigationTitle = Font.largeTitle.weight(.bold)
         public static let sectionHeader = Font.headline.weight(.semibold)
         public static let cardTitle = Font.headline
@@ -141,6 +155,7 @@ public struct DesignSystem {
         public static let badgeText = Font.caption.weight(.medium)
 
         // MARK: - Custom Sized Typography (Centralized)
+
         /// Team number display in cards
         public static let teamNumber = Font.system(size: 22, weight: .bold, design: .rounded)
         /// Large metric values
@@ -169,6 +184,7 @@ public struct DesignSystem {
         public static let extraLargeControl = Font.system(size: 24)
 
         // MARK: - Additional Typography for Complete Coverage
+
         /// Settings icon font
         public static let settingsIcon = Font.system(size: 16, weight: .semibold)
         /// Settings description font
@@ -183,13 +199,16 @@ public struct DesignSystem {
         public static let loadingStateSubtitle = Font.system(size: 16, weight: .medium, design: .default)
 
         // MARK: - Accessibility Support
+
         /// All fonts automatically support Dynamic Type scaling
         /// No custom font sizes - use semantic styles only
     }
 
     // MARK: - Spacing (Enhanced iOS 18 Grid System)
-    public struct Spacing {
+
+    public enum Spacing {
         // MARK: - Base Spacing Scale (8pt grid system)
+
         public static let xxxs: CGFloat = 2
         public static let xxs: CGFloat = 4
         public static let xs: CGFloat = 8
@@ -202,6 +221,7 @@ public struct DesignSystem {
         public static let xxxxl: CGFloat = 48
 
         // MARK: - Additional Spacing Values (Centralized)
+
         /// Single point spacing
         public static let single: CGFloat = 1
         /// Compact spacing for tight layouts
@@ -212,6 +232,7 @@ public struct DesignSystem {
         public static let mediumLarge: CGFloat = 10
 
         // MARK: - Semantic Spacing (iOS 18 Guidelines)
+
         public static let cardPadding = md
         public static let screenPadding = md
         public static let sectionSpacing = xl
@@ -221,6 +242,7 @@ public struct DesignSystem {
         public static let iconSpacing = xs
 
         // MARK: - Layout Spacing (Enhanced for modern iOS)
+
         public static let navigationSpacing = lg
         public static let tabBarSpacing = sm
         public static let toolbarSpacing = md
@@ -229,7 +251,8 @@ public struct DesignSystem {
     }
 
     // MARK: - Corner Radius (iOS 18 Enhanced)
-    public struct CornerRadius {
+
+    public enum CornerRadius {
         public static let none: CGFloat = 0
         public static let small: CGFloat = 8
         public static let medium: CGFloat = 12
@@ -239,6 +262,7 @@ public struct DesignSystem {
         public static let xxxl: CGFloat = 28
 
         // MARK: - Additional Corner Radius Values (Centralized)
+
         /// Tiny radius for small elements
         public static let tiny: CGFloat = 2
         /// Compact radius for tight layouts
@@ -251,6 +275,7 @@ public struct DesignSystem {
         public static let progressBar: CGFloat = 4
 
         // MARK: - Semantic Radius (iOS 18 Guidelines)
+
         public static let button: CGFloat = 10
         public static let card: CGFloat = medium
         public static let sheet: CGFloat = large
@@ -258,6 +283,7 @@ public struct DesignSystem {
         public static let pill: CGFloat = 50 // For pill-shaped elements
 
         // MARK: - Additional Corner Radius for Complete Coverage
+
         /// Skill picker radius
         public static let skillPicker: CGFloat = 12
         /// Team distribution indicator radius
@@ -267,7 +293,8 @@ public struct DesignSystem {
     }
 
     // MARK: - Icon Sizes (Enhanced iOS 18)
-    public struct IconSize {
+
+    public enum IconSize {
         public static let xxs: CGFloat = 8
         public static let xs: CGFloat = 12
         public static let sm: CGFloat = 14
@@ -278,6 +305,7 @@ public struct DesignSystem {
         public static let xxxl: CGFloat = 40
 
         // MARK: - Semantic Icon Sizes
+
         public static let tabBar: CGFloat = lg
         public static let navigation: CGFloat = lg
         public static let button: CGFloat = md
@@ -286,8 +314,10 @@ public struct DesignSystem {
     }
 
     // MARK: - Component Dimensions (Centralized)
-    public struct ComponentSize {
+
+    public enum ComponentSize {
         // MARK: - Common Frame Dimensions
+
         /// Small circular indicators (5x5)
         public static let tinyIndicator: CGFloat = 5
         /// Medium circular indicators (6x6)
@@ -314,6 +344,7 @@ public struct DesignSystem {
         public static let emptyStateIcon: CGFloat = 120
 
         // MARK: - Component Heights
+
         /// Minimum row height
         public static let minRowHeight: CGFloat = 20
         /// Standard row height
@@ -338,6 +369,7 @@ public struct DesignSystem {
         public static let scaleMarkerHeight: CGFloat = 4
 
         // MARK: - Selection Indicators
+
         /// Selection circle size
         public static let selectionCircle: CGFloat = 22
         /// Checkmark size within selection
@@ -345,7 +377,8 @@ public struct DesignSystem {
     }
 
     // MARK: - Shadow (Enhanced iOS 18 Elevation System)
-    public struct Shadow {
+
+    public enum Shadow {
         public static let none = Color.clear
         public static let subtle = Color.black.opacity(0.03)
         public static let small = Color.black.opacity(0.05)
@@ -354,6 +387,7 @@ public struct DesignSystem {
         public static let extraLarge = Color.black.opacity(0.2)
 
         // MARK: - Elevation Shadows (Material Design inspired, iOS 18 compliant)
+
         public static func elevation1() -> some View {
             RoundedRectangle(cornerRadius: 0)
                 .fill(Color.clear)
@@ -386,8 +420,10 @@ public struct DesignSystem {
     }
 
     // MARK: - Animation (Enhanced iOS 18 Motion System)
-    public struct Animation {
+
+    public enum Animation {
         // MARK: - Basic Timing Curves (iOS 18 Enhanced)
+
         /// Ultra-fast micro-interactions (0.1s) - button presses, toggles
         public static let ultraQuick = SwiftUI.Animation.easeInOut(duration: 0.1)
 
@@ -404,6 +440,7 @@ public struct DesignSystem {
         public static let extraSlow = SwiftUI.Animation.easeInOut(duration: 0.7)
 
         // MARK: - Spring Animations (Natural Physics - iOS 18)
+
         /// Gentle spring for subtle interactions
         public static let gentleSpring = SwiftUI.Animation.spring(
             response: 0.4,
@@ -440,6 +477,7 @@ public struct DesignSystem {
         )
 
         // MARK: - Contextual Animations (iOS 18 Enhanced)
+
         /// For list item insertions/deletions
         public static let listTransition = SwiftUI.Animation.spring(
             response: 0.4,
@@ -471,38 +509,40 @@ public struct DesignSystem {
         )
 
         // MARK: - Accessibility-Aware Animations (Enhanced)
+
         /// Returns appropriate animation based on reduce motion setting
         public static func accessible(
             _ animation: SwiftUI.Animation,
             reduceMotion: Bool = false
         ) -> SwiftUI.Animation? {
-            return reduceMotion ? nil : animation
+            reduceMotion ? nil : animation
         }
 
         /// Standard animation with accessibility support
         public static func accessibleStandard(reduceMotion: Bool = false) -> SwiftUI.Animation? {
-            return accessible(standard, reduceMotion: reduceMotion)
+            accessible(standard, reduceMotion: reduceMotion)
         }
 
         /// Spring animation with accessibility support
         public static func accessibleSpring(reduceMotion: Bool = false) -> SwiftUI.Animation? {
-            return accessible(spring, reduceMotion: reduceMotion)
+            accessible(spring, reduceMotion: reduceMotion)
         }
 
         /// Quick animation with accessibility support
         public static func accessibleQuick(reduceMotion: Bool = false) -> SwiftUI.Animation? {
-            return accessible(quick, reduceMotion: reduceMotion)
+            accessible(quick, reduceMotion: reduceMotion)
         }
 
         /// Interactive animation with accessibility support
         public static func accessibleInteractive(reduceMotion: Bool = false) -> SwiftUI.Animation? {
-            return accessible(interactive, reduceMotion: reduceMotion)
+            accessible(interactive, reduceMotion: reduceMotion)
         }
 
         // MARK: - Staggered Animations (Enhanced)
+
         /// Creates staggered animation delays for list items
         public static func staggeredDelay(for index: Int, baseDelay: Double = 0.05) -> Double {
-            return Double(index) * baseDelay
+            Double(index) * baseDelay
         }
 
         /// Staggered spring animation for list items
@@ -510,7 +550,7 @@ public struct DesignSystem {
             for index: Int,
             baseDelay: Double = 0.05
         ) -> SwiftUI.Animation {
-            return spring.delay(staggeredDelay(for: index, baseDelay: baseDelay))
+            spring.delay(staggeredDelay(for: index, baseDelay: baseDelay))
         }
 
         /// Staggered interactive animation
@@ -518,12 +558,13 @@ public struct DesignSystem {
             for index: Int,
             baseDelay: Double = 0.03
         ) -> SwiftUI.Animation {
-            return interactive.delay(staggeredDelay(for: index, baseDelay: baseDelay))
+            interactive.delay(staggeredDelay(for: index, baseDelay: baseDelay))
         }
     }
 
     // MARK: - Button Styles (Enhanced iOS 18)
-    public struct ButtonStyles {
+
+    public enum ButtonStyles {
         public static let primaryHeight: CGFloat = 50
         public static let secondaryHeight: CGFloat = 44
         public static let smallHeight: CGFloat = 36
@@ -536,8 +577,10 @@ public struct DesignSystem {
     }
 
     // MARK: - Visual Consistency Standards (Enhanced iOS 18)
-    public struct VisualConsistency {
+
+    public enum VisualConsistency {
         // MARK: - Border Widths (Enhanced hierarchy)
+
         public static let borderHairline: CGFloat = 0.33
         public static let borderThin: CGFloat = 0.5
         public static let borderStandard: CGFloat = 1.0
@@ -546,6 +589,7 @@ public struct DesignSystem {
         public static let borderBold: CGFloat = 4.0
 
         // MARK: - Opacity Levels (Enhanced layering)
+
         public static let opacityDisabled: Double = 0.3
         public static let opacitySubtle: Double = 0.08
         public static let opacityLight: Double = 0.15
@@ -555,6 +599,7 @@ public struct DesignSystem {
         public static let opacityDominant: Double = 0.8
 
         // MARK: - Additional Opacity Values (Centralized)
+
         /// Very subtle overlay (0.1)
         public static let opacityVeryLight: Double = 0.1
         /// Moderate overlay (0.2)
@@ -569,6 +614,7 @@ public struct DesignSystem {
         public static let opacityHighlyTransparent: Double = 0.95
 
         // MARK: - Component-Specific Opacity Values
+
         /// Button pressed state opacity
         public static let opacityButtonPressed: Double = 0.9
         /// Loading state opacity
@@ -593,6 +639,7 @@ public struct DesignSystem {
         public static let opacityWhiteOverlayStrong: Double = 0.4
 
         // MARK: - Additional Opacity Values for Complete Coverage
+
         /// Very light background opacity (0.05)
         public static let opacityBackgroundVeryLight: Double = 0.05
         /// Icon background opacity (0.15)
@@ -607,6 +654,7 @@ public struct DesignSystem {
         public static let opacityBlurBackground: Double = 0.95
 
         // MARK: - Shadow Parameters (Centralized)
+
         /// Light shadow opacity for light mode
         public static let shadowLightMode: Double = 0.06
         /// Dark shadow opacity for dark mode
@@ -625,6 +673,7 @@ public struct DesignSystem {
         public static let buttonShadowOffsetPressed: CGFloat = 1
 
         // MARK: - Blur Radii (Enhanced depth)
+
         public static let blurSubtle: CGFloat = 2
         public static let blurStandard: CGFloat = 4
         public static let blurStrong: CGFloat = 8
@@ -632,6 +681,7 @@ public struct DesignSystem {
         public static let blurExtreme: CGFloat = 32
 
         // MARK: - Scale Factors (Enhanced interactions)
+
         public static let scalePressed: CGFloat = 0.98
         public static let scalePressedSubtle: CGFloat = 0.99
         public static let scaleSelected: CGFloat = 1.02
@@ -645,7 +695,8 @@ public struct DesignSystem {
     }
 
     // MARK: - Elevation System (Enhanced Material Design, iOS 18 compliant)
-    public struct Elevation {
+
+    public enum Elevation {
         public static let none: CGFloat = 0
         public static let subtle: CGFloat = 0.5
         public static let low: CGFloat = 1
@@ -689,26 +740,27 @@ public struct DesignSystem {
     }
 
     // MARK: - Gradient Colors
-    struct GradientColors {
+
+    enum GradientColors {
         static func skillColor(for value: Double) -> Color {
             let clampedValue = max(1.0, min(10.0, value))
 
             // Define color stops for smooth interpolation
             let colorStops: [(threshold: Double, color: (r: Double, g: Double, b: Double))] = [
-                (1.0, (1.0, 0.2, 0.2)),    // Muted red for lowest skill
-                (2.5, (1.0, 0.4, 0.3)),   // Warm orange-red transition
-                (4.0, (1.0, 0.6, 0.0)),    // Orange for basic skill
-                (6.0, (1.0, 0.8, 0.0)),    // Yellow for intermediate
-                (7.5, (0.6, 0.8, 0.2)),    // Light green for advanced
-                (10.0, (0.2, 0.8, 0.3))    // Green for expert
+                (1.0, (1.0, 0.2, 0.2)), // Muted red for lowest skill
+                (2.5, (1.0, 0.4, 0.3)), // Warm orange-red transition
+                (4.0, (1.0, 0.6, 0.0)), // Orange for basic skill
+                (6.0, (1.0, 0.8, 0.0)), // Yellow for intermediate
+                (7.5, (0.6, 0.8, 0.2)), // Light green for advanced
+                (10.0, (0.2, 0.8, 0.3)), // Green for expert
             ]
 
             // Find the two color stops to interpolate between
-            for i in 0..<(colorStops.count - 1) {
+            for i in 0 ..< (colorStops.count - 1) {
                 let currentStop = colorStops[i]
                 let nextStop = colorStops[i + 1]
 
-                if clampedValue >= currentStop.threshold && clampedValue <= nextStop.threshold {
+                if clampedValue >= currentStop.threshold, clampedValue <= nextStop.threshold {
                     // Calculate interpolation factor (0.0 to 1.0)
                     let range = nextStop.threshold - currentStop.threshold
                     let position = clampedValue - currentStop.threshold
@@ -754,13 +806,15 @@ public struct DesignSystem {
 
         /// Returns appropriate text color for the given skill value
         static func textColor(for skillValue: Double) -> Color {
-            return skillColor(for: skillValue)
+            skillColor(for: skillValue)
         }
     }
 
     // MARK: - SF Symbols (iOS 18 Enhanced)
-    public struct Symbols {
+
+    public enum Symbols {
         // MARK: - Navigation & Actions
+
         public static let plus = "plus"
         public static let minus = "minus"
         public static let chevronDown = "chevron.down"
@@ -772,6 +826,7 @@ public struct DesignSystem {
         public static let ellipsis = "ellipsis"
 
         // MARK: - Content & Media
+
         public static let person = "person"
         public static let personFill = "person.fill"
         public static let personGroup = "person.3"
@@ -780,6 +835,7 @@ public struct DesignSystem {
         public static let personStackFill = "person.crop.rectangle.stack.fill"
 
         // MARK: - Interface & Controls
+
         public static let gear = "gearshape"
         public static let gearFill = "gearshape.fill"
         public static let list = "list.bullet"
@@ -789,6 +845,7 @@ public struct DesignSystem {
         public static let sort = "arrow.up.arrow.down"
 
         // MARK: - Status & Feedback
+
         public static let success = "checkmark.circle.fill"
         public static let error = "exclamationmark.triangle.fill"
         public static let warning = "exclamationmark.circle.fill"
@@ -796,6 +853,7 @@ public struct DesignSystem {
         public static let loading = "arrow.clockwise"
 
         // MARK: - Skills & Levels
+
         public static let triangle = "triangle.fill"
         public static let diamond = "diamond.fill"
         public static let circle = "circle.fill"
@@ -803,15 +861,17 @@ public struct DesignSystem {
         public static let star = "star.fill"
 
         // MARK: - Skill Categories
+
         public static let technical = "cpu"
         public static let agility = "figure.run"
         public static let endurance = "heart"
         public static let teamwork = "person.2"
 
         // MARK: - Accessibility Support
+
         /// Returns appropriate symbol variant based on context
         public static func symbol(_ name: String, filled: Bool = false) -> String {
-            if filled && !name.hasSuffix(".fill") {
+            if filled, !name.hasSuffix(".fill") {
                 return "\(name).fill"
             }
             return name
@@ -820,10 +880,10 @@ public struct DesignSystem {
         /// Returns symbol with proper weight for context
         public static func symbolWeight(for context: SymbolContext) -> Font.Weight {
             switch context {
-            case .navigation: return .medium
-            case .button: return .medium
-            case .icon: return .regular
-            case .emphasis: return .semibold
+            case .navigation: .medium
+            case .button: .medium
+            case .icon: .regular
+            case .emphasis: .semibold
             }
         }
 
@@ -834,6 +894,7 @@ public struct DesignSystem {
 }
 
 // MARK: - Badge Size
+
 /// Defines sizing options for skill badges and similar components
 public enum BadgeSize {
     case small
@@ -843,76 +904,77 @@ public enum BadgeSize {
     public var font: Font {
         switch self {
         case .small:
-            return DesignSystem.Typography.caption2
+            DesignSystem.Typography.caption2
         case .medium:
-            return DesignSystem.Typography.caption1
+            DesignSystem.Typography.caption1
         case .large:
-            return DesignSystem.Typography.subheadline
+            DesignSystem.Typography.subheadline
         }
     }
 
     public var horizontalPadding: CGFloat {
         switch self {
         case .small:
-            return DesignSystem.Spacing.xs
+            DesignSystem.Spacing.xs
         case .medium:
-            return DesignSystem.Spacing.sm
+            DesignSystem.Spacing.sm
         case .large:
-            return DesignSystem.Spacing.md
+            DesignSystem.Spacing.md
         }
     }
 
     public var verticalPadding: CGFloat {
         switch self {
         case .small:
-            return DesignSystem.Spacing.xxxs
+            DesignSystem.Spacing.xxxs
         case .medium:
-            return DesignSystem.Spacing.xxs
+            DesignSystem.Spacing.xxs
         case .large:
-            return DesignSystem.Spacing.xs
+            DesignSystem.Spacing.xs
         }
     }
 
     public var iconSpacing: CGFloat {
         switch self {
         case .small:
-            return DesignSystem.Spacing.xxs
+            DesignSystem.Spacing.xxs
         case .medium:
-            return DesignSystem.Spacing.sm
+            DesignSystem.Spacing.sm
         case .large:
-            return DesignSystem.Spacing.md
+            DesignSystem.Spacing.md
         }
     }
 
     public var iconSize: CGFloat {
         switch self {
         case .small:
-            return DesignSystem.IconSize.xxs
+            DesignSystem.IconSize.xxs
         case .medium:
-            return DesignSystem.IconSize.sm
+            DesignSystem.IconSize.sm
         case .large:
-            return DesignSystem.IconSize.md
+            DesignSystem.IconSize.md
         }
     }
 }
 
 // MARK: - Skill Level Color Extension
+
 public extension SkillLevel {
     /// Returns the continuous gradient color based on the exact skill value
     /// This ensures perfect synchronization between rank labels and visual indicators
     var designSystemColor: Color {
-        return DesignSystem.GradientColors.skillColor(for: representativeValue)
+        DesignSystem.GradientColors.skillColor(for: representativeValue)
     }
 
     /// Returns the representative skill value for continuous gradient calculation
     /// Maps discrete skill levels to their continuous equivalents
     var representativeValue: Double {
         switch self {
-        case .beginner: return 1.75  // Mid-point of 1.0-2.5 range
-        case .novice: return 3.25    // Mid-point of 2.5-4.0 range
-        case .intermediate: return 5.00 // Mid-point of 4.0-6.0 range
-        case .advanced: return 6.75  // Mid-point of 6.0-7.5 range
-        case .expert: return 8.75     // High-end of 7.5-10.0 range
+        case .beginner: 1.75 // Mid-point of 1.0-2.5 range
+        case .novice: 3.25 // Mid-point of 2.5-4.0 range
+        case .intermediate: 5.00 // Mid-point of 4.0-6.0 range
+        case .advanced: 6.75 // Mid-point of 6.0-7.5 range
+        case .expert: 8.75 // High-end of 7.5-10.0 range
         }
     }
 
@@ -923,13 +985,13 @@ public extension SkillLevel {
         let clampedValue = max(1.0, min(10.0, value))
 
         switch clampedValue {
-        case 1.0..<2.5:
+        case 1.0 ..< 2.5:
             return .beginner
-        case 2.5..<4.0:
+        case 2.5 ..< 4.0:
             return .novice
-        case 4.0..<6.0:
+        case 4.0 ..< 6.0:
             return .intermediate
-        case 6.0..<7.5:
+        case 6.0 ..< 7.5:
             return .advanced
         default: // 7.5-10.0
             return .expert
@@ -949,7 +1011,7 @@ public extension SkillLevel {
     /// Text color that ensures WCAG AA compliance against light backgrounds
     /// Uses the continuous gradient system for perfect synchronization
     var textColor: Color {
-        return DesignSystem.GradientColors.textColor(for: representativeValue)
+        DesignSystem.GradientColors.textColor(for: representativeValue)
     }
 
     /// Enhanced background colors with better visual hierarchy
@@ -965,11 +1027,12 @@ public extension SkillLevel {
 }
 
 // MARK: - View Extensions for Design System
+
 public extension View {
     // MARK: - Card Styles
+
     func cardStyle(elevation: CGFloat = DesignSystem.Elevation.low) -> some View {
-        self
-            .background(DesignSystem.Colors.cardBackground)
+        background(DesignSystem.Colors.cardBackground)
             .cornerRadius(DesignSystem.CornerRadius.card)
             .overlay(
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.card)
@@ -979,8 +1042,7 @@ public extension View {
     }
 
     func compactCardStyle() -> some View {
-        self
-            .background(DesignSystem.Colors.secondaryBackground)
+        background(DesignSystem.Colors.secondaryBackground)
             .cornerRadius(DesignSystem.CornerRadius.small)
             .overlay(
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
@@ -989,9 +1051,9 @@ public extension View {
     }
 
     // MARK: - Button Styles
+
     func primaryButtonStyle() -> some View {
-        self
-            .frame(height: DesignSystem.ButtonStyles.primaryHeight)
+        frame(height: DesignSystem.ButtonStyles.primaryHeight)
             .frame(maxWidth: .infinity)
             .background(DesignSystem.Colors.primary)
             .foregroundColor(.white)
@@ -1000,8 +1062,7 @@ public extension View {
     }
 
     func secondaryButtonStyle() -> some View {
-        self
-            .frame(height: DesignSystem.ButtonStyles.secondaryHeight)
+        frame(height: DesignSystem.ButtonStyles.secondaryHeight)
             .frame(maxWidth: .infinity)
             .background(DesignSystem.Colors.cardBackground)
             .foregroundColor(DesignSystem.Colors.primary)
@@ -1013,50 +1074,54 @@ public extension View {
     }
 
     // MARK: - Spacing and Layout
+
     func screenPadding() -> some View {
-        self.padding(DesignSystem.Spacing.screenPadding)
+        padding(DesignSystem.Spacing.screenPadding)
     }
 
     func sectionSpacing() -> some View {
-        self.padding(.vertical, DesignSystem.Spacing.sectionSpacing)
+        padding(.vertical, DesignSystem.Spacing.sectionSpacing)
     }
 
     func cardPadding() -> some View {
-        self.padding(DesignSystem.Spacing.cardPadding)
+        padding(DesignSystem.Spacing.cardPadding)
     }
 
     // MARK: - Interactive States
+
     func pressedScale() -> some View {
-        self.scaleEffect(DesignSystem.VisualConsistency.scalePressed)
+        scaleEffect(DesignSystem.VisualConsistency.scalePressed)
     }
 
     func selectedScale() -> some View {
-        self.scaleEffect(DesignSystem.VisualConsistency.scaleSelected)
+        scaleEffect(DesignSystem.VisualConsistency.scaleSelected)
     }
 
     // MARK: - Visual Hierarchy
+
     func subtleBackground() -> some View {
-        self.background(DesignSystem.Colors.primaryBackground.opacity(DesignSystem.VisualConsistency.opacitySubtle))
+        background(DesignSystem.Colors.primaryBackground.opacity(DesignSystem.VisualConsistency.opacitySubtle))
     }
 
     func lightBackground() -> some View {
-        self.background(DesignSystem.Colors.primaryBackground.opacity(DesignSystem.VisualConsistency.opacityLight))
+        background(DesignSystem.Colors.primaryBackground.opacity(DesignSystem.VisualConsistency.opacityLight))
     }
 
     func mediumBackground() -> some View {
-        self.background(DesignSystem.Colors.primaryBackground.opacity(DesignSystem.VisualConsistency.opacityMedium))
+        background(DesignSystem.Colors.primaryBackground.opacity(DesignSystem.VisualConsistency.opacityMedium))
     }
 
     // MARK: - Borders and Separators
+
     func standardBorder(color: Color = DesignSystem.Colors.separatorColor) -> some View {
-        self.overlay(
+        overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                 .stroke(color, lineWidth: DesignSystem.VisualConsistency.borderStandard)
         )
     }
 
     func thickBorder(color: Color = DesignSystem.Colors.primary) -> some View {
-        self.overlay(
+        overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                 .stroke(color, lineWidth: DesignSystem.VisualConsistency.borderThick)
         )

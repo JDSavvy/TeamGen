@@ -1,8 +1,9 @@
 import Foundation
-import SwiftUI
 import Observation
+import SwiftUI
 
 // MARK: - Settings Management State
+
 enum SettingsManagementState: Equatable {
     case idle
     case loading
@@ -12,17 +13,20 @@ enum SettingsManagementState: Equatable {
 }
 
 // MARK: - Settings Management View Model
+
 /// Modern ViewModel using @Observable for settings management
 @Observable
 @MainActor
 public final class SettingsManagementViewModel {
     // MARK: - Observable Properties
+
     private(set) var currentState: SettingsManagementState = .idle
     var colorScheme: ColorSchemeOption = .system
     var selectedLanguage: SupportedLanguage = .english
     var highContrastEnabled: Bool = false
 
     // MARK: - Dependencies
+
     private let settingsRepository: SettingsRepositoryProtocol
     private let hapticService: HapticServiceProtocol
     private let colorSchemeService: any ColorSchemeServiceProtocol
@@ -34,13 +38,14 @@ public final class SettingsManagementViewModel {
     }
 
     var errorMessage: String? {
-        if case .error(let message) = currentState {
+        if case let .error(message) = currentState {
             return message
         }
         return nil
     }
 
     // MARK: - Initialization
+
     public init(
         settingsRepository: SettingsRepositoryProtocol,
         hapticService: HapticServiceProtocol,
@@ -180,32 +185,32 @@ enum SupportedLanguage: String, CaseIterable, Identifiable {
     case english = "English"
     case german = "Deutsch"
 
-    var id: String { self.rawValue }
+    var id: String { rawValue }
 
     var displayName: String {
-        return self.rawValue
+        rawValue
     }
 
     var localeIdentifier: String {
         switch self {
-        case .english: return "en"
-        case .german: return "de"
+        case .english: "en"
+        case .german: "de"
         }
     }
 
     /// Convert from AppLanguage to SupportedLanguage
     static func from(appLanguage: AppLanguage) -> SupportedLanguage {
         switch appLanguage {
-        case .english: return .english
-        case .german: return .german
+        case .english: .english
+        case .german: .german
         }
     }
 
     /// Convert to AppLanguage
     func toAppLanguage() -> AppLanguage {
         switch self {
-        case .english: return .english
-        case .german: return .german
+        case .english: .english
+        case .german: .german
         }
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Generate Teams Use Case Protocol
+
 public protocol GenerateTeamsUseCaseProtocol {
     func execute(
         teamCount: Int,
@@ -18,6 +19,7 @@ public protocol GenerateTeamsUseCaseProtocol {
 }
 
 // MARK: - Team Generation Validation Result
+
 public struct TeamGenerationValidationResult: Sendable {
     public let isValid: Bool
     public let warnings: [TeamGenerationWarning]
@@ -38,6 +40,7 @@ public struct TeamGenerationValidationResult: Sendable {
 }
 
 // MARK: - Team Generation Warning
+
 public enum TeamGenerationWarning: Sendable {
     case unevenPlayerDistribution(difference: Int)
     case significantSkillGap(maxDifference: Double)
@@ -46,19 +49,20 @@ public enum TeamGenerationWarning: Sendable {
 
     public var description: String {
         switch self {
-        case .unevenPlayerDistribution(let difference):
-            return "Some teams will have \(difference) more player(s) than others"
-        case .significantSkillGap(let maxDifference):
-            return "Large skill difference detected (up to \(String(format: "%.1f", maxDifference)) points)"
-        case .smallTeamSize(let playersPerTeam):
-            return "Teams will be very small (\(playersPerTeam) player(s) each)"
-        case .largeTeamSize(let playersPerTeam):
-            return "Teams will be very large (\(playersPerTeam)+ players each)"
+        case let .unevenPlayerDistribution(difference):
+            "Some teams will have \(difference) more player(s) than others"
+        case let .significantSkillGap(maxDifference):
+            "Large skill difference detected (up to \(String(format: "%.1f", maxDifference)) points)"
+        case let .smallTeamSize(playersPerTeam):
+            "Teams will be very small (\(playersPerTeam) player(s) each)"
+        case let .largeTeamSize(playersPerTeam):
+            "Teams will be very large (\(playersPerTeam)+ players each)"
         }
     }
 }
 
 // MARK: - Team Generation Recommendation
+
 public enum TeamGenerationRecommendation: Sendable {
     case adjustTeamCount(suggested: Int, reason: String)
     case addMorePlayers(minimum: Int)
@@ -68,21 +72,22 @@ public enum TeamGenerationRecommendation: Sendable {
 
     public var description: String {
         switch self {
-        case .adjustTeamCount(let suggested, let reason):
-            return "Consider \(suggested) teams: \(reason)"
-        case .addMorePlayers(let minimum):
-            return "Add at least \(minimum) more players for better balance"
+        case let .adjustTeamCount(suggested, reason):
+            "Consider \(suggested) teams: \(reason)"
+        case let .addMorePlayers(minimum):
+            "Add at least \(minimum) more players for better balance"
         case .balanceSkillLevels:
-            return "Consider adding players with different skill levels"
+            "Consider adding players with different skill levels"
         case .useFairMode:
-            return "Use Fair mode for better skill balance"
+            "Use Fair mode for better skill balance"
         case .useRandomMode:
-            return "Use Random mode for variety"
+            "Use Random mode for variety"
         }
     }
 }
 
 // MARK: - Team Distribution Preview
+
 public struct TeamDistributionPreview: Sendable {
     public let teamCount: Int
     public let playersPerTeam: [Int]
@@ -103,6 +108,7 @@ public struct TeamDistributionPreview: Sendable {
 }
 
 // MARK: - Domain Events
+
 public protocol DomainEventPublisher {
     func publish(_ event: DomainEvent) async
 }
@@ -159,6 +165,7 @@ public struct TeamGenerationFailedEvent: DomainEvent {
 }
 
 // MARK: - Generate Teams Use Case Implementation
+
 public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
     private let playerRepository: PlayerRepositoryProtocol
     private let teamGenerationService: TeamGenerationServiceProtocol
@@ -167,7 +174,7 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
     // Business rules constants
     private let minPlayersPerTeam = 2
     private let maxPlayersPerTeam = 8
-    private let optimalPlayersPerTeam = 4...6
+    private let optimalPlayersPerTeam = 4 ... 6
     private let significantSkillGapThreshold = 3.0
 
     public init(
@@ -339,7 +346,7 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
         let remainder = selectedPlayers.count % teamCount
 
         var playersPerTeam: [Int] = []
-        for i in 0..<teamCount {
+        for i in 0 ..< teamCount {
             let extraPlayer = i < remainder ? 1 : 0
             playersPerTeam.append(basePlayersPerTeam + extraPlayer)
         }
@@ -350,8 +357,9 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
 
         var playerIndex = 0
         for teamSize in playersPerTeam {
-            let teamPlayers = Array(sortedPlayers[playerIndex..<min(playerIndex + teamSize, sortedPlayers.count)])
-            let averageSkill = teamPlayers.isEmpty ? 0 : teamPlayers.map(\.skills.overall).reduce(0, +) / Double(teamPlayers.count)
+            let teamPlayers = Array(sortedPlayers[playerIndex ..< min(playerIndex + teamSize, sortedPlayers.count)])
+            let averageSkill = teamPlayers.isEmpty ? 0 : teamPlayers.map(\.skills.overall)
+                .reduce(0, +) / Double(teamPlayers.count)
             skillDistribution.append(averageSkill)
             playerIndex += teamSize
         }
@@ -381,7 +389,7 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
                 throw TeamGenerationError.generationFailed("Invalid player data: empty name")
             }
 
-            guard player.skills.overall > 0 && player.skills.overall <= 10 else {
+            guard player.skills.overall > 0, player.skills.overall <= 10 else {
                 throw TeamGenerationError.generationFailed("Invalid player data: skill out of range")
             }
         }
@@ -397,7 +405,7 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
         let maxRetries = 3
         var lastError: Error?
 
-        for attempt in 1...maxRetries {
+        for attempt in 1 ... maxRetries {
             do {
                 let teams = try await teamGenerationService.generateTeams(
                     from: players,
@@ -486,7 +494,7 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
 
     private func estimateBalanceScore(
         players: [PlayerEntity],
-        teamCount: Int,
+        teamCount _: Int,
         mode: TeamGenerationMode
     ) -> Double {
         switch mode {

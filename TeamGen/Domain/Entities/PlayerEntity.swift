@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Domain Entity (Framework Agnostic)
+
 /// Pure domain model representing a player without any framework dependencies
 public struct PlayerEntity: Equatable, Identifiable, Sendable {
     public let id: UUID
@@ -25,6 +26,7 @@ public struct PlayerEntity: Equatable, Identifiable, Sendable {
 }
 
 // MARK: - Value Objects
+
 public struct PlayerSkills: Equatable, Sendable {
     public let technical: Int
     public let agility: Int
@@ -41,8 +43,6 @@ public struct PlayerSkills: Equatable, Sendable {
         self.endurance = min(max(endurance, 1), 10)
         self.teamwork = min(max(teamwork, 1), 10)
     }
-
-
 }
 
 public struct PlayerStatistics: Equatable, Sendable {
@@ -62,6 +62,7 @@ public struct PlayerStatistics: Equatable, Sendable {
 }
 
 // MARK: - Skill Level Classification
+
 public enum SkillLevel: String, CaseIterable, Sendable {
     case beginner = "Beginner"
     case novice = "Novice"
@@ -71,13 +72,13 @@ public enum SkillLevel: String, CaseIterable, Sendable {
 
     public init(from overallRank: Double) {
         switch overallRank {
-        case 0..<2:
+        case 0 ..< 2:
             self = .beginner
-        case 2..<4:
+        case 2 ..< 4:
             self = .novice
-        case 4..<6:
+        case 4 ..< 6:
             self = .intermediate
-        case 6..<8:
+        case 6 ..< 8:
             self = .advanced
         default:
             self = .expert
@@ -86,27 +87,28 @@ public enum SkillLevel: String, CaseIterable, Sendable {
 
     public var color: String {
         switch self {
-        case .beginner: return "red"
-        case .novice: return "orange"
-        case .intermediate: return "yellow"
-        case .advanced: return "green"
-        case .expert: return "blue"
+        case .beginner: "red"
+        case .novice: "orange"
+        case .intermediate: "yellow"
+        case .advanced: "green"
+        case .expert: "blue"
         }
     }
 
     // MARK: - Display Properties
+
     var displayName: String {
         switch self {
         case .beginner:
-            return "Beginner"
+            "Beginner"
         case .novice:
-            return "Novice"
+            "Novice"
         case .intermediate:
-            return "Intermediate"
+            "Intermediate"
         case .advanced:
-            return "Advanced"
+            "Advanced"
         case .expert:
-            return "Expert"
+            "Expert"
         }
     }
 
@@ -114,15 +116,15 @@ public enum SkillLevel: String, CaseIterable, Sendable {
     var accessibilityDescription: String {
         switch self {
         case .beginner:
-            return "Beginner level, represented by a triangle shape"
+            "Beginner level, represented by a triangle shape"
         case .novice:
-            return "Novice level, represented by a diamond shape"
+            "Novice level, represented by a diamond shape"
         case .intermediate:
-            return "Intermediate level, represented by a circle shape"
+            "Intermediate level, represented by a circle shape"
         case .advanced:
-            return "Advanced level, represented by a square shape"
+            "Advanced level, represented by a square shape"
         case .expert:
-            return "Expert level, represented by a star shape"
+            "Expert level, represented by a star shape"
         }
     }
 
@@ -130,16 +132,15 @@ public enum SkillLevel: String, CaseIterable, Sendable {
     var accessibilityHint: String {
         switch self {
         case .beginner:
-            return "Low skill level"
+            "Low skill level"
         case .novice:
-            return "Below average skill level"
+            "Below average skill level"
         case .intermediate:
-            return "Average skill level"
+            "Average skill level"
         case .advanced:
-            return "Above average skill level"
+            "Above average skill level"
         case .expert:
-            return "High skill level"
+            "High skill level"
         }
     }
 }
-

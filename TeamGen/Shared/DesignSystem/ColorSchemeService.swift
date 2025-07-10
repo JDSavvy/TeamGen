@@ -1,21 +1,23 @@
-import SwiftUI
 import Observation
 import OSLog
+import SwiftUI
 
 // MARK: - Color Scheme Service Implementation
+
 /// Centralized service for managing system-wide color scheme preferences and state
 /// Provides seamless integration with system preferences and accessibility settings
 @Observable
 @MainActor
 public final class ColorSchemeService: ColorSchemeServiceProtocol {
-
     // MARK: - Observable Properties (iOS 18 @Observable pattern)
+
     public var effectiveColorScheme: ColorScheme?
     public var userPreference: ColorSchemeOption = .system
     public var isHighContrastEnabled: Bool = false
     public var isReduceMotionEnabled: Bool = false
 
     // MARK: - Private Properties
+
     private let settingsRepository: SettingsRepositoryProtocol
     private let hapticService: HapticServiceProtocol
     private var saveTask: Task<Void, Never>?
@@ -23,6 +25,7 @@ public final class ColorSchemeService: ColorSchemeServiceProtocol {
     private let logger = Logger(subsystem: "com.teamgen.app", category: "ColorScheme")
 
     // MARK: - Initialization
+
     public init(
         settingsRepository: SettingsRepositoryProtocol,
         hapticService: HapticServiceProtocol
@@ -155,4 +158,3 @@ public final class ColorSchemeService: ColorSchemeServiceProtocol {
         }
     }
 }
-

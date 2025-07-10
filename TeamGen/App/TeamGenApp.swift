@@ -5,9 +5,9 @@
 //  Created by Jorge Savvidis on 22.05.2025.
 //
 
-import SwiftUI
-import SwiftData
 import OSLog
+import SwiftData
+import SwiftUI
 
 @main
 struct TeamGenApp: App {
@@ -19,6 +19,7 @@ struct TeamGenApp: App {
     }
 
     // MARK: - Safe Model Container Creation
+
     private func createModelContainer() -> ModelContainer {
         do {
             return try ModelContainer(for: SchemaV3.PlayerV3.self, migrationPlan: PlayerMigrationPlan.self)
@@ -39,6 +40,7 @@ struct TeamGenApp: App {
 }
 
 // MARK: - Modern Content Bootstrapper
+
 struct ContentBootstrapper: View {
     @Environment(\.modelContext) private var modelContext
     @State private var dependencyContainer: DependencyContainerProtocol?
@@ -75,15 +77,16 @@ struct ContentBootstrapper: View {
         // Create dependency container with SwiftData context
         let container = LiveDependencyContainer(modelContext: modelContext)
 
-        self.dependencyContainer = container
-        self.isInitialized = true
-        self.initializationError = nil
+        dependencyContainer = container
+        isInitialized = true
+        initializationError = nil
 
         logger.info("Dependencies initialized successfully")
     }
 }
 
 // MARK: - Loading View
+
 private struct LoadingView: View {
     var body: some View {
         VStack(spacing: 16) {
@@ -101,6 +104,7 @@ private struct LoadingView: View {
 }
 
 // MARK: - Error View
+
 private struct ErrorView: View {
     let error: Error
     let retry: () -> Void

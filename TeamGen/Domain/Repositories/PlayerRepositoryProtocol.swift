@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Player Repository Protocol
+
 /// Defines the contract for player data access operations
 public protocol PlayerRepositoryProtocol: Sendable {
     /// Fetches all players from the data store
@@ -41,6 +42,7 @@ public protocol PlayerRepositoryProtocol: Sendable {
 }
 
 // MARK: - Repository Errors
+
 public enum RepositoryError: LocalizedError, Sendable {
     case notFound(id: UUID)
     case saveFailed(Error)
@@ -50,16 +52,16 @@ public enum RepositoryError: LocalizedError, Sendable {
 
     public var errorDescription: String? {
         switch self {
-        case .notFound(let id):
-            return "Entity with ID \(id) not found"
-        case .saveFailed(let error):
-            return "Failed to save: \(error.localizedDescription)"
-        case .deleteFailed(let error):
-            return "Failed to delete: \(error.localizedDescription)"
-        case .fetchFailed(let error):
-            return "Failed to fetch: \(error.localizedDescription)"
+        case let .notFound(id):
+            "Entity with ID \(id) not found"
+        case let .saveFailed(error):
+            "Failed to save: \(error.localizedDescription)"
+        case let .deleteFailed(error):
+            "Failed to delete: \(error.localizedDescription)"
+        case let .fetchFailed(error):
+            "Failed to fetch: \(error.localizedDescription)"
         case .invalidData:
-            return "Invalid data encountered"
+            "Invalid data encountered"
         }
     }
 }

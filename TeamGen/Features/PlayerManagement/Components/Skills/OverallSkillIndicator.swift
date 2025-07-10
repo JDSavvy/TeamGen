@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Overall Skill Indicator Component
+
 /// A comprehensive indicator showing overall skill with perfect synchronization between visual and text elements
 struct OverallSkillIndicator: View {
     let overallSkill: Double
@@ -88,7 +89,8 @@ struct OverallSkillIndicator: View {
                 ZStack(alignment: .leading) {
                     // Background track
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.compact)
-                        .fill(DesignSystem.Colors.separatorColor.opacity(DesignSystem.VisualConsistency.opacitySeparator))
+                        .fill(DesignSystem.Colors.separatorColor
+                            .opacity(DesignSystem.VisualConsistency.opacitySeparator))
                         .frame(height: DesignSystem.ComponentSize.progressBarCompact)
 
                     // Filled portion with gradient color
@@ -98,7 +100,11 @@ struct OverallSkillIndicator: View {
                             width: geometry.size.width * fillPercentage,
                             height: DesignSystem.ComponentSize.progressBarCompact
                         )
-                        .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion), value: overallSkill)
+                        .animation(
+                            DesignSystem.Animation
+                                .accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion),
+                            value: overallSkill
+                        )
 
                     // Subtle highlight overlay
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.compact)
@@ -107,7 +113,7 @@ struct OverallSkillIndicator: View {
                                 colors: [
                                     Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayMedium),
                                     Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayLight),
-                                    Color.clear
+                                    Color.clear,
                                 ],
                                 startPoint: .top,
                                 endPoint: .bottom
@@ -182,8 +188,10 @@ struct OverallSkillIndicator: View {
                             .fill(
                                 LinearGradient(
                                     colors: [
-                                        DesignSystem.Colors.separatorColor.opacity(DesignSystem.VisualConsistency.opacitySkillBackground),
-                                        DesignSystem.Colors.separatorColor.opacity(DesignSystem.VisualConsistency.opacitySeparator)
+                                        DesignSystem.Colors.separatorColor
+                                            .opacity(DesignSystem.VisualConsistency.opacitySkillBackground),
+                                        DesignSystem.Colors.separatorColor
+                                            .opacity(DesignSystem.VisualConsistency.opacitySeparator),
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom
@@ -197,7 +205,7 @@ struct OverallSkillIndicator: View {
                                 LinearGradient(
                                     colors: [
                                         continuousColor,
-                                        continuousColor.opacity(DesignSystem.VisualConsistency.opacityDominant)
+                                        continuousColor.opacity(DesignSystem.VisualConsistency.opacityDominant),
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom
@@ -207,7 +215,11 @@ struct OverallSkillIndicator: View {
                                 width: geometry.size.width * fillPercentage,
                                 height: DesignSystem.ComponentSize.progressBarStandard
                             )
-                            .animation(DesignSystem.Animation.accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion), value: overallSkill)
+                            .animation(
+                                DesignSystem.Animation
+                                    .accessible(DesignSystem.Animation.standard, reduceMotion: reduceMotion),
+                                value: overallSkill
+                            )
 
                         // Highlight overlay
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.progressBar)
@@ -216,7 +228,7 @@ struct OverallSkillIndicator: View {
                                     colors: [
                                         Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayStrong),
                                         Color.white.opacity(DesignSystem.VisualConsistency.opacityWhiteOverlayMedium),
-                                        Color.clear
+                                        Color.clear,
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom
@@ -236,7 +248,10 @@ struct OverallSkillIndicator: View {
                         VStack(spacing: DesignSystem.Spacing.xxxs) {
                             Rectangle()
                                 .fill(DesignSystem.Colors.tertiaryText)
-                                .frame(width: DesignSystem.ComponentSize.scaleMarkerWidth, height: DesignSystem.ComponentSize.scaleMarkerHeight)
+                                .frame(
+                                    width: DesignSystem.ComponentSize.scaleMarkerWidth,
+                                    height: DesignSystem.ComponentSize.scaleMarkerHeight
+                                )
 
                             Text(marker == 10 ? "10" : String(format: "%.1f", marker))
                                 .font(DesignSystem.Typography.caption2)
@@ -259,7 +274,10 @@ struct OverallSkillIndicator: View {
             // Small skill indicator
             Circle()
                 .fill(continuousColor)
-                .frame(width: DesignSystem.ComponentSize.smallIndicator, height: DesignSystem.ComponentSize.smallIndicator)
+                .frame(
+                    width: DesignSystem.ComponentSize.smallIndicator,
+                    height: DesignSystem.ComponentSize.smallIndicator
+                )
 
             if showValue {
                 Text(String(format: "%.1f", overallSkill))
@@ -291,7 +309,7 @@ struct OverallSkillIndicator: View {
     }
 
     private var fillPercentage: Double {
-        return overallSkill / 10.0
+        overallSkill / 10.0
     }
 
     private var accessibilityDescription: String {
@@ -302,14 +320,16 @@ struct OverallSkillIndicator: View {
 }
 
 // MARK: - Indicator Style
+
 enum IndicatorStyle {
-    case minimal    // Just dot and value
-    case compact    // Dot, value, and label in a row
-    case standard   // Label, badge, and progress bar
-    case detailed   // Full visualization with scale markers
+    case minimal // Just dot and value
+    case compact // Dot, value, and label in a row
+    case standard // Label, badge, and progress bar
+    case detailed // Full visualization with scale markers
 }
 
 // MARK: - Preview
+
 #Preview("Overall Skill Indicators") {
     VStack(spacing: DesignSystem.Spacing.lg) {
         // Different skill levels

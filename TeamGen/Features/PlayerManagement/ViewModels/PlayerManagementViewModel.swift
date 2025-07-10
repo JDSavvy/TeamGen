@@ -1,9 +1,10 @@
 import Foundation
-import SwiftUI
 import Observation
 import OSLog
+import SwiftUI
 
 // MARK: - Player Management View State
+
 enum PlayerManagementViewState: Equatable {
     case idle
     case loading
@@ -14,24 +15,26 @@ enum PlayerManagementViewState: Equatable {
     static func == (lhs: PlayerManagementViewState, rhs: PlayerManagementViewState) -> Bool {
         switch (lhs, rhs) {
         case (.idle, .idle), (.loading, .loading), (.empty, .empty):
-            return true
-        case (.loaded(let lhsPlayers), .loaded(let rhsPlayers)):
-            return lhsPlayers == rhsPlayers
+            true
+        case let (.loaded(lhsPlayers), .loaded(rhsPlayers)):
+            lhsPlayers == rhsPlayers
         case (.error, .error):
-            return true // We consider all errors equal for state comparison
+            true // We consider all errors equal for state comparison
         default:
-            return false
+            false
         }
     }
 }
 
 // MARK: - Player Management View Model
+
 /// Modern ViewModel using @Observable for automatic observation and better performance
 /// Optimized with state batching and efficient cache management
 @Observable
 @MainActor
 final class PlayerManagementViewModel {
     // MARK: - Observable Properties (no @Published needed)
+
     private(set) var state: PlayerManagementViewState = .idle
 
     var searchQuery: String = "" {
@@ -51,18 +54,21 @@ final class PlayerManagementViewModel {
     }
 
     // MARK: - Private Properties
+
     private var allPlayers: [PlayerEntity] = []
     private var searchTask: Task<Void, Never>?
     private let searchDebounceTime: TimeInterval = 0.3
     private let logger = Logger(subsystem: "com.teamgen.app", category: "PlayerManagement")
 
     // MARK: - Performance Optimization: Simplified Filtered Results
+
     private var _cachedFilteredPlayers: [PlayerEntity] = []
     private var _lastSearchQuery: String = ""
     private var _lastSortOption: PlayerSortOption = .nameAscending
     private var _lastPlayerCount: Int = 0
 
     // MARK: - Dependencies (injected via constructor)
+
     private let managePlayersUseCase: ManagePlayersUseCaseProtocol
     private let hapticService: HapticServiceProtocol
 
@@ -70,16 +76,13 @@ final class PlayerManagementViewModel {
 
     /// Current view state based on internal state and data
     var currentViewState: PlayerManagementViewState {
-        let result: PlayerManagementViewState
-        switch state {
+        let result: PlayerManagementViewState = switch state {
         case .loaded:
             // Return proper state based on actual data
-            result = allPlayers.isEmpty ? .empty : .loaded(allPlayers)
+            allPlayers.isEmpty ? .empty : .loaded(allPlayers)
         default:
-            result = state
+            state
         }
-
-
 
         return result
     }
@@ -95,7 +98,7 @@ final class PlayerManagementViewModel {
 
         // Check if cache is still valid by comparing allPlayers count too
         let currentPlayerCount = allPlayers.count
-        if _lastSearchQuery == trimmedQuery && _lastSortOption == sortOption && _lastPlayerCount == currentPlayerCount {
+        if _lastSearchQuery == trimmedQuery, _lastSortOption == sortOption, _lastPlayerCount == currentPlayerCount {
             return _cachedFilteredPlayers
         }
 
@@ -122,6 +125,7 @@ final class PlayerManagementViewModel {
     }
 
     // MARK: - Initialization
+
     init(
         managePlayersUseCase: ManagePlayersUseCaseProtocol,
         hapticService: HapticServiceProtocol
@@ -194,18 +198,17 @@ final class PlayerManagementViewModel {
         // Perform sorting on background thread for large datasets
         switch sortOption {
         case .nameAscending:
-            return players.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+            players.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         case .nameDescending:
-            return players.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedDescending }
+            players.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedDescending }
         case .skillLowToHigh:
-            return players.sorted { $0.skills.overall < $1.skills.overall }
+            players.sorted { $0.skills.overall < $1.skills.overall }
         case .skillHighToLow:
-            return players.sorted { $0.skills.overall > $1.skills.overall }
+            players.sorted { $0.skills.overall > $1.skills.overall }
         }
     }
 
     func updatePlayer(_ player: PlayerEntity) async {
-
         do {
             try await managePlayersUseCase.updatePlayer(player)
             await loadPlayers()
@@ -217,7 +220,6 @@ final class PlayerManagementViewModel {
     }
 
     func togglePlayerSelection(_ playerId: UUID) async {
-
         do {
             try await managePlayersUseCase.togglePlayerSelection(id: playerId)
             await hapticService.selection()
@@ -238,7 +240,7 @@ final class PlayerManagementViewModel {
         invalidateCache()
 
         searchTask = Task { @MainActor [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             do {
                 try await Task.sleep(nanoseconds: UInt64(searchDebounceTime * 1_000_000_000))
@@ -275,24 +277,25 @@ final class PlayerManagementViewModel {
 }
 
 // MARK: - Sort Options
+
 enum PlayerSortOption: String, CaseIterable, Identifiable {
     case nameAscending = "Name (A→Z)"
     case nameDescending = "Name (Z→A)"
     case skillLowToHigh = "Skill (Low→High)"
     case skillHighToLow = "Skill (High→Low)"
 
-    var id: String { self.rawValue }
+    var id: String { rawValue }
 
     var systemImage: String {
         switch self {
         case .nameAscending:
-            return "textformat.abc"
+            "textformat.abc"
         case .nameDescending:
-            return "textformat.abc"
+            "textformat.abc"
         case .skillLowToHigh:
-            return "arrow.up.circle"
+            "arrow.up.circle"
         case .skillHighToLow:
-            return "arrow.down.circle"
+            "arrow.down.circle"
         }
     }
 }

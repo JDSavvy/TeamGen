@@ -6,87 +6,69 @@ import SwiftUI
 @MainActor
 public final class LiveDependencyContainer: DependencyContainerProtocol {
     // MARK: - Properties
+
     private let modelContext: ModelContext
 
     // MARK: - Initialization
+
     public init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
 
     // MARK: - Lazy Dependencies
-    public lazy var playerRepository: PlayerRepositoryProtocol = {
-        SwiftDataPlayerRepository(modelContext: modelContext)
-    }()
 
-    public lazy var settingsRepository: SettingsRepositoryProtocol = {
-        UserDefaultsSettingsRepository()
-    }()
+    public lazy var playerRepository: PlayerRepositoryProtocol = SwiftDataPlayerRepository(modelContext: modelContext)
 
-    public lazy var hapticService: HapticServiceProtocol = {
-        iOSHapticService()
-    }()
+    public lazy var settingsRepository: SettingsRepositoryProtocol = UserDefaultsSettingsRepository()
 
-    public lazy var teamGenerationService: TeamGenerationServiceProtocol = {
-        TeamGenerationService()
-    }()
+    public lazy var hapticService: HapticServiceProtocol = iOSHapticService()
 
-    public lazy var colorSchemeService: any ColorSchemeServiceProtocol = {
-        ColorSchemeService(settingsRepository: settingsRepository, hapticService: hapticService)
-    }()
+    public lazy var teamGenerationService: TeamGenerationServiceProtocol = TeamGenerationService()
 
-    public lazy var analyticsService: AnalyticsServiceProtocol = {
-        iOSAnalyticsService()
-    }()
-    
-    public lazy var performanceService: SimplePerformanceServiceProtocol = {
-        SimplePerformanceService()
-    }()
+    public lazy var colorSchemeService: any ColorSchemeServiceProtocol = ColorSchemeService(
+        settingsRepository: settingsRepository,
+        hapticService: hapticService
+    )
 
-    public lazy var networkService: NetworkServiceProtocol = {
-        iOSNetworkService()
-    }()
+    public lazy var analyticsService: AnalyticsServiceProtocol = iOSAnalyticsService()
 
-    public lazy var generateTeamsUseCase: GenerateTeamsUseCaseProtocol = {
-        GenerateTeamsUseCase(
-            playerRepository: playerRepository,
-            teamGenerationService: teamGenerationService
-        )
-    }()
+    public lazy var performanceService: SimplePerformanceServiceProtocol = SimplePerformanceService()
 
-    public lazy var managePlayersUseCase: ManagePlayersUseCaseProtocol = {
-        ManagePlayersUseCase(
-            playerRepository: playerRepository
-        )
-    }()
+    public lazy var networkService: NetworkServiceProtocol = iOSNetworkService()
 
-    public lazy var teamGenerationViewModel: TeamGenerationViewModel = {
-        TeamGenerationViewModel(
-            generateTeamsUseCase: generateTeamsUseCase,
-            managePlayersUseCase: managePlayersUseCase,
-            hapticService: hapticService
-        )
-    }()
+    public lazy var generateTeamsUseCase: GenerateTeamsUseCaseProtocol = GenerateTeamsUseCase(
+        playerRepository: playerRepository,
+        teamGenerationService: teamGenerationService
+    )
 
-    public lazy var settingsManagementViewModel: SettingsManagementViewModel = {
-        SettingsManagementViewModel(
-            settingsRepository: settingsRepository,
-            hapticService: hapticService,
-            colorSchemeService: colorSchemeService
-        )
-    }()
+    public lazy var managePlayersUseCase: ManagePlayersUseCaseProtocol = ManagePlayersUseCase(
+        playerRepository: playerRepository
+    )
+
+    public lazy var teamGenerationViewModel: TeamGenerationViewModel = .init(
+        generateTeamsUseCase: generateTeamsUseCase,
+        managePlayersUseCase: managePlayersUseCase,
+        hapticService: hapticService
+    )
+
+    public lazy var settingsManagementViewModel: SettingsManagementViewModel = .init(
+        settingsRepository: settingsRepository,
+        hapticService: hapticService,
+        colorSchemeService: colorSchemeService
+    )
 
     // MARK: - Lifecycle Management
+
     public func clearScopedInstances() {
         // Clear any scoped instances if needed
     }
 }
 
 // MARK: - SwiftUI Environment Integration
+
 public struct DependencyContainerKey: @preconcurrency EnvironmentKey {
     @MainActor
-    public static let defaultValue: DependencyContainerProtocol = {
-        MockDependencyContainer()
-    }()
+    public static let defaultValue: DependencyContainerProtocol = MockDependencyContainer()
 }
 
 public extension EnvironmentValues {
@@ -97,6 +79,7 @@ public extension EnvironmentValues {
 }
 
 // MARK: - Mock Container for Previews
+
 @MainActor
 public final class MockDependencyContainer: DependencyContainerProtocol {
     private var singletonInstances: [String: Any] = [:]
@@ -178,6 +161,7 @@ public final class MockDependencyContainer: DependencyContainerProtocol {
 }
 
 // MARK: - Mock Implementations
+
 @MainActor
 public final class MockPlayerRepository: PlayerRepositoryProtocol {
     private var players: [PlayerEntity] = []
@@ -196,7 +180,7 @@ public final class MockPlayerRepository: PlayerRepositoryProtocol {
                 name: "Jane Smith",
                 skills: PlayerSkills(technical: 7, agility: 8, endurance: 7, teamwork: 8),
                 isSelected: true
-            )
+            ),
         ]
     }
 
@@ -215,15 +199,15 @@ public final class MockPlayerRepository: PlayerRepositoryProtocol {
     }
 
     public func fetch(id: UUID) async throws -> PlayerEntity? {
-        return players.first { $0.id == id }
+        players.first { $0.id == id }
     }
 
     public func fetchAll() async throws -> [PlayerEntity] {
-        return players
+        players
     }
 
     public func fetchSelected() async throws -> [PlayerEntity] {
-        return players.filter { $0.isSelected }
+        players.filter(\.isSelected)
     }
 
     public func delete(id: UUID) async throws {
@@ -247,15 +231,15 @@ public final class MockPlayerRepository: PlayerRepositoryProtocol {
     }
 
     public func fetchByMinimumSkillLevel(_ minLevel: Double) async throws -> [PlayerEntity] {
-        return players.filter { $0.skills.overall >= minLevel }
+        players.filter { $0.skills.overall >= minLevel }
     }
 
     public func hasPlayers() async throws -> Bool {
-        return !players.isEmpty
+        !players.isEmpty
     }
 
     public func count() async throws -> Int {
-        return players.count
+        players.count
     }
 }
 
@@ -264,7 +248,7 @@ public final class MockSettingsRepository: SettingsRepositoryProtocol {
     private var settings = AppSettings()
 
     public func getSettings() async throws -> AppSettings {
-        return settings
+        settings
     }
 
     public func saveSettings(_ settings: AppSettings) async throws {
@@ -274,15 +258,17 @@ public final class MockSettingsRepository: SettingsRepositoryProtocol {
 
 @MainActor
 public final class MockTeamGenerationService: TeamGenerationServiceProtocol {
-    public func generateTeams(from players: [PlayerEntity], count: Int, mode: TeamGenerationMode) async throws -> [TeamEntity] {
+    public func generateTeams(from players: [PlayerEntity], count: Int,
+                              mode _: TeamGenerationMode) async throws -> [TeamEntity]
+    {
         // Mock implementation - create balanced teams
         let playersPerTeam = players.count / count
         var teams: [TeamEntity] = []
 
-        for i in 0..<count {
+        for i in 0 ..< count {
             let startIndex = i * playersPerTeam
             let endIndex = min(startIndex + playersPerTeam, players.count)
-            let teamPlayers = Array(players[startIndex..<endIndex])
+            let teamPlayers = Array(players[startIndex ..< endIndex])
 
             let team = TeamEntity(
                 id: UUID(),
@@ -294,22 +280,22 @@ public final class MockTeamGenerationService: TeamGenerationServiceProtocol {
         return teams
     }
 
-    nonisolated public func calculateBalanceScores(for teams: [TeamEntity]) -> [TeamEntity] {
-        return teams // Mock implementation
+    public nonisolated func calculateBalanceScores(for teams: [TeamEntity]) -> [TeamEntity] {
+        teams // Mock implementation
     }
 
-    nonisolated public func validateGeneration(playerCount: Int, teamCount: Int) -> ValidationResult {
+    public nonisolated func validateGeneration(playerCount: Int, teamCount: Int) -> ValidationResult {
         if playerCount >= teamCount {
-            return .valid
+            .valid
         } else {
-            return .invalid(.insufficientPlayers(required: teamCount, available: playerCount))
+            .invalid(.insufficientPlayers(required: teamCount, available: playerCount))
         }
     }
 }
 
 @MainActor
 public final class MockHapticService: HapticServiceProtocol {
-    public func impact(_ intensity: HapticIntensity) async {
+    public func impact(_: HapticIntensity) async {
         // Mock implementation
     }
 
@@ -317,7 +303,7 @@ public final class MockHapticService: HapticServiceProtocol {
         // Mock implementation
     }
 
-    public func notification(_ type: HapticNotificationType) async {
+    public func notification(_: HapticNotificationType) async {
         // Mock implementation
     }
 
@@ -333,14 +319,14 @@ public final class MockHapticService: HapticServiceProtocol {
         // Mock implementation
     }
 
-    public func provideGenerationFeedback(balanceScore: Double) async {
+    public func provideGenerationFeedback(balanceScore _: Double) async {
         // Mock implementation
     }
 }
 
 @MainActor
 public final class MockColorSchemeService: ColorSchemeServiceProtocol {
-    public var effectiveColorScheme: ColorScheme? = nil
+    public var effectiveColorScheme: ColorScheme?
     public var userPreference: ColorSchemeOption = .system
     public var isHighContrastEnabled: Bool = false
     public var isReduceMotionEnabled: Bool = false
@@ -368,26 +354,26 @@ public final class MockColorSchemeService: ColorSchemeServiceProtocol {
 
 @MainActor
 public final class MockAnalyticsService: AnalyticsServiceProtocol {
-    public func track(event: AnalyticsEvent) async {
+    public func track(event _: AnalyticsEvent) async {
         // Mock implementation
     }
 
-    public func setUserProperty(key: String, value: String) async {
+    public func setUserProperty(key _: String, value _: String) async {
         // Mock implementation
     }
 
-    public func identify(userId: String) async {
+    public func identify(userId _: String) async {
         // Mock implementation
     }
 }
 
 @MainActor
 public final class MockNetworkService: NetworkServiceProtocol {
-    public func request<T: Codable>(_ request: NetworkRequest, responseType: T.Type) async throws -> T {
+    public func request<T: Codable>(_: NetworkRequest, responseType _: T.Type) async throws -> T {
         throw NetworkError.invalidURL
     }
 
-    public func request(_ request: NetworkRequest) async throws -> Data {
+    public func request(_: NetworkRequest) async throws -> Data {
         throw NetworkError.invalidURL
     }
 }

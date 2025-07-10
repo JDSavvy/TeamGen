@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Settings View
+
 /// Modern settings view using @Observable ViewModels
 /// Focuses on essential app configuration with clean, intuitive design
 /// NavigationStack and title handled at TabView level for proper isolation
@@ -11,7 +12,7 @@ struct SettingsView: View {
 
     var body: some View {
         Group {
-            if let viewModel = viewModel {
+            if let viewModel {
                 Form {
                     appearanceSection(viewModel: viewModel)
                     languageSection(viewModel: viewModel)
@@ -129,7 +130,9 @@ struct SettingsView: View {
         } header: {
             Text("About TeamGen")
         } footer: {
-            Text("TeamGen helps create balanced teams for sports and recreational activities. Thank you for using our app!")
+            Text(
+                "TeamGen helps create balanced teams for sports and recreational activities. Thank you for using our app!"
+            )
         }
     }
 
@@ -154,6 +157,7 @@ struct SettingsView: View {
 }
 
 // MARK: - Appearance Settings Section
+
 /// Visual appearance settings following HIG guidelines
 private struct AppearanceSettingsSection: View {
     @Bindable var viewModel: SettingsManagementViewModel
@@ -185,6 +189,7 @@ private struct AppearanceSettingsSection: View {
 }
 
 // MARK: - Localization Section
+
 /// Language selection for app interface
 private struct LocalizationSection: View {
     @Bindable var viewModel: SettingsManagementViewModel
@@ -208,6 +213,7 @@ private struct LocalizationSection: View {
 }
 
 // MARK: - About Section
+
 /// Essential app information and developer details
 private struct AboutSection: View {
     var body: some View {
@@ -373,7 +379,7 @@ private struct SettingsInfoRow: View {
     }
 
     var body: some View {
-        if isInteractive, let action = action {
+        if isInteractive, let action {
             Button(action: action) {
                 rowContent
             }

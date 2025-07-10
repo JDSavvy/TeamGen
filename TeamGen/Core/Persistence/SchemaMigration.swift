@@ -2,6 +2,7 @@ import Foundation
 import SwiftData
 
 // MARK: - Schema Versioning with Proper Model Finalization
+
 enum SchemaV1: VersionedSchema {
     static var versionIdentifier = Schema.Version(1, 0, 0)
 
@@ -20,12 +21,12 @@ enum SchemaV1: VersionedSchema {
         var updatedAt: Date
 
         init(name: String, rank: Int) {
-            self.id = UUID()
+            id = UUID()
             self.name = name
             self.rank = min(max(rank, 1), 10)
-            self.isSelected = false
-            self.createdAt = Date()
-            self.updatedAt = Date()
+            isSelected = false
+            createdAt = Date()
+            updatedAt = Date()
         }
     }
 }
@@ -64,16 +65,16 @@ enum SchemaV2: VersionedSchema {
         var teamsJoined: Int = 0
 
         init(name: String, technicalSkill: Int = 5, fitnessLevel: Int = 5, teamworkRating: Int = 5) {
-            self.id = UUID()
+            id = UUID()
             self.name = name
-            self.createdAt = Date()
-            self.updatedAt = Date()
+            createdAt = Date()
+            updatedAt = Date()
             self.technicalSkill = min(max(technicalSkill, 1), 10)
             self.fitnessLevel = min(max(fitnessLevel, 1), 10)
             self.teamworkRating = min(max(teamworkRating, 1), 10)
-            self.isSelected = false
-            self.gamesPlayed = 0
-            self.teamsJoined = 0
+            isSelected = false
+            gamesPlayed = 0
+            teamsJoined = 0
         }
     }
 }
@@ -112,23 +113,30 @@ enum SchemaV3: VersionedSchema {
         var gamesPlayed: Int = 0
         var teamsJoined: Int = 0
 
-        init(name: String, technicalSkill: Int = 5, agilityLevel: Int = 5, enduranceLevel: Int = 5, teamworkRating: Int = 5) {
-            self.id = UUID()
+        init(
+            name: String,
+            technicalSkill: Int = 5,
+            agilityLevel: Int = 5,
+            enduranceLevel: Int = 5,
+            teamworkRating: Int = 5
+        ) {
+            id = UUID()
             self.name = name
-            self.createdAt = Date()
-            self.updatedAt = Date()
+            createdAt = Date()
+            updatedAt = Date()
             self.technicalSkill = min(max(technicalSkill, 1), 10)
             self.agilityLevel = min(max(agilityLevel, 1), 10)
             self.enduranceLevel = min(max(enduranceLevel, 1), 10)
             self.teamworkRating = min(max(teamworkRating, 1), 10)
-            self.isSelected = false
-            self.gamesPlayed = 0
-            self.teamsJoined = 0
+            isSelected = false
+            gamesPlayed = 0
+            teamsJoined = 0
         }
     }
 }
 
 // MARK: - Migration Plan with Lightweight Migration
+
 enum PlayerMigrationPlan: SchemaMigrationPlan {
     static var schemas: [any VersionedSchema.Type] {
         [SchemaV1.self, SchemaV2.self, SchemaV3.self]
@@ -176,71 +184,74 @@ enum PlayerMigrationPlan: SchemaMigrationPlan {
 }
 
 // MARK: - Extension for V2 Entity Conversion (Legacy Support)
+
 extension SchemaV2.PlayerV2 {
     func toEntity() -> PlayerEntity {
         PlayerEntity(
-            id: self.id,
-            name: self.name,
+            id: id,
+            name: name,
             skills: PlayerSkills(
-                technical: self.technicalSkill,
-                agility: self.fitnessLevel, // Map fitness to agility for legacy support
-                endurance: self.fitnessLevel, // Map fitness to endurance for legacy support
-                teamwork: self.teamworkRating
+                technical: technicalSkill,
+                agility: fitnessLevel, // Map fitness to agility for legacy support
+                endurance: fitnessLevel, // Map fitness to endurance for legacy support
+                teamwork: teamworkRating
             ),
             statistics: PlayerStatistics(
-                gamesPlayed: self.gamesPlayed,
-                teamsJoined: self.teamsJoined
+                gamesPlayed: gamesPlayed,
+                teamsJoined: teamsJoined
             ),
-            isSelected: self.isSelected
+            isSelected: isSelected
         )
     }
 
     func updateFromEntity(_ entity: PlayerEntity) {
-        self.name = entity.name
-        self.technicalSkill = entity.skills.technical
-        self.fitnessLevel = (entity.skills.agility + entity.skills.endurance) / 2 // Average for legacy
-        self.teamworkRating = entity.skills.teamwork
-        self.isSelected = entity.isSelected
-        self.gamesPlayed = entity.statistics.gamesPlayed
-        self.teamsJoined = entity.statistics.teamsJoined
-        self.updatedAt = Date()
+        name = entity.name
+        technicalSkill = entity.skills.technical
+        fitnessLevel = (entity.skills.agility + entity.skills.endurance) / 2 // Average for legacy
+        teamworkRating = entity.skills.teamwork
+        isSelected = entity.isSelected
+        gamesPlayed = entity.statistics.gamesPlayed
+        teamsJoined = entity.statistics.teamsJoined
+        updatedAt = Date()
     }
 }
 
 // MARK: - Extension for V3 Entity Conversion
+
 extension SchemaV3.PlayerV3 {
     func toEntity() -> PlayerEntity {
         PlayerEntity(
-            id: self.id,
-            name: self.name,
+            id: id,
+            name: name,
             skills: PlayerSkills(
-                technical: self.technicalSkill,
-                agility: self.agilityLevel,
-                endurance: self.enduranceLevel,
-                teamwork: self.teamworkRating
+                technical: technicalSkill,
+                agility: agilityLevel,
+                endurance: enduranceLevel,
+                teamwork: teamworkRating
             ),
             statistics: PlayerStatistics(
-                gamesPlayed: self.gamesPlayed,
-                teamsJoined: self.teamsJoined
+                gamesPlayed: gamesPlayed,
+                teamsJoined: teamsJoined
             ),
-            isSelected: self.isSelected
+            isSelected: isSelected
         )
     }
 
     func updateFromEntity(_ entity: PlayerEntity) {
-        self.name = entity.name
-        self.technicalSkill = entity.skills.technical
-        self.agilityLevel = entity.skills.agility
-        self.enduranceLevel = entity.skills.endurance
-        self.teamworkRating = entity.skills.teamwork
-        self.isSelected = entity.isSelected
-        self.gamesPlayed = entity.statistics.gamesPlayed
-        self.teamsJoined = entity.statistics.teamsJoined
-        self.updatedAt = Date()
+        name = entity.name
+        technicalSkill = entity.skills.technical
+        agilityLevel = entity.skills.agility
+        enduranceLevel = entity.skills.endurance
+        teamworkRating = entity.skills.teamwork
+        isSelected = entity.isSelected
+        gamesPlayed = entity.statistics.gamesPlayed
+        teamsJoined = entity.statistics.teamsJoined
+        updatedAt = Date()
     }
 }
 
 // MARK: - Model Mapping Extensions for V3
+
 extension SchemaV3.PlayerV3 {
     static func from(_ entity: PlayerEntity) -> SchemaV3.PlayerV3 {
         let player = SchemaV3.PlayerV3(

@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Team Generation Service Implementation
+
 /// Optimized team generation service for fair team distribution (max 99 players)
 ///
 /// ## Core Features:
@@ -9,8 +10,8 @@ import Foundation
 /// - **Skill-Based Balancing**: Uses enhanced snake draft (≤30 players) and skill-tier distribution (31-99 players)
 /// - **Modern Swift Implementation**: Async/await, proper error handling, and Apple development standards
 public final class TeamGenerationService: TeamGenerationServiceProtocol {
-
     // MARK: - Private Properties
+
     private let balanceThreshold: Double = 0.15 // 15% deviation threshold for balance
     private let maxOptimizationIterations: Int = 100
 
@@ -88,10 +89,10 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
     private func generateFairTeams(from players: [PlayerEntity], count: Int) async -> [TeamEntity] {
         // For small datasets (≤30 players), use enhanced snake draft with controlled variation
         if players.count <= 30 {
-            return await generateSmallScaleFairTeams(from: players, count: count)
+            await generateSmallScaleFairTeams(from: players, count: count)
         } else {
             // For medium datasets (31-99 players), use skill-tier distribution with intelligent shuffling
-            return await generateMediumScaleFairTeams(from: players, count: count)
+            await generateMediumScaleFairTeams(from: players, count: count)
         }
     }
 
@@ -152,13 +153,13 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
         // Calculate balanced team sizes (e.g., 10 players, 3 teams = [4,3,3])
         let (baseSize, largerTeams) = calculateBalancedTeamSizes(playerCount: players.count, teamCount: teamCount)
 
-        let teamBuilders = (0..<teamCount).map { teamIndex in
+        let teamBuilders = (0 ..< teamCount).map { teamIndex in
             let capacity = teamIndex < largerTeams ? baseSize + 1 : baseSize
             return TeamBuilder(capacity: capacity + 1) // +1 for safety margin
         }
 
         // Introduce controlled variation: randomize starting team
-        var currentTeam = Int.random(in: 0..<teamCount)
+        var currentTeam = Int.random(in: 0 ..< teamCount)
         var direction = Bool.random() ? 1 : -1 // Random initial direction
         var playersAssigned = 0
 
@@ -207,7 +208,7 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
         let teamCount = teams.count
 
         // Try current direction first
-        for _ in 0..<teamCount {
+        for _ in 0 ..< teamCount {
             if direction == 1 {
                 next = (next + 1) % teamCount
             } else {
@@ -223,7 +224,7 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
         direction *= -1
         next = current
 
-        for _ in 0..<teamCount {
+        for _ in 0 ..< teamCount {
             if direction == 1 {
                 next = (next + 1) % teamCount
             } else {
@@ -247,10 +248,10 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
         var tiers: [[PlayerEntity]] = []
         var currentIndex = 0
 
-        for _ in 0..<tierCount {
+        for _ in 0 ..< tierCount {
             let endIndex = min(currentIndex + playersPerTier, players.count)
             if currentIndex < endIndex {
-                let tierPlayers = Array(sortedPlayers[currentIndex..<endIndex])
+                let tierPlayers = Array(sortedPlayers[currentIndex ..< endIndex])
                 // Shuffle players within each tier for variation while maintaining skill balance
                 tiers.append(tierPlayers.shuffled())
                 currentIndex = endIndex
@@ -261,12 +262,14 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
     }
 
     /// Distributes a skill tier across teams with balanced team sizes and optional randomized assignment
-    private func distributeTierToTeams(tier: [PlayerEntity], teams: [TeamBuilder], useRandomizedAssignment: Bool) -> [TeamBuilder] {
+    private func distributeTierToTeams(tier: [PlayerEntity], teams: [TeamBuilder],
+                                       useRandomizedAssignment: Bool) -> [TeamBuilder]
+    {
         let mutableTeams = teams // Already mutable through reference semantics
 
         if useRandomizedAssignment {
             // Create randomized team assignment order for variation, but respect capacity limits
-            let teamIndices = Array(0..<teams.count).shuffled()
+            let teamIndices = Array(0 ..< teams.count).shuffled()
 
             for player in tier {
                 // Find next available team with capacity
@@ -316,13 +319,13 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
         if totalPlayers > 0 {
             let (baseSize, largerTeams) = calculateBalancedTeamSizes(playerCount: totalPlayers, teamCount: count)
 
-            return (0..<count).map { teamIndex in
+            return (0 ..< count).map { teamIndex in
                 let capacity = teamIndex < largerTeams ? baseSize + 1 : baseSize
                 return TeamBuilder(capacity: capacity + 1) // +1 for safety margin
             }
         } else {
             // Fallback for when total players unknown
-            return (0..<count).map { _ in TeamBuilder(capacity: 20) }
+            return (0 ..< count).map { _ in TeamBuilder(capacity: 20) }
         }
     }
 
@@ -336,13 +339,13 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
         var bestTeams = mutableTeams
         var bestBalance = calculateTeamBalance(teams: mutableTeams)
 
-        for _ in 0..<optimizationPasses {
+        for _ in 0 ..< optimizationPasses {
             let currentTeams = mutableTeams
             var passIteration = 0
             var passImproved = true
             let passMaxIterations = maxIterations / optimizationPasses
 
-            while passImproved && passIteration < passMaxIterations {
+            while passImproved, passIteration < passMaxIterations {
                 passImproved = false
                 let currentBalance = calculateTeamBalance(teams: currentTeams)
 
@@ -350,7 +353,11 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
                 let teamPairs = generateRandomizedTeamPairs(teamCount: currentTeams.count)
 
                 for (i, j) in teamPairs {
-                    if await trySwapPlayersForBalance(between: currentTeams[i], and: currentTeams[j], currentBalance: currentBalance) {
+                    if await trySwapPlayersForBalance(
+                        between: currentTeams[i],
+                        and: currentTeams[j],
+                        currentBalance: currentBalance
+                    ) {
                         passImproved = true
                     }
                 }
@@ -384,8 +391,8 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
     private func generateRandomizedTeamPairs(teamCount: Int) -> [(Int, Int)] {
         var pairs: [(Int, Int)] = []
 
-        for i in 0..<teamCount {
-            for j in (i + 1)..<teamCount {
+        for i in 0 ..< teamCount {
+            for j in (i + 1) ..< teamCount {
                 pairs.append((i, j))
             }
         }
@@ -397,7 +404,7 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
     private func trySwapPlayersForBalance(
         between team1: TeamBuilder,
         and team2: TeamBuilder,
-        currentBalance: Double
+        currentBalance _: Double
     ) async -> Bool {
         guard !team1.players.isEmpty, !team2.players.isEmpty else { return false }
 
@@ -412,7 +419,7 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
 
             let newBalance = abs(team1.averageRank - team2.averageRank)
             let oldBalance = abs((team1.averageRank - player2.skills.overall + player1.skills.overall) -
-                                 (team2.averageRank - player1.skills.overall + player2.skills.overall))
+                (team2.averageRank - player1.skills.overall + player2.skills.overall))
 
             if newBalance < oldBalance {
                 return true // Keep the swap
@@ -431,15 +438,17 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
 
     /// Finds the best player swap between two teams
     private func findBestPlayerSwap(team1: TeamBuilder, team2: TeamBuilder) -> (PlayerEntity, PlayerEntity)? {
-        var bestSwap: (PlayerEntity, PlayerEntity)? = nil
+        var bestSwap: (PlayerEntity, PlayerEntity)?
         var bestBalanceImprovement = 0.0
 
         let currentDifference = abs(team1.averageRank - team2.averageRank)
 
         for player1 in team1.players {
             for player2 in team2.players {
-                let newTeam1Average = (team1.totalRank - player1.skills.overall + player2.skills.overall) / Double(team1.playerCount)
-                let newTeam2Average = (team2.totalRank - player2.skills.overall + player1.skills.overall) / Double(team2.playerCount)
+                let newTeam1Average = (team1.totalRank - player1.skills.overall + player2.skills.overall) /
+                    Double(team1.playerCount)
+                let newTeam2Average = (team2.totalRank - player2.skills.overall + player1.skills.overall) /
+                    Double(team2.playerCount)
                 let newDifference = abs(newTeam1Average - newTeam2Average)
 
                 let improvement = currentDifference - newDifference
@@ -458,7 +467,7 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
     private func calculateTeamBalance(teams: [TeamBuilder]) -> Double {
         guard teams.count > 1 else { return 0.0 }
 
-        let averageRanks = teams.map { $0.averageRank }
+        let averageRanks = teams.map(\.averageRank)
         let overall = averageRanks.reduce(0, +) / Double(averageRanks.count)
         let variance = averageRanks.map { pow($0 - overall, 2) }.reduce(0, +) / Double(averageRanks.count)
 
@@ -487,7 +496,7 @@ private final class TeamBuilder {
     private let _capacity: Int
 
     init(capacity: Int) {
-        self._capacity = capacity
+        _capacity = capacity
     }
 
     var capacity: Int {
@@ -518,7 +527,7 @@ private final class TeamBuilder {
 
     func copy() -> TeamBuilder {
         let newBuilder = TeamBuilder(capacity: _capacity)
-        newBuilder.players = self.players
+        newBuilder.players = players
         return newBuilder
     }
 

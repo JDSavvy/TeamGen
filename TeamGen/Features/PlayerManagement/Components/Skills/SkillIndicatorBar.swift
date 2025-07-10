@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Skill Indicator Bar Component
+
 /// A visual indicator showing individual skill levels with continuous gradient colors
 struct SkillIndicatorBar: View {
     let skillName: String
@@ -64,7 +65,7 @@ struct SkillIndicatorBar: View {
                                 colors: [
                                     Color.white.opacity(0.3),
                                     Color.white.opacity(0.1),
-                                    Color.clear
+                                    Color.clear,
                                 ],
                                 startPoint: .top,
                                 endPoint: .bottom
@@ -84,6 +85,7 @@ struct SkillIndicatorBar: View {
     }
 
     // MARK: - Computed Properties
+
     private var fillPercentage: Double {
         guard maxValue > 0 else { return 0 }
         return Double(skillValue) / Double(maxValue)
@@ -91,6 +93,7 @@ struct SkillIndicatorBar: View {
 }
 
 // MARK: - Skill Indicator Dots Component
+
 /// A compact dot-based indicator for skill levels
 struct SkillIndicatorDots: View {
     let skillValue: Int
@@ -105,7 +108,7 @@ struct SkillIndicatorDots: View {
 
     var body: some View {
         HStack(spacing: size.dotSpacing) {
-            ForEach(1...maxValue, id: \.self) { index in
+            ForEach(1 ... maxValue, id: \.self) { index in
                 Circle()
                     .fill(dotColor(for: index))
                     .frame(width: size.dotSize, height: size.dotSize)
@@ -119,14 +122,15 @@ struct SkillIndicatorDots: View {
 
     private func dotColor(for index: Int) -> Color {
         if index <= skillValue {
-            return PlayerSkillPresentation.skillColor(for: index)
+            PlayerSkillPresentation.skillColor(for: index)
         } else {
-            return DesignSystem.Colors.separatorColor.opacity(0.3)
+            DesignSystem.Colors.separatorColor.opacity(0.3)
         }
     }
 }
 
 // MARK: - Indicator Size Configuration
+
 enum IndicatorSize {
     case small
     case medium
@@ -134,58 +138,59 @@ enum IndicatorSize {
 
     var barHeight: CGFloat {
         switch self {
-        case .small: return 4
-        case .medium: return 6
-        case .large: return 8
+        case .small: 4
+        case .medium: 6
+        case .large: 8
         }
     }
 
     var cornerRadius: CGFloat {
-        return barHeight / 2
+        barHeight / 2
     }
 
     var spacing: CGFloat {
         switch self {
-        case .small: return DesignSystem.Spacing.xxs
-        case .medium: return DesignSystem.Spacing.xs
-        case .large: return DesignSystem.Spacing.sm
+        case .small: DesignSystem.Spacing.xxs
+        case .medium: DesignSystem.Spacing.xs
+        case .large: DesignSystem.Spacing.sm
         }
     }
 
     var labelFont: Font {
         switch self {
-        case .small: return DesignSystem.Typography.caption2
-        case .medium: return DesignSystem.Typography.caption1
-        case .large: return DesignSystem.Typography.subheadline
+        case .small: DesignSystem.Typography.caption2
+        case .medium: DesignSystem.Typography.caption1
+        case .large: DesignSystem.Typography.subheadline
         }
     }
 
     var valueFont: Font {
         switch self {
-        case .small: return DesignSystem.Typography.caption1
-        case .medium: return DesignSystem.Typography.subheadline
-        case .large: return DesignSystem.Typography.body
+        case .small: DesignSystem.Typography.caption1
+        case .medium: DesignSystem.Typography.subheadline
+        case .large: DesignSystem.Typography.body
         }
     }
 
     var dotSize: CGFloat {
         switch self {
-        case .small: return 6
-        case .medium: return 8
-        case .large: return 10
+        case .small: 6
+        case .medium: 8
+        case .large: 10
         }
     }
 
     var dotSpacing: CGFloat {
         switch self {
-        case .small: return 2
-        case .medium: return 3
-        case .large: return 4
+        case .small: 2
+        case .medium: 3
+        case .large: 4
         }
     }
 }
 
 // MARK: - Preview
+
 #Preview("Skill Indicator Bars") {
     VStack(spacing: DesignSystem.Spacing.md) {
         SkillIndicatorBar(skillName: "Technical", skillValue: 8)

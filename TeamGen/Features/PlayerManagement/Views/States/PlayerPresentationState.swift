@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 // MARK: - Player Presentation State
+
 /// Manages presentation state for the PlayerManagement feature
 /// Centralized state management following SwiftUI best practices
 @Observable

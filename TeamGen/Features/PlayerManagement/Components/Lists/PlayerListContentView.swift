@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - Player List Content View
+
 /// Handles the main player list display logic with optimized List rendering
 /// Enhanced with single-expansion accordion behavior and refined animations
 struct PlayerListContentView: View {
@@ -12,35 +13,35 @@ struct PlayerListContentView: View {
 
     var body: some View {
         Group {
-            if viewModel.filteredPlayers.isEmpty && !viewModel.searchQuery.isEmpty {
+            if viewModel.filteredPlayers.isEmpty, !viewModel.searchQuery.isEmpty {
                 EmptySearchStateView()
             } else if viewModel.filteredPlayers.isEmpty {
                 EmptyPlayersStateView(presentationState: $presentationState)
             } else {
                 // Use List for optimal performance with large datasets
                 List {
-                ForEach(viewModel.filteredPlayers, id: \.id) { player in
-                    RefinedPlayerRow(
-                        player: player,
-                        isExpanded: expandedPlayerIDs.contains(player.id),
-                        onTap: {
-                            performAccordionExpansion(for: player.id)
-                        },
-                        onEdit: {
-                            presentationState.editingPlayer = player
-                            presentationState.showingEditPlayer = true
-                        },
-                        onDelete: {
-                            // Set up for safe deletion with confirmation
-                            presentationState.playerToDelete = player
-                            presentationState.showingDeleteConfirmation = true
-                        }
-                    )
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-                }
-                // Remove .onDelete to prevent SwiftUI collection view crashes
-                // Deletion will be handled through edit actions in RefinedPlayerRow
+                    ForEach(viewModel.filteredPlayers, id: \.id) { player in
+                        RefinedPlayerRow(
+                            player: player,
+                            isExpanded: expandedPlayerIDs.contains(player.id),
+                            onTap: {
+                                performAccordionExpansion(for: player.id)
+                            },
+                            onEdit: {
+                                presentationState.editingPlayer = player
+                                presentationState.showingEditPlayer = true
+                            },
+                            onDelete: {
+                                // Set up for safe deletion with confirmation
+                                presentationState.playerToDelete = player
+                                presentationState.showingDeleteConfirmation = true
+                            }
+                        )
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+                    }
+                    // Remove .onDelete to prevent SwiftUI collection view crashes
+                    // Deletion will be handled through edit actions in RefinedPlayerRow
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
@@ -85,6 +86,7 @@ struct PlayerListContentView: View {
 }
 
 // MARK: - Empty Search State View
+
 private struct EmptySearchStateView: View {
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
@@ -118,6 +120,7 @@ private struct EmptySearchStateView: View {
 }
 
 // MARK: - Empty Players State View
+
 private struct EmptyPlayersStateView: View {
     @Binding var presentationState: PlayerPresentationState
 
@@ -127,13 +130,18 @@ private struct EmptyPlayersStateView: View {
                 // Refined empty state illustration
                 ZStack {
                     Circle()
-                        .fill(DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacitySkillBackground))
-                        .frame(width: DesignSystem.ComponentSize.emptyStateIcon, height: DesignSystem.ComponentSize.emptyStateIcon)
+                        .fill(DesignSystem.Colors.primary
+                            .opacity(DesignSystem.VisualConsistency.opacitySkillBackground))
+                        .frame(
+                            width: DesignSystem.ComponentSize.emptyStateIcon,
+                            height: DesignSystem.ComponentSize.emptyStateIcon
+                        )
 
                     Image(systemName: "person.3.fill")
                         .font(DesignSystem.Typography.extraLargeDisplay)
                         .fontWeight(.light)
-                        .foregroundColor(DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityIntense))
+                        .foregroundColor(DesignSystem.Colors.primary
+                            .opacity(DesignSystem.VisualConsistency.opacityIntense))
                 }
 
                 VStack(spacing: DesignSystem.Spacing.md) {
@@ -142,11 +150,13 @@ private struct EmptyPlayersStateView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(DesignSystem.Colors.primaryText)
 
-                    Text("Add your first player to start creating balanced teams. You can manage their skills and track their performance.")
-                        .font(DesignSystem.Typography.body)
-                        .foregroundColor(DesignSystem.Colors.secondaryText)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
+                    Text(
+                        "Add your first player to start creating balanced teams. You can manage their skills and track their performance."
+                    )
+                    .font(DesignSystem.Typography.body)
+                    .foregroundColor(DesignSystem.Colors.secondaryText)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
                 }
             }
 
@@ -191,6 +201,7 @@ private struct EmptyPlayersStateView: View {
 }
 
 // MARK: - Helpful Tip Component
+
 private struct HelpfulTip: View {
     let icon: String
     let iconColor: Color
@@ -224,6 +235,7 @@ private struct HelpfulTip: View {
 }
 
 // MARK: - Player List Header
+
 /// Informative header showing player count and current sort status
 struct PlayerListHeader: View {
     let totalCount: Int
@@ -262,7 +274,6 @@ struct PlayerListHeader: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(isSearchActive ?
             "Showing \(filteredCount) of \(totalCount) players, sorted by \(sortOption.rawValue)" :
-            "\(filteredCount) players, sorted by \(sortOption.rawValue)"
-        )
+            "\(filteredCount) players, sorted by \(sortOption.rawValue)")
     }
 }
