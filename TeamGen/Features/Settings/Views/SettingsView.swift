@@ -131,7 +131,10 @@ struct SettingsView: View {
             Text("About TeamGen")
         } footer: {
             Text(
-                "TeamGen helps create balanced teams for sports and recreational activities. Thank you for using our app!"
+                """
+                TeamGen helps create balanced teams for sports and recreational activities. 
+                Thank you for using our app!
+                """
             )
         }
     }

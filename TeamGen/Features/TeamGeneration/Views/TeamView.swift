@@ -184,12 +184,15 @@ private struct SheetsModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .sheet(isPresented: $presentationState.showingPlayerSelection, onDismiss: {
-                // Safety net: refresh when sheet is actually dismissed
-                Task { @MainActor in
-                    await viewModel.refreshPlayerDataIfNeeded()
-                }
-            }) {
+            .sheet(
+                isPresented: $presentationState.showingPlayerSelection,
+                onDismiss: {
+                    // Safety net: refresh when sheet is actually dismissed
+                    Task { @MainActor in
+                        await viewModel.refreshPlayerDataIfNeeded()
+                    }
+                },
+                content: {
                 // Completion handler ensures immediate state refresh when sheet dismisses
                 PlayerSelectionSheet { hasChanges in
                     if hasChanges {
@@ -200,7 +203,7 @@ private struct SheetsModifier: ViewModifier {
                 }
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
-            }
+            })
     }
 }
 

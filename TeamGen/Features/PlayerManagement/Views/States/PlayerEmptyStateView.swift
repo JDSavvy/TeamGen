@@ -32,7 +32,10 @@ struct PlayerEmptyStateView: View {
                         .foregroundColor(DesignSystem.Colors.primaryText)
 
                     Text(
-                        "Add your first player to start creating balanced teams. You can manage their skills and track their performance."
+                        """
+                        Add your first player to start creating balanced teams. 
+                        You can manage their skills and track their performance.
+                        """
                     )
                     .font(DesignSystem.Typography.body)
                     .foregroundColor(DesignSystem.Colors.secondaryText)

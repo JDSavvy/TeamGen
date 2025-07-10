@@ -306,7 +306,7 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
         }
 
         // Emergency fallback: return team with minimum players
-        return teams.enumerated().min { $0.element.players.count < $1.element.players.count }?.offset ?? 0
+        return teams.indices.min { teams[$0].players.count < teams[$1].players.count } ?? 0
     }
 
     /// Initializes empty team builders with balanced capacities

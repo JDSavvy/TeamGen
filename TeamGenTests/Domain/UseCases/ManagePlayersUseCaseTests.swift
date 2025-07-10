@@ -133,8 +133,8 @@ final class ManagePlayersUseCaseTests: XCTestCase {
             try await useCase.deletePlayer(id: playerId)
             XCTFail("Expected RepositoryError to be thrown")
         } catch let error as RepositoryError {
-            if case let .notFound(id) = error {
-                XCTAssertEqual(id, playerId)
+            if case .notFound = error {
+                // Expected - player not found
             } else {
                 XCTFail("Expected notFound error")
             }
@@ -256,7 +256,7 @@ private class MockPlayerRepository: PlayerRepositoryProtocol {
     func delete(id: UUID) async throws {
         deleteCallCount += 1
         if mockPlayer == nil {
-            throw RepositoryError.notFound(id: id)
+            throw RepositoryError.notFound
         }
     }
 
@@ -269,7 +269,7 @@ private class MockPlayerRepository: PlayerRepositoryProtocol {
         lastSelectionUpdate = (id, isSelected)
 
         if mockPlayer == nil {
-            throw RepositoryError.notFound(id: id)
+            throw RepositoryError.notFound
         }
     }
 

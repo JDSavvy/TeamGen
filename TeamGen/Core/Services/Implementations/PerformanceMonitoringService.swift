@@ -91,10 +91,8 @@ public final class IOSPerformanceMonitoringService: NSObject, PerformanceMonitor
             await recordMetric(PerformanceMetric(name: "data_load_time", value: duration, unit: "seconds"))
 
         case let .teamGeneration(playerCount, duration):
-            logger
-                .info(
-                    "Team generation for \(playerCount, privacy: .public) players completed in \(duration, privacy: .public)s"
-                )
+            let generationLog = "Team generation for \(playerCount) players completed in \(duration)s"
+            logger.info("\(generationLog, privacy: .public)")
             await recordMetric(PerformanceMetric(name: "team_generation_time", value: duration, unit: "seconds"))
 
         case let .userAction(action, duration):
@@ -104,10 +102,8 @@ public final class IOSPerformanceMonitoringService: NSObject, PerformanceMonitor
     }
 
     public func recordMetric(_ metric: PerformanceMetric) async {
-        logger
-            .info(
-                "📊 Metric: \(metric.name, privacy: .public) = \(metric.value, privacy: .public) \(metric.unit, privacy: .public)"
-            )
+        let metricLog = "📊 Metric: \(metric.name) = \(metric.value) \(metric.unit)"
+        logger.info("\(metricLog, privacy: .public)")
 
         // You could also send metrics to analytics services here
         // analyticsService.recordMetric(metric)
@@ -216,10 +212,8 @@ extension IOSPerformanceMonitoringService: MXMetricManagerSubscriber {
 
     private nonisolated func processMetricPayload(_ payload: MXMetricPayload) {
         Task { @MainActor in
-            logger
-                .info(
-                    "📈 Received MetricKit payload for timerange: \(payload.timeStampBegin, privacy: .public) - \(payload.timeStampEnd, privacy: .public)"
-                )
+            let timeRange = "\(payload.timeStampBegin) - \(payload.timeStampEnd)"
+            logger.info("📈 Received MetricKit payload for timerange: \(timeRange, privacy: .public)")
         }
 
         // Process app launch metrics

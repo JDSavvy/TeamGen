@@ -261,7 +261,8 @@ struct TeamCard: View {
 
     private var accessibilityDescription: String {
         let playerNames = sortedPlayers.map(\.name).joined(separator: ", ")
-        return "Team \(teamNumber), \(team.players.count) players, average skill \(String(format: "%.1f", team.averageRank)). Players: \(playerNames)"
+        let skillText = String(format: "%.1f", team.averageRank)
+        return "Team \(teamNumber), \(team.players.count) players, average skill \(skillText). Players: \(playerNames)"
     }
 }
 

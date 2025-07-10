@@ -38,16 +38,18 @@ struct RefinedPlayerRow: View {
     // MARK: - Header View
 
     private var headerView: some View {
-        Button(action: {
-            withAnimation(
-                DesignSystem.Animation.accessible(
-                    .interactiveSpring(response: 0.32, dampingFraction: 0.88, blendDuration: 0.06),
-                    reduceMotion: reduceMotion
-                )
-            ) {
-                onTap()
-            }
-        }) {
+        Button(
+            action: {
+                withAnimation(
+                    DesignSystem.Animation.accessible(
+                        .interactiveSpring(response: 0.32, dampingFraction: 0.88, blendDuration: 0.06),
+                        reduceMotion: reduceMotion
+                    )
+                ) {
+                    onTap()
+                }
+            },
+            label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 // Player initial with skill color
                 playerInitial
@@ -92,7 +94,7 @@ struct RefinedPlayerRow: View {
             .frame(height: headerHeight)
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
-        }
+        })
         .buttonStyle(.plain)
         .contextMenu {
             Button {
