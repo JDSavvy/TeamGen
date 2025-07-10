@@ -37,6 +37,10 @@ public final class LiveDependencyContainer: DependencyContainerProtocol {
     public lazy var analyticsService: AnalyticsServiceProtocol = {
         iOSAnalyticsService()
     }()
+    
+    public lazy var performanceService: SimplePerformanceServiceProtocol = {
+        SimplePerformanceService()
+    }()
 
     public lazy var networkService: NetworkServiceProtocol = {
         iOSNetworkService()

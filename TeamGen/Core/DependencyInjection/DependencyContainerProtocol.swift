@@ -17,6 +17,7 @@ public protocol DependencyContainerProtocol {
     // Core Services (modular architecture)
     var analyticsService: AnalyticsServiceProtocol { get }
     var networkService: NetworkServiceProtocol { get }
+    var performanceService: SimplePerformanceServiceProtocol { get }
 
     // Use Cases
     var generateTeamsUseCase: GenerateTeamsUseCaseProtocol { get }

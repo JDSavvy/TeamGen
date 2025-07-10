@@ -1,6 +1,19 @@
 import Foundation
 import OSLog
 
+// MARK: - Thread-Safe Actor for Mock
+actor Actor<T> {
+    var value: T
+    
+    init(_ value: T) {
+        self.value = value
+    }
+    
+    func append<Element>(_ element: Element) where T == [Element] {
+        value.append(element)
+    }
+}
+
 // MARK: - Simple Performance Service Protocol
 public protocol SimplePerformanceServiceProtocol: Sendable {
     func logAppLaunch(duration: TimeInterval) async
@@ -35,19 +48,23 @@ public final class SimplePerformanceService: SimplePerformanceServiceProtocol {
 // MARK: - Mock Implementation
 public final class MockSimplePerformanceService: SimplePerformanceServiceProtocol {
     
-    public var loggedEvents: [(action: String, duration: TimeInterval)] = []
+    private let _loggedEvents = Actor<[(action: String, duration: TimeInterval)]>([])
+    
+    public var loggedEvents: [(action: String, duration: TimeInterval)] {
+        get async { await _loggedEvents.value }
+    }
     
     public init() {}
     
     public func logAppLaunch(duration: TimeInterval) async {
-        loggedEvents.append(("app_launch", duration))
+        await _loggedEvents.append(("app_launch", duration))
     }
     
     public func logTeamGeneration(playerCount: Int, duration: TimeInterval) async {
-        loggedEvents.append(("team_generation_\(playerCount)", duration))
+        await _loggedEvents.append(("team_generation_\(playerCount)", duration))
     }
     
     public func logUserAction(_ action: String, duration: TimeInterval) async {
-        loggedEvents.append((action, duration))
+        await _loggedEvents.append((action, duration))
     }
 }
