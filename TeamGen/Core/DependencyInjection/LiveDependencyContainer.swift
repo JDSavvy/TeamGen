@@ -112,6 +112,10 @@ public final class MockDependencyContainer: DependencyContainerProtocol {
         getSingleton { MockNetworkService() }
     }
 
+    public var performanceService: SimplePerformanceServiceProtocol {
+        getSingleton { MockPerformanceService() }
+    }
+
     public var generateTeamsUseCase: GenerateTeamsUseCaseProtocol {
         GenerateTeamsUseCase(
             playerRepository: playerRepository,
@@ -375,5 +379,42 @@ public final class MockNetworkService: NetworkServiceProtocol {
 
     public func request(_: NetworkRequest) async throws -> Data {
         throw NetworkError.invalidURL
+    }
+}
+
+@MainActor
+public final class MockPerformanceService: SimplePerformanceServiceProtocol {
+    public func trackUserAction(_: String) async {
+        // Mock implementation
+    }
+
+    public func trackAppLaunch() async {
+        // Mock implementation
+    }
+
+    public func trackViewLoad(_: String) async {
+        // Mock implementation
+    }
+
+    public func trackDataOperation(_: String) async {
+        // Mock implementation
+    }
+
+    public func getPerformanceMetrics() async -> PerformanceMetrics {
+        PerformanceMetrics(
+            appLaunchTime: 0.5,
+            memoryUsage: 50.0,
+            cpuUsage: 10.0,
+            batteryLevel: 80.0,
+            thermalState: "optimal"
+        )
+    }
+
+    public func startSession() async {
+        // Mock implementation
+    }
+
+    public func endSession() async {
+        // Mock implementation
     }
 }
