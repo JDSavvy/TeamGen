@@ -59,7 +59,7 @@ public final class UserDefaultsSettingsRepository: SettingsRepositoryProtocol, @
 
     private func getDefaultTeamCount() -> Int {
         let count = userDefaults.integer(forKey: Keys.defaultTeamCount)
-        return count > 0 ? count : 2
+        return !count.isZero ? count : 2
     }
 
     private func getDefaultGenerationMode() -> TeamGenerationMode {

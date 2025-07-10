@@ -9,7 +9,7 @@ on:
 env:
   SCHEME: TeamGen
   PROJECT: TeamGen.xcodeproj
-  DESTINATION: 'platform=iOS Simulator,OS=latest'
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest'
 
 jobs:
   # Code Quality and Linting
@@ -78,34 +78,44 @@ jobs:
         xcodebuild build \
           -project ${{ env.PROJECT }} \
           -scheme ${{ env.SCHEME }} \
-          -destination "generic/platform=iOS Simulator" \
+          -destination "${{ env.DESTINATION }}" \
           -configuration Debug \
           -quiet
           
     - name: Run Unit Tests
       run: |
-        echo "⚠️  Temporarily skipping unit tests due to iOS Simulator configuration issues"
-        echo "Tests will be re-enabled once simulator setup is resolved"
-        # xcodebuild test \
-        #   -project ${{ env.PROJECT }} \
-        #   -scheme ${{ env.SCHEME }} \
-        #   -destination "generic/platform=iOS Simulator" \
-        #   -configuration Debug \
-        #   -enableCodeCoverage YES \
-        #   -resultBundlePath TestResults.xcresult \
-        #   -quiet
+        xcodebuild test \
+          -project ${{ env.PROJECT }} \
+          -scheme ${{ env.SCHEME }} \
+          -destination "${{ env.DESTINATION }}" \
+          -configuration Debug \
+          -enableCodeCoverage YES \
+          -resultBundlePath TestResults.xcresult \
+          -only-testing:TeamGenTests \
+          -quiet
           
     - name: Upload Test Results
-      run: |
-        echo "⚠️  Skipping test results upload - no tests run"
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: TestResults.xcresult
+      continue-on-error: true
         
     - name: Generate Code Coverage Report
       run: |
-        echo "⚠️  Skipping coverage report - no tests run"
+        if [ -d "TestResults.xcresult" ]; then
+          xcrun xccov view --report --json TestResults.xcresult > coverage.json
+          echo "✅ Coverage report generated"
+        else
+          echo "⚠️ No test results found"
+        fi
         
     - name: Upload Coverage Reports
-      run: |
-        echo "⚠️  Skipping coverage upload - no tests run"
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage.json
+      continue-on-error: true
 
   # UI Testing (on specific events)
   ui-tests:
@@ -128,7 +138,7 @@ jobs:
         xcodebuild test \
           -project ${{ env.PROJECT }} \
           -scheme ${{ env.SCHEME }} \
-          -destination "generic/platform=iOS Simulator" \
+          -destination "${{ env.DESTINATION }}" \
           -configuration Debug \
           -only-testing:TeamGenUITests \
           -quiet
@@ -184,14 +194,29 @@ jobs:
         xcodebuild docbuild \
           -project ${{ env.PROJECT }} \
           -scheme ${{ env.SCHEME }} \
-          -destination "generic/platform=iOS Simulator" \
+          -destination "${{ env.DESTINATION }}" \
           -derivedDataPath docs
           
+    - name: Prepare Documentation for Upload
+      run: |
+        if [ -d "docs/Build/Products/Debug-iphonesimulator/TeamGen.doccarchive" ]; then
+          # Create clean documentation archive without problematic file names
+          mkdir -p clean-docs
+          cd docs/Build/Products/Debug-iphonesimulator/TeamGen.doccarchive
+          # Copy everything except files with problematic characters
+          find . -type f ! -name "*:*" ! -name "*\"*" ! -name "*<*" ! -name "*>*" ! -name "*|*" ! -name "*\**" ! -name "*?*" -exec cp --parents {} ../../../../../clean-docs/ \;
+          cd ../../../../..
+          echo "✅ Documentation prepared for upload"
+        else
+          echo "⚠️ No documentation archive found"
+        fi
+        
     - name: Upload Documentation
       uses: actions/upload-artifact@v4
       with:
         name: documentation
-        path: docs/Build/Products/Debug-iphonesimulator/TeamGen.doccarchive
+        path: clean-docs/
+      continue-on-error: true  # Allow documentation failures
 
   # Performance Testing
   performance-tests:
@@ -216,7 +241,7 @@ jobs:
           xcodebuild test \
             -project ${{ env.PROJECT }} \
             -scheme ${{ env.SCHEME }} \
-            -destination "generic/platform=iOS Simulator" \
+            -destination "${{ env.DESTINATION }}" \
             -configuration Release \
             -only-testing:TeamGenTests/PerformanceTests \
             -quiet
