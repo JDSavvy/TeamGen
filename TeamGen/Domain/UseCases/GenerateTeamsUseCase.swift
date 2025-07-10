@@ -193,14 +193,25 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
     ) async throws -> [TeamEntity] {
         let startTime = Date()
 
-        // Comprehensive validation
-        let validationResult = try await validateTeamGeneration(teamCount: teamCount, mode: mode)
-        guard validationResult.isValid else {
-            throw TeamGenerationError.generationFailed("Validation failed: Invalid configuration")
+        // Basic validation with specific errors
+        guard teamCount >= 2 else {
+            throw TeamGenerationError.invalidTeamCount(teamCount)
         }
 
-        // Fetch selected players with business logic validation
-        let selectedPlayers = try await fetchAndValidateSelectedPlayers()
+        let selectedPlayers = try await playerRepository.fetchSelected()
+        guard !selectedPlayers.isEmpty else {
+            throw TeamGenerationError.emptyPlayerList
+        }
+
+        guard selectedPlayers.count >= teamCount else {
+            throw TeamGenerationError.insufficientPlayers(required: teamCount, available: selectedPlayers.count)
+        }
+
+        // Comprehensive validation for warnings and recommendations  
+        let validationResult = try await validateTeamGeneration(teamCount: teamCount, mode: mode)
+
+        // Additional business logic validation on the already fetched players
+        try validatePlayerDataIntegrity(selectedPlayers)
 
         // Publish domain event
         await eventPublisher?.publish(TeamGenerationStartedEvent(
@@ -521,5 +532,18 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
         let maxDeviation = skillDistribution.map { abs($0 - averageSkill) }.max() ?? 0.0
 
         return maxDeviation > 0 ? max(0.0, 1.0 - (maxDeviation / 5.0)) : 1.0
+    }
+    
+    private func validatePlayerDataIntegrity(_ players: [PlayerEntity]) throws {
+        // Business rule: Validate player data integrity
+        for player in players {
+            guard !player.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                throw TeamGenerationError.generationFailed("Invalid player data: empty name")
+            }
+
+            guard player.skills.overall > 0, player.skills.overall <= 10 else {
+                throw TeamGenerationError.generationFailed("Invalid player data: skill out of range")
+            }
+        }
     }
 }

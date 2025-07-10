@@ -132,7 +132,7 @@ struct SettingsView: View {
         } footer: {
             Text(
                 """
-                TeamGen helps create balanced teams for sports and recreational activities. 
+                TeamGen helps create balanced teams for sports and recreational activities.
                 Thank you for using our app!
                 """
             )

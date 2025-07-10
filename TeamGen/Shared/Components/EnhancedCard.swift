@@ -204,7 +204,7 @@ struct EnhancedCard<Content: View>: View {
                 LinearGradient(
                     colors: [
                         Color.white.opacity(0.1),
-                        Color.white.opacity(0.05),
+                        Color.white.opacity(0.05)
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
@@ -214,7 +214,7 @@ struct EnhancedCard<Content: View>: View {
             LinearGradient(
                 colors: [
                     backgroundColor,
-                    backgroundColor.opacity(0.95),
+                    backgroundColor.opacity(0.95)
                 ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
@@ -241,7 +241,7 @@ struct EnhancedCard<Content: View>: View {
                         LinearGradient(
                             colors: [
                                 Color.white.opacity(0.2),
-                                Color.white.opacity(0.1),
+                                Color.white.opacity(0.1)
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing

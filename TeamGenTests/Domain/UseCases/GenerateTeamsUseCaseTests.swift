@@ -31,12 +31,12 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
 
         let expectedTeams = [
             TeamEntity(players: Array(players[0 ..< 3])),
-            TeamEntity(players: Array(players[3 ..< 6])),
+            TeamEntity(players: Array(players[3 ..< 6]))
         ]
         mockTeamGenerationService.mockTeams = expectedTeams
 
         // When
-        let result = try await useCase.generateTeams(teamCount: 2, mode: .fair)
+        let result = try await useCase.execute(teamCount: 2, mode: .fair)
 
         // Then
         XCTAssertEqual(result.count, 2)
@@ -55,13 +55,13 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await useCase.generateTeams(teamCount: 2, mode: .fair)
+            _ = try await useCase.execute(teamCount: 2, mode: .fair)
             XCTFail("Expected TeamGenerationError to be thrown")
         } catch let error as TeamGenerationError {
-            if case .noPlayersSelected = error {
+            if case .emptyPlayerList = error {
                 // Expected
             } else {
-                XCTFail("Expected noPlayersSelected error")
+                XCTFail("Expected emptyPlayerList error")
             }
         } catch {
             XCTFail("Unexpected error type: \(error)")
@@ -75,7 +75,7 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await useCase.generateTeams(teamCount: 3, mode: .fair)
+            _ = try await useCase.execute(teamCount: 3, mode: .fair)
             XCTFail("Expected TeamGenerationError to be thrown")
         } catch let error as TeamGenerationError {
             if case let .insufficientPlayers(required, available) = error {
@@ -96,7 +96,7 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await useCase.generateTeams(teamCount: 0, mode: .fair)
+            _ = try await useCase.execute(teamCount: 0, mode: .fair)
             XCTFail("Expected TeamGenerationError to be thrown")
         } catch let error as TeamGenerationError {
             if case .invalidTeamCount = error {
@@ -117,14 +117,10 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
         mockPlayerRepository.mockSelectedPlayers = players
 
         // When
-        let result = try await useCase.validateGeneration(teamCount: 2)
+        let result = try await useCase.validateTeamGeneration(teamCount: 2, mode: .fair)
 
         // Then
-        if case .valid = result {
-            // Expected
-        } else {
-            XCTFail("Expected valid result")
-        }
+        XCTAssertTrue(result.isValid)
     }
 
     func testValidateGeneration_InsufficientPlayers_ReturnsInvalid() async throws {
@@ -133,17 +129,10 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
         mockPlayerRepository.mockSelectedPlayers = players
 
         // When
-        let result = try await useCase.validateGeneration(teamCount: 4)
+        let result = try await useCase.validateTeamGeneration(teamCount: 4, mode: .fair)
 
         // Then
-        if case let .invalid(error) = result,
-           case let .insufficientPlayers(required, available) = error
-        {
-            XCTAssertEqual(required, 4)
-            XCTAssertEqual(available, 2)
-        } else {
-            XCTFail("Expected invalid result with insufficientPlayers error")
-        }
+        XCTAssertFalse(result.isValid)
     }
 
     // MARK: - Get Selected Players Count Tests
@@ -154,7 +143,8 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
         mockPlayerRepository.mockSelectedPlayers = players
 
         // When
-        let count = try await useCase.getSelectedPlayersCount()
+        let preview = try await useCase.previewTeamDistribution(teamCount: 2)
+        let count = preview.playersPerTeam.reduce(0, +)
 
         // Then
         XCTAssertEqual(count, 5)
@@ -164,11 +154,15 @@ final class GenerateTeamsUseCaseTests: XCTestCase {
         // Given
         mockPlayerRepository.mockSelectedPlayers = []
 
-        // When
-        let count = try await useCase.getSelectedPlayersCount()
-
-        // Then
-        XCTAssertEqual(count, 0)
+        // When & Then
+        do {
+            _ = try await useCase.previewTeamDistribution(teamCount: 2)
+            XCTFail("Expected TeamGenerationError to be thrown")
+        } catch TeamGenerationError.emptyPlayerList {
+            // Expected
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
     }
 
     // MARK: - Helper Methods
@@ -196,17 +190,16 @@ private class MockTeamGenerationService: TeamGenerationServiceProtocol {
     var lastGenerateCall: (players: [PlayerEntity], teamCount: Int, mode: TeamGenerationMode)?
 
     func generateTeams(from players: [PlayerEntity], count: Int,
-                       mode: TeamGenerationMode) async throws -> [TeamEntity]
-    {
+                       mode: TeamGenerationMode) async throws -> [TeamEntity] {
         lastGenerateCall = (players, count, mode)
 
         // Basic validation
-        guard !isEmpty else {
-            throw TeamGenerationError.invalidTeamCount
+        guard count > 0 else {
+            throw TeamGenerationError.invalidTeamCount(count)
         }
 
         guard !players.isEmpty else {
-            throw TeamGenerationError.noPlayersSelected
+            throw TeamGenerationError.emptyPlayerList
         }
 
         guard players.count >= count else {
@@ -223,20 +216,97 @@ private class MockTeamGenerationService: TeamGenerationServiceProtocol {
             return updatedTeam
         }
     }
-
+    
     func validateGeneration(playerCount: Int, teamCount: Int) -> ValidationResult {
         if teamCount <= 0 {
-            return .invalid(.invalidTeamCount)
+            return ValidationResult.invalid(.invalidTeamCount(teamCount))
         }
 
         if playerCount == 0 {
-            return .invalid(.noPlayersSelected)
+            return ValidationResult.invalid(.emptyPlayerList)
         }
 
         if playerCount < teamCount {
-            return .invalid(.insufficientPlayers(required: teamCount, available: playerCount))
+            return ValidationResult.invalid(.insufficientPlayers(required: teamCount, available: playerCount))
         }
 
         return .valid
+    }
+
+}
+
+// MARK: - Mock Player Repository
+
+private class MockPlayerRepository: PlayerRepositoryProtocol {
+    var mockSelectedPlayers: [PlayerEntity] = []
+    var mockPlayers: [PlayerEntity] = []
+    
+    func fetchAll() async throws -> [PlayerEntity] {
+        return mockPlayers
+    }
+    
+    func fetch(id: UUID) async throws -> PlayerEntity? {
+        return mockPlayers.first { $0.id == id }
+    }
+    
+    func save(_ player: PlayerEntity) async throws {
+        if let index = mockPlayers.firstIndex(where: { $0.id == player.id }) {
+            mockPlayers[index] = player
+        } else {
+            mockPlayers.append(player)
+        }
+    }
+    
+    func saveAll(_ players: [PlayerEntity]) async throws {
+        for player in players {
+            try await save(player)
+        }
+    }
+    
+    func delete(id: UUID) async throws {
+        mockPlayers.removeAll { $0.id == id }
+        mockSelectedPlayers.removeAll { $0.id == id }
+    }
+    
+    func deleteAll(ids: [UUID]) async throws {
+        for id in ids {
+            try await delete(id: id)
+        }
+    }
+    
+    func fetchSelected() async throws -> [PlayerEntity] {
+        return mockSelectedPlayers
+    }
+    
+    func updateSelection(id: UUID, isSelected: Bool) async throws {
+        if let index = mockPlayers.firstIndex(where: { $0.id == id }) {
+            mockPlayers[index].isSelected = isSelected
+            if isSelected {
+                if !mockSelectedPlayers.contains(where: { $0.id == id }) {
+                    mockSelectedPlayers.append(mockPlayers[index])
+                }
+            } else {
+                mockSelectedPlayers.removeAll { $0.id == id }
+            }
+        }
+    }
+    
+    func resetAllSelections() async throws {
+        mockSelectedPlayers.removeAll()
+        for i in mockPlayers.indices {
+            mockPlayers[i].isSelected = false
+        }
+    }
+    
+    func fetchByMinimumSkillLevel(_ minLevel: Double) async throws -> [PlayerEntity] {
+        return mockPlayers.filter { $0.skills.overall >= minLevel }
+    }
+    
+    func hasPlayers() async throws -> Bool {
+        return !mockPlayers.isEmpty
+    }
+    
+    func count() async throws -> Int {
+        return mockPlayers.count
     }
 }

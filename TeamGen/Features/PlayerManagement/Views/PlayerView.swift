@@ -108,8 +108,7 @@ struct PlayerView: View {
             }
             Button("Delete", role: .destructive) {
                 if let player = presentationState.playerToDelete,
-                   let viewModel
-                {
+                   let viewModel {
                     Task {
                         await viewModel.deletePlayer(player.id)
                         presentationState.playerToDelete = nil
@@ -255,7 +254,7 @@ private struct LoadingStateContent: View {
                         LinearGradient(
                             colors: [
                                 DesignSystem.Colors.primary,
-                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading),
+                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading)
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -446,7 +445,9 @@ private struct EmptyPlayersState: View {
                         .accessibilityAddTraits(.isHeader)
 
                     Text(
-                        "Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution."
+                        """
+                        Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution.
+                        """
                     )
                     .font(DesignSystem.Typography.body)
                     .foregroundColor(DesignSystem.Colors.secondaryText)

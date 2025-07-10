@@ -33,7 +33,7 @@ struct PlayerEmptyStateView: View {
 
                     Text(
                         """
-                        Add your first player to start creating balanced teams. 
+                        Add your first player to start creating balanced teams.
                         You can manage their skills and track their performance.
                         """
                     )

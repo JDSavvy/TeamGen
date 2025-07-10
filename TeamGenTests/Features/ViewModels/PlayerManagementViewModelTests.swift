@@ -468,7 +468,9 @@ final class PlayerManagementViewModelTests: XCTestCase {
          resetAllSelectionsCallCount += 1
 
          if shouldThrowError {
-             throw RepositoryError.saveFailed(NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to reset selections"]))
+             throw RepositoryError.saveFailed(
+                NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to reset selections"])
+            )
          }
      }
 
@@ -478,7 +480,9 @@ final class PlayerManagementViewModelTests: XCTestCase {
          }
 
          if shouldThrowError {
-             throw RepositoryError.fetchFailed(NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch players"]))
+             throw RepositoryError.fetchFailed(
+                NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch players"])
+            )
          }
 
          return mockPlayers
@@ -486,7 +490,9 @@ final class PlayerManagementViewModelTests: XCTestCase {
 
      func getSelectedPlayers() async throws -> [PlayerEntity] {
          if shouldThrowError {
-             throw RepositoryError.fetchFailed(NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch selected players"]))
+             throw RepositoryError.fetchFailed(
+                NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch selected players"])
+            )
          }
 
          return mockPlayers.filter(\.isSelected)
