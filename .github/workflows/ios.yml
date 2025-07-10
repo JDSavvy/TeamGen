@@ -9,7 +9,7 @@ on:
 env:
   SCHEME: TeamGen
   PROJECT: TeamGen.xcodeproj
-  DESTINATION: 'platform=iOS Simulator,id=dvtdevice-DVTiOSDeviceSimulatorPlaceholder-iphonesimulator:placeholder'
+  DESTINATION: 'platform=iOS Simulator,OS=latest'
 
 jobs:
   # Code Quality and Linting
@@ -67,6 +67,20 @@ jobs:
     - name: Show Available Simulators
       run: xcrun simctl list devices available
       
+    - name: Create and Boot iOS Simulator
+      run: |
+        # Create a new iPhone 15 simulator if one doesn't exist
+        DEVICE_TYPE="com.apple.CoreSimulator.SimDeviceType.iPhone-15"
+        RUNTIME=$(xcrun simctl list runtimes ios -j | jq -r '.runtimes | map(select(.name | contains("iOS"))) | sort_by(.version) | last.identifier')
+        
+        echo "Using runtime: $RUNTIME"
+        DEVICE_ID=$(xcrun simctl create "TeamGen-CI" "$DEVICE_TYPE" "$RUNTIME")
+        echo "Created device: $DEVICE_ID"
+        
+        # Boot the simulator
+        xcrun simctl boot "$DEVICE_ID"
+        echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+      
     - name: Clean Build Folder
       run: |
         xcodebuild clean \
@@ -78,7 +92,7 @@ jobs:
         xcodebuild build \
           -project ${{ env.PROJECT }} \
           -scheme ${{ env.SCHEME }} \
-          -destination "${{ env.DESTINATION }}" \
+          -destination "id=${{ env.DEVICE_ID }}" \
           -configuration Debug \
           -quiet
           
@@ -87,7 +101,7 @@ jobs:
         xcodebuild test \
           -project ${{ env.PROJECT }} \
           -scheme ${{ env.SCHEME }} \
-          -destination "${{ env.DESTINATION }}" \
+          -destination "id=${{ env.DEVICE_ID }}" \
           -configuration Debug \
           -enableCodeCoverage YES \
           -resultBundlePath TestResults.xcresult \
@@ -131,7 +145,7 @@ jobs:
         xcodebuild test \
           -project ${{ env.PROJECT }} \
           -scheme ${{ env.SCHEME }} \
-          -destination "${{ env.DESTINATION }}" \
+          -destination "id=${{ env.DEVICE_ID }}" \
           -configuration Debug \
           -only-testing:TeamGenUITests \
           -quiet
@@ -187,7 +201,7 @@ jobs:
         xcodebuild docbuild \
           -project ${{ env.PROJECT }} \
           -scheme ${{ env.SCHEME }} \
-          -destination "${{ env.DESTINATION }}" \
+          -destination "id=${{ env.DEVICE_ID }}" \
           -derivedDataPath docs
           
     - name: Upload Documentation
@@ -219,7 +233,7 @@ jobs:
           xcodebuild test \
             -project ${{ env.PROJECT }} \
             -scheme ${{ env.SCHEME }} \
-            -destination "${{ env.DESTINATION }}" \
+            -destination "id=${{ env.DEVICE_ID }}" \
             -configuration Release \
             -only-testing:TeamGenTests/PerformanceTests \
             -quiet
