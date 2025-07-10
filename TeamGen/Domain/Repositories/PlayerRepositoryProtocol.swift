@@ -41,27 +41,4 @@ public protocol PlayerRepositoryProtocol: Sendable {
     func count() async throws -> Int
 }
 
-// MARK: - Repository Errors
-
-public enum RepositoryError: LocalizedError, Sendable {
-    case notFound(id: UUID)
-    case saveFailed(Error)
-    case deleteFailed(Error)
-    case fetchFailed(Error)
-    case invalidData
-
-    public var errorDescription: String? {
-        switch self {
-        case let .notFound(id):
-            "Entity with ID \(id) not found"
-        case let .saveFailed(error):
-            "Failed to save: \(error.localizedDescription)"
-        case let .deleteFailed(error):
-            "Failed to delete: \(error.localizedDescription)"
-        case let .fetchFailed(error):
-            "Failed to fetch: \(error.localizedDescription)"
-        case .invalidData:
-            "Invalid data encountered"
-        }
-    }
-}
+// Repository errors are now defined in UserFriendlyError.swift for better UX

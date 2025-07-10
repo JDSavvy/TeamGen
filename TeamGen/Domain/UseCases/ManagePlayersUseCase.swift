@@ -52,7 +52,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
     public func deletePlayer(id: UUID) async throws {
         // Verify player exists
         guard try await (playerRepository.fetch(id: id)) != nil else {
-            throw RepositoryError.notFound(id: id)
+            throw RepositoryError.notFound
         }
 
         // Delete from repository
@@ -62,7 +62,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
     public func togglePlayerSelection(id: UUID) async throws {
         // Fetch current player state
         guard let player = try await playerRepository.fetch(id: id) else {
-            throw RepositoryError.notFound(id: id)
+            throw RepositoryError.notFound
         }
 
         // Toggle selection
@@ -75,7 +75,7 @@ public final class ManagePlayersUseCase: ManagePlayersUseCaseProtocol {
     public func updatePlayerSelection(id: UUID, isSelected: Bool) async throws {
         // Verify player exists
         guard try await (playerRepository.fetch(id: id)) != nil else {
-            throw RepositoryError.notFound(id: id)
+            throw RepositoryError.notFound
         }
 
         // Update selection

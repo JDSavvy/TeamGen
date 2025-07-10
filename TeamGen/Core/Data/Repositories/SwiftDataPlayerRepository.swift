@@ -86,7 +86,7 @@ public final class SwiftDataPlayerRepository: PlayerRepositoryProtocol {
         let players = try modelContext.fetch(descriptor)
 
         guard let player = players.first else {
-            throw RepositoryError.notFound(id: id)
+            throw RepositoryError.notFound
         }
 
         modelContext.delete(player)
@@ -123,7 +123,7 @@ public final class SwiftDataPlayerRepository: PlayerRepositoryProtocol {
         let players = try modelContext.fetch(descriptor)
 
         guard let player = players.first else {
-            throw RepositoryError.notFound(id: id)
+            throw RepositoryError.notFound
         }
 
         player.isSelected = isSelected
