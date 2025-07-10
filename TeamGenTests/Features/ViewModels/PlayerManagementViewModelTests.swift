@@ -485,7 +485,11 @@ final class PlayerManagementViewModelTests: XCTestCase {
 
          if shouldThrowError {
              throw RepositoryError.fetchFailed(
-                NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch players"])
+                NSError(
+                    domain: "TestError",
+                    code: 1,
+                    userInfo: [NSLocalizedDescriptionKey: "Failed to fetch players"]
+                )
             )
          }
 
