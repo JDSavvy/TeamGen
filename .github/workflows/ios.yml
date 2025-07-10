@@ -59,7 +59,7 @@ jobs:
     - name: Setup Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '16.0'
+        xcode-version: '16.1'
         
     - name: Show Xcode Version
       run: xcodebuild -version
@@ -124,7 +124,7 @@ jobs:
     - name: Setup Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '16.0'
+        xcode-version: '16.1'
         
     - name: Run UI Tests
       run: |
@@ -160,7 +160,7 @@ jobs:
     - name: Check for Secrets
       run: |
         # Basic check for hardcoded secrets (excluding scripts and docs)
-        if grep -r "sk_" . --exclude-dir=.git --exclude-dir=scripts --exclude="*.yml" --exclude="*.yaml" --exclude="*.md" --exclude="*.sh" 2>/dev/null | grep -v "example" | grep -v "placeholder"; then
+        if grep -r "sk_" . --exclude-dir=.git --exclude-dir=scripts --exclude="*.yml" --exclude="*.yaml" --exclude="*.md" --exclude="*.sh" 2>/dev/null | grep -v "example" | grep -v "placeholder" | grep -v "mach_task" | grep -v "PerformanceMonitoringService"; then
           echo "❌ Potential secrets found"
           exit 1
         fi
@@ -180,7 +180,7 @@ jobs:
     - name: Setup Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '16.0'
+        xcode-version: '16.1'
         
     - name: Generate DocC Documentation
       run: |
@@ -210,7 +210,7 @@ jobs:
     - name: Setup Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '16.0'
+        xcode-version: '16.1'
         
     - name: Run Performance Tests
       run: |
@@ -241,7 +241,7 @@ jobs:
     - name: Setup Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '16.0'
+        xcode-version: '16.1'
         
     - name: Build Archive
       run: |
