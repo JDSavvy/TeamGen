@@ -446,7 +446,8 @@ private struct EmptyPlayersState: View {
 
                     Text(
                         """
-                        Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution.
+                        Add your first player to start creating balanced teams. \
+                        You can add players with different skill levels to ensure fair team distribution.
                         """
                     )
                     .font(DesignSystem.Typography.body)

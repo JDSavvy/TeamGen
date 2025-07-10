@@ -194,7 +194,7 @@ private class MockTeamGenerationService: TeamGenerationServiceProtocol {
         lastGenerateCall = (players, count, mode)
 
         // Basic validation
-        guard !count.isZero else { // swiftlint:disable:this empty_count
+        guard count > 0 else {
             throw TeamGenerationError.invalidTeamCount(count)
         }
 

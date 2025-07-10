@@ -207,7 +207,7 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
             throw TeamGenerationError.insufficientPlayers(required: teamCount, available: selectedPlayers.count)
         }
 
-        // Comprehensive validation for warnings and recommendations  
+        // Comprehensive validation for warnings and recommendations
         let validationResult = try await validateTeamGeneration(teamCount: teamCount, mode: mode)
 
         // Additional business logic validation on the already fetched players
@@ -533,7 +533,7 @@ public final class GenerateTeamsUseCase: GenerateTeamsUseCaseProtocol {
 
         return maxDeviation > 0 ? max(0.0, 1.0 - (maxDeviation / 5.0)) : 1.0
     }
-    
+
     private func validatePlayerDataIntegrity(_ players: [PlayerEntity]) throws {
         // Business rule: Validate player data integrity
         for player in players {
