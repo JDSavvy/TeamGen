@@ -752,7 +752,7 @@ public enum DesignSystem {
                 (4.0, (1.0, 0.6, 0.0)), // Orange for basic skill
                 (6.0, (1.0, 0.8, 0.0)), // Yellow for intermediate
                 (7.5, (0.6, 0.8, 0.2)), // Light green for advanced
-                (10.0, (0.2, 0.8, 0.3)) // Green for expert
+                (10.0, (0.2, 0.8, 0.3)), // Green for expert
             ]
 
             // Find the two color stops to interpolate between

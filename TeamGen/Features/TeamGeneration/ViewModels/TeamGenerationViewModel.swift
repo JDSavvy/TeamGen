@@ -166,7 +166,8 @@ public final class TeamGenerationViewModel {
         let timeSinceLastLoad = Date().timeIntervalSince(cacheState.lastPlayerLoadTime)
         if timeSinceLastLoad < playerCacheValidityDuration,
            cacheState.isValid,
-           !cacheState.cachedPlayers.isEmpty {
+           !cacheState.cachedPlayers.isEmpty
+        {
             // Use cached data and update selected players
             availablePlayers = cacheState.cachedPlayers
             return

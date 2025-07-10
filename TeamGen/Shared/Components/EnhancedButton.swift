@@ -381,7 +381,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             LinearGradient(
                 colors: [
                     DesignSystem.Colors.primary,
-                    DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque)
+                    DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque),
                 ],
                 startPoint: .top,
                 endPoint: .bottom
@@ -394,7 +394,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             LinearGradient(
                 colors: [
                     DesignSystem.Colors.error,
-                    DesignSystem.Colors.error.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque)
+                    DesignSystem.Colors.error.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque),
                 ],
                 startPoint: .top,
                 endPoint: .bottom
@@ -403,7 +403,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             LinearGradient(
                 colors: [
                     DesignSystem.Colors.success,
-                    DesignSystem.Colors.success.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque)
+                    DesignSystem.Colors.success.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque),
                 ],
                 startPoint: .top,
                 endPoint: .bottom
@@ -412,7 +412,7 @@ struct ModernButtonStyle: SwiftUI.ButtonStyle {
             LinearGradient(
                 colors: [
                     DesignSystem.Colors.warning,
-                    DesignSystem.Colors.warning.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque)
+                    DesignSystem.Colors.warning.opacity(DesignSystem.VisualConsistency.opacityNearlyOpaque),
                 ],
                 startPoint: .top,
                 endPoint: .bottom

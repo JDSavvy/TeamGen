@@ -193,17 +193,18 @@ private struct SheetsModifier: ViewModifier {
                     }
                 },
                 content: {
-                // Completion handler ensures immediate state refresh when sheet dismisses
-                PlayerSelectionSheet { hasChanges in
-                    if hasChanges {
-                        Task { @MainActor in
-                            await viewModel.loadSelectedPlayers() // Force refresh when changes are made
+                    // Completion handler ensures immediate state refresh when sheet dismisses
+                    PlayerSelectionSheet { hasChanges in
+                        if hasChanges {
+                            Task { @MainActor in
+                                await viewModel.loadSelectedPlayers() // Force refresh when changes are made
+                            }
                         }
                     }
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible)
                 }
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-            })
+            )
     }
 }
 

@@ -82,7 +82,7 @@ struct MainTabView: View {
         LinearGradient(
             colors: [
                 DesignSystem.Colors.primaryBackground,
-                DesignSystem.Colors.secondaryBackground.opacity(0.3)
+                DesignSystem.Colors.secondaryBackground.opacity(0.3),
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -104,13 +104,13 @@ struct MainTabView: View {
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.systemFont(ofSize: 10, weight: .medium)
+            .font: UIFont.systemFont(ofSize: 10, weight: .medium),
         ]
 
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor.systemBlue
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
             .foregroundColor: UIColor.systemBlue,
-            .font: UIFont.systemFont(ofSize: 10, weight: .semibold)
+            .font: UIFont.systemFont(ofSize: 10, weight: .semibold),
         ]
 
         // Compact appearance (iPhone landscape)

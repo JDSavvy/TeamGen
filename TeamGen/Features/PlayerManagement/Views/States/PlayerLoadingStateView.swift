@@ -26,7 +26,7 @@ struct PlayerLoadingStateView: View {
                         LinearGradient(
                             colors: [
                                 DesignSystem.Colors.primary,
-                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading)
+                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading),
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing

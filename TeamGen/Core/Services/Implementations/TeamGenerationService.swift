@@ -263,7 +263,8 @@ public final class TeamGenerationService: TeamGenerationServiceProtocol {
 
     /// Distributes a skill tier across teams with balanced team sizes and optional randomized assignment
     private func distributeTierToTeams(tier: [PlayerEntity], teams: [TeamBuilder],
-                                       useRandomizedAssignment: Bool) -> [TeamBuilder] {
+                                       useRandomizedAssignment: Bool) -> [TeamBuilder]
+    {
         let mutableTeams = teams // Already mutable through reference semantics
 
         if useRandomizedAssignment {

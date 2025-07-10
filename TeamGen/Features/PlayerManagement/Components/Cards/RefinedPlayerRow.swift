@@ -50,51 +50,52 @@ struct RefinedPlayerRow: View {
                 }
             },
             label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                // Player initial with skill color
-                playerInitial
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    // Player initial with skill color
+                    playerInitial
 
-                // Player information - clean hierarchy
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(player.name)
-                        .font(DesignSystem.Typography.listItemTitle)
-                        .foregroundColor(DesignSystem.Colors.primaryText)
-                        .lineLimit(1)
+                    // Player information - clean hierarchy
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(player.name)
+                            .font(DesignSystem.Typography.listItemTitle)
+                            .foregroundColor(DesignSystem.Colors.primaryText)
+                            .lineLimit(1)
 
-                    Text(skillLevelText)
-                        .font(DesignSystem.Typography.listItemSubtitle)
-                        .foregroundColor(DesignSystem.Colors.secondaryText)
+                        Text(skillLevelText)
+                            .font(DesignSystem.Typography.listItemSubtitle)
+                            .foregroundColor(DesignSystem.Colors.secondaryText)
+                    }
+
+                    Spacer()
+
+                    // Skill score - prominent but not overwhelming
+                    Text(String(format: "%.1f", player.skills.overall))
+                        .font(DesignSystem.Typography.headlineEmphasized)
+                        .foregroundColor(skillColor)
+                        .monospacedDigit()
+
+                    // Enhanced expansion indicator with smooth rotation
+                    Image(systemName: DesignSystem.Symbols.chevronDown)
+                        .font(.system(
+                            size: DesignSystem.IconSize.sm,
+                            weight: DesignSystem.Symbols.symbolWeight(for: .icon)
+                        ))
+                        .foregroundColor(DesignSystem.Colors.tertiaryText)
+                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                        .animation(
+                            DesignSystem.Animation.accessible(
+                                .interactiveSpring(response: 0.25, dampingFraction: 0.92, blendDuration: 0.04),
+                                reduceMotion: reduceMotion
+                            ),
+                            value: isExpanded
+                        )
                 }
-
-                Spacer()
-
-                // Skill score - prominent but not overwhelming
-                Text(String(format: "%.1f", player.skills.overall))
-                    .font(DesignSystem.Typography.headlineEmphasized)
-                    .foregroundColor(skillColor)
-                    .monospacedDigit()
-
-                // Enhanced expansion indicator with smooth rotation
-                Image(systemName: DesignSystem.Symbols.chevronDown)
-                    .font(.system(
-                        size: DesignSystem.IconSize.sm,
-                        weight: DesignSystem.Symbols.symbolWeight(for: .icon)
-                    ))
-                    .foregroundColor(DesignSystem.Colors.tertiaryText)
-                    .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                    .animation(
-                        DesignSystem.Animation.accessible(
-                            .interactiveSpring(response: 0.25, dampingFraction: 0.92, blendDuration: 0.04),
-                            reduceMotion: reduceMotion
-                        ),
-                        value: isExpanded
-                    )
+                .padding(DesignSystem.Spacing.md)
+                .frame(height: headerHeight)
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
             }
-            .padding(DesignSystem.Spacing.md)
-            .frame(height: headerHeight)
-            .frame(maxWidth: .infinity)
-            .contentShape(Rectangle())
-        })
+        )
         .buttonStyle(.plain)
         .contextMenu {
             Button {

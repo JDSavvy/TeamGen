@@ -68,7 +68,7 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
         let players = [
             createTestPlayer(name: "Player 1"),
             createTestPlayer(name: "Player 2"),
-            createTestPlayer(name: "Player 3")
+            createTestPlayer(name: "Player 3"),
         ]
 
         // When
@@ -116,7 +116,7 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
         let players = [
             createTestPlayer(name: "Alpha"),
             createTestPlayer(name: "Beta"),
-            createTestPlayer(name: "Charlie")
+            createTestPlayer(name: "Charlie"),
         ]
         try await repository.saveAll(players)
 
@@ -228,7 +228,7 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
             createTestPlayer(name: "Player 1"),
             createTestPlayer(name: "Player 2"),
             createTestPlayer(name: "Player 3"),
-            createTestPlayer(name: "Player 4")
+            createTestPlayer(name: "Player 4"),
         ]
         try await repository.saveAll(players)
 
@@ -288,7 +288,7 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
         let selectedPlayers = [
             createTestPlayer(name: "Selected 1", isSelected: true),
             createTestPlayer(name: "Selected 2", isSelected: true),
-            createTestPlayer(name: "Unselected", isSelected: false)
+            createTestPlayer(name: "Unselected", isSelected: false),
         ]
         try await repository.saveAll(selectedPlayers)
 
@@ -330,7 +330,7 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
         let players = [
             createTestPlayer(name: "Player 1"),
             createTestPlayer(name: "Player 2"),
-            createTestPlayer(name: "Player 3")
+            createTestPlayer(name: "Player 3"),
         ]
         try await repository.saveAll(players)
 

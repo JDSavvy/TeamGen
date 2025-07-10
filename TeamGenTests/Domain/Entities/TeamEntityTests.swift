@@ -44,7 +44,7 @@ final class TeamEntityTests: XCTestCase {
         let players = [
             createPlayer(name: "Player 1", technical: 8, agility: 7, endurance: 6, teamwork: 9), // Overall: 7.5
             createPlayer(name: "Player 2", technical: 6, agility: 8, endurance: 7, teamwork: 7), // Overall: 7.0
-            createPlayer(name: "Player 3", technical: 9, agility: 6, endurance: 8, teamwork: 8) // Overall: 7.75
+            createPlayer(name: "Player 3", technical: 9, agility: 6, endurance: 8, teamwork: 8), // Overall: 7.75
         ]
         var team = TeamEntity(players: players)
 
@@ -62,7 +62,7 @@ final class TeamEntityTests: XCTestCase {
         let players = [
             createPlayer(name: "Player 1", technical: 10, agility: 10, endurance: 10, teamwork: 10), // Overall: 10.0
             createPlayer(name: "Player 2", technical: 1, agility: 1, endurance: 1, teamwork: 1), // Overall: 1.0
-            createPlayer(name: "Player 3", technical: 5, agility: 5, endurance: 5, teamwork: 7) // Overall: 5.5
+            createPlayer(name: "Player 3", technical: 5, agility: 5, endurance: 5, teamwork: 7), // Overall: 5.5
         ]
         let team = TeamEntity(players: players)
 
@@ -81,7 +81,7 @@ final class TeamEntityTests: XCTestCase {
         let players = [
             createPlayer(name: "Player 1", technical: 10, agility: 10, endurance: 10, teamwork: 10), // Overall: 10.0
             createPlayer(name: "Player 2", technical: 3, agility: 3, endurance: 3, teamwork: 3), // Overall: 3.0
-            createPlayer(name: "Player 3", technical: 7, agility: 7, endurance: 7, teamwork: 7) // Overall: 7.0
+            createPlayer(name: "Player 3", technical: 7, agility: 7, endurance: 7, teamwork: 7), // Overall: 7.0
         ]
         let team = TeamEntity(players: players)
 
@@ -102,7 +102,7 @@ final class TeamEntityTests: XCTestCase {
         // Given
         let players = [
             createPlayer(name: "Player 1", technical: 8, agility: 6, endurance: 7, teamwork: 9),
-            createPlayer(name: "Player 2", technical: 6, agility: 8, endurance: 5, teamwork: 7)
+            createPlayer(name: "Player 2", technical: 6, agility: 8, endurance: 5, teamwork: 7),
         ]
         let team = TeamEntity(players: players)
 
@@ -142,7 +142,7 @@ final class TeamEntityTests: XCTestCase {
             // Overall: 5.0 (Intermediate)
             createPlayer(name: "Advanced", technical: 7, agility: 7, endurance: 7, teamwork: 7),
             // Overall: 7.0 (Advanced)
-            createPlayer(name: "Expert", technical: 9, agility: 9, endurance: 9, teamwork: 9) // Overall: 9.0 (Expert)
+            createPlayer(name: "Expert", technical: 9, agility: 9, endurance: 9, teamwork: 9), // Overall: 9.0 (Expert)
         ]
         let team = TeamEntity(players: players)
 
@@ -208,7 +208,7 @@ final class TeamEntityTests: XCTestCase {
         // Given
         let players = [
             createPlayer(name: "Beginner", technical: 1, agility: 1, endurance: 1, teamwork: 1), // Overall: 1.0
-            createPlayer(name: "Expert", technical: 10, agility: 10, endurance: 10, teamwork: 10) // Overall: 10.0
+            createPlayer(name: "Expert", technical: 10, agility: 10, endurance: 10, teamwork: 10), // Overall: 10.0
         ]
         let team = TeamEntity(players: players)
 
@@ -369,7 +369,8 @@ final class TeamEntityTests: XCTestCase {
     }
 
     private func createPlayer(name: String, technical: Int, agility: Int, endurance: Int,
-                              teamwork: Int) -> PlayerEntity {
+                              teamwork: Int) -> PlayerEntity
+    {
         let skills = PlayerSkills(technical: technical, agility: agility, endurance: endurance, teamwork: teamwork)
         return PlayerEntity(name: name, skills: skills)
     }

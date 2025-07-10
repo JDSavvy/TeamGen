@@ -184,7 +184,7 @@ public final class MockPlayerRepository: PlayerRepositoryProtocol {
                 name: "Jane Smith",
                 skills: PlayerSkills(technical: 7, agility: 8, endurance: 7, teamwork: 8),
                 isSelected: true
-            )
+            ),
         ]
     }
 
@@ -263,7 +263,8 @@ public final class MockSettingsRepository: SettingsRepositoryProtocol {
 @MainActor
 public final class MockTeamGenerationService: TeamGenerationServiceProtocol {
     public func generateTeams(from players: [PlayerEntity], count: Int,
-                              mode _: TeamGenerationMode) async throws -> [TeamEntity] {
+                              mode _: TeamGenerationMode) async throws -> [TeamEntity]
+    {
         // Mock implementation - create balanced teams
         let playersPerTeam = players.count / count
         var teams: [TeamEntity] = []
@@ -383,15 +384,15 @@ public final class MockNetworkService: NetworkServiceProtocol {
 
 @MainActor
 public final class MockPerformanceService: SimplePerformanceServiceProtocol {
-    public func logAppLaunch(duration: TimeInterval) async {
+    public func logAppLaunch(duration _: TimeInterval) async {
         // Mock implementation
     }
 
-    public func logTeamGeneration(playerCount: Int, duration: TimeInterval) async {
+    public func logTeamGeneration(playerCount _: Int, duration _: TimeInterval) async {
         // Mock implementation
     }
 
-    public func logUserAction(_ action: String, duration: TimeInterval) async {
+    public func logUserAction(_: String, duration _: TimeInterval) async {
         // Mock implementation
     }
 }

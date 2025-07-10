@@ -108,7 +108,8 @@ struct PlayerView: View {
             }
             Button("Delete", role: .destructive) {
                 if let player = presentationState.playerToDelete,
-                   let viewModel {
+                   let viewModel
+                {
                     Task {
                         await viewModel.deletePlayer(player.id)
                         presentationState.playerToDelete = nil
@@ -254,7 +255,7 @@ private struct LoadingStateContent: View {
                         LinearGradient(
                             colors: [
                                 DesignSystem.Colors.primary,
-                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading)
+                                DesignSystem.Colors.primary.opacity(DesignSystem.VisualConsistency.opacityLoading),
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing

@@ -367,7 +367,7 @@ public struct HoverEffectModifier: ViewModifier {
                                 LinearGradient(
                                     colors: [
                                         DesignSystem.Colors.primary.opacity(0.6),
-                                        DesignSystem.Colors.primary.opacity(0.2)
+                                        DesignSystem.Colors.primary.opacity(0.2),
                                     ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
@@ -423,7 +423,7 @@ public struct ShimmerModifier: ViewModifier {
                             colors: [
                                 Color.clear,
                                 Color.white.opacity(opacity),
-                                Color.clear
+                                Color.clear,
                             ],
                             startPoint: .init(x: phase - 0.3, y: 0),
                             endPoint: .init(x: phase + 0.3, y: 0)

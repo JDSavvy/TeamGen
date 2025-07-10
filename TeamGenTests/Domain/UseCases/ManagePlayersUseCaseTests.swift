@@ -171,7 +171,7 @@ final class ManagePlayersUseCaseTests: XCTestCase {
         // Given
         let players = [
             PlayerEntity(name: "Player 1", skills: PlayerSkills(technical: 5, agility: 5, endurance: 5, teamwork: 5)),
-            PlayerEntity(name: "Player 2", skills: PlayerSkills(technical: 7, agility: 6, endurance: 8, teamwork: 7))
+            PlayerEntity(name: "Player 2", skills: PlayerSkills(technical: 7, agility: 6, endurance: 8, teamwork: 7)),
         ]
         mockRepository.mockPlayers = players
 
@@ -196,7 +196,7 @@ final class ManagePlayersUseCaseTests: XCTestCase {
                 name: "Selected Player 2",
                 skills: PlayerSkills(technical: 7, agility: 6, endurance: 8, teamwork: 7),
                 isSelected: true
-            )
+            ),
         ]
         mockRepository.mockSelectedPlayers = selectedPlayers
 
@@ -253,7 +253,7 @@ private class MockPlayerRepository: PlayerRepositoryProtocol {
         mockSelectedPlayers
     }
 
-    func delete(id: UUID) async throws {
+    func delete(id _: UUID) async throws {
         deleteCallCount += 1
         if mockPlayer == nil {
             throw RepositoryError.notFound
