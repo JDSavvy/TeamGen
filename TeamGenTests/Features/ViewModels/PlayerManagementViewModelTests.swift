@@ -469,7 +469,11 @@ final class PlayerManagementViewModelTests: XCTestCase {
 
          if shouldThrowError {
              throw RepositoryError.saveFailed(
-                NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to reset selections"])
+                NSError(
+                    domain: "TestError",
+                    code: 1,
+                    userInfo: [NSLocalizedDescriptionKey: "Failed to reset selections"]
+                )
             )
          }
      }
@@ -491,7 +495,11 @@ final class PlayerManagementViewModelTests: XCTestCase {
      func getSelectedPlayers() async throws -> [PlayerEntity] {
          if shouldThrowError {
              throw RepositoryError.fetchFailed(
-                NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch selected players"])
+                NSError(
+                    domain: "TestError",
+                    code: 1,
+                    userInfo: [NSLocalizedDescriptionKey: "Failed to fetch selected players"]
+                )
             )
          }
 

@@ -194,7 +194,7 @@ private class MockTeamGenerationService: TeamGenerationServiceProtocol {
         lastGenerateCall = (players, count, mode)
 
         // Basic validation
-        guard count > 0 else {
+        guard count > 0 else { // swiftlint:disable:this empty_count
             throw TeamGenerationError.invalidTeamCount(count)
         }
 
@@ -216,7 +216,7 @@ private class MockTeamGenerationService: TeamGenerationServiceProtocol {
             return updatedTeam
         }
     }
-    
+
     func validateGeneration(playerCount: Int, teamCount: Int) -> ValidationResult {
         if teamCount <= 0 {
             return ValidationResult.invalid(.invalidTeamCount(teamCount))
@@ -240,15 +240,15 @@ private class MockTeamGenerationService: TeamGenerationServiceProtocol {
 private class MockPlayerRepository: PlayerRepositoryProtocol {
     var mockSelectedPlayers: [PlayerEntity] = []
     var mockPlayers: [PlayerEntity] = []
-    
+
     func fetchAll() async throws -> [PlayerEntity] {
         return mockPlayers
     }
-    
+
     func fetch(id: UUID) async throws -> PlayerEntity? {
         return mockPlayers.first { $0.id == id }
     }
-    
+
     func save(_ player: PlayerEntity) async throws {
         if let index = mockPlayers.firstIndex(where: { $0.id == player.id }) {
             mockPlayers[index] = player
@@ -256,28 +256,28 @@ private class MockPlayerRepository: PlayerRepositoryProtocol {
             mockPlayers.append(player)
         }
     }
-    
+
     func saveAll(_ players: [PlayerEntity]) async throws {
         for player in players {
             try await save(player)
         }
     }
-    
+
     func delete(id: UUID) async throws {
         mockPlayers.removeAll { $0.id == id }
         mockSelectedPlayers.removeAll { $0.id == id }
     }
-    
+
     func deleteAll(ids: [UUID]) async throws {
         for id in ids {
             try await delete(id: id)
         }
     }
-    
+
     func fetchSelected() async throws -> [PlayerEntity] {
         return mockSelectedPlayers
     }
-    
+
     func updateSelection(id: UUID, isSelected: Bool) async throws {
         if let index = mockPlayers.firstIndex(where: { $0.id == id }) {
             mockPlayers[index].isSelected = isSelected
@@ -290,22 +290,22 @@ private class MockPlayerRepository: PlayerRepositoryProtocol {
             }
         }
     }
-    
+
     func resetAllSelections() async throws {
         mockSelectedPlayers.removeAll()
         for i in mockPlayers.indices {
             mockPlayers[i].isSelected = false
         }
     }
-    
+
     func fetchByMinimumSkillLevel(_ minLevel: Double) async throws -> [PlayerEntity] {
         return mockPlayers.filter { $0.skills.overall >= minLevel }
     }
-    
+
     func hasPlayers() async throws -> Bool {
         return !mockPlayers.isEmpty
     }
-    
+
     func count() async throws -> Int {
         return mockPlayers.count
     }
