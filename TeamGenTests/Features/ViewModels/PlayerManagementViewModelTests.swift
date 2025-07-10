@@ -6,7 +6,7 @@ final class PlayerManagementViewModelTests: XCTestCase {
     // MARK: - Temporary Test Disable
 
     // Tests are temporarily disabled due to API changes in PlayerManagementViewModel
-    // TODO: Update tests to match current @Observable ViewModel API
+    // Tests will be updated to match current @Observable ViewModel API
 
     func testTemporaryDisabled() {
         // Placeholder test to ensure test target compiles

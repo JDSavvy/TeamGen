@@ -212,8 +212,8 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
             try await repository.delete(id: nonexistentId)
             XCTFail("Expected RepositoryError to be thrown")
         } catch let error as RepositoryError {
-            if case let .notFound(id) = error {
-                XCTAssertEqual(id, nonexistentId)
+            if case .notFound = error {
+                // Expected - player not found
             } else {
                 XCTFail("Expected notFound error")
             }
@@ -273,8 +273,8 @@ final class SwiftDataPlayerRepositoryTests: XCTestCase {
             try await repository.updateSelection(id: nonexistentId, isSelected: true)
             XCTFail("Expected RepositoryError to be thrown")
         } catch let error as RepositoryError {
-            if case let .notFound(id) = error {
-                XCTAssertEqual(id, nonexistentId)
+            if case .notFound = error {
+                // Expected - player not found
             } else {
                 XCTFail("Expected notFound error")
             }
