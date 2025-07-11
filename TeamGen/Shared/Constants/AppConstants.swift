@@ -20,20 +20,18 @@ enum AppConstants {
         static let animationDuration: Double = 0.3
         static let hapticFeedbackIntensity: Float = 0.7
 
-        enum Spacing {
-            static let xs: CGFloat = 4
-            static let sm: CGFloat = 8
-            static let md: CGFloat = 16
-            static let lg: CGFloat = 24
-            static let xl: CGFloat = 32
-        }
+        // Spacing constants (flattened to avoid nesting)
+        static let spacingXS: CGFloat = 4
+        static let spacingSM: CGFloat = 8
+        static let spacingMD: CGFloat = 16
+        static let spacingLG: CGFloat = 24
+        static let spacingXL: CGFloat = 32
 
-        enum FontSize {
-            static let caption: CGFloat = 12
-            static let body: CGFloat = 16
-            static let title: CGFloat = 20
-            static let largeTitle: CGFloat = 28
-        }
+        // Font size constants (flattened to avoid nesting)
+        static let fontSizeCaption: CGFloat = 12
+        static let fontSizeBody: CGFloat = 16
+        static let fontSizeTitle: CGFloat = 20
+        static let fontSizeLargeTitle: CGFloat = 28
     }
 
     // MARK: - Player Constants
