@@ -48,7 +48,7 @@ extension View {
 
     /// Applies standard spacing
     func standardSpacing() -> some View {
-        padding(AppConstants.UserInterface.Spacing.md)
+        padding(AppConstants.UserInterface.spacingMD)
     }
 
     /// Applies loading state overlay
@@ -98,10 +98,10 @@ extension Color {
 
 extension Font {
     /// Standard app fonts
-    static let appCaption = Font.system(size: AppConstants.UserInterface.FontSize.caption)
-    static let appBody = Font.system(size: AppConstants.UserInterface.FontSize.body)
-    static let appTitle = Font.system(size: AppConstants.UserInterface.FontSize.title, weight: .semibold)
-    static let appLargeTitle = Font.system(size: AppConstants.UserInterface.FontSize.largeTitle, weight: .bold)
+    static let appCaption = Font.system(size: AppConstants.UserInterface.fontSizeCaption)
+    static let appBody = Font.system(size: AppConstants.UserInterface.fontSizeBody)
+    static let appTitle = Font.system(size: AppConstants.UserInterface.fontSizeTitle, weight: .semibold)
+    static let appLargeTitle = Font.system(size: AppConstants.UserInterface.fontSizeLargeTitle, weight: .bold)
 }
 
 // MARK: - Animation Extensions
@@ -122,17 +122,17 @@ extension Animation {
 extension EdgeInsets {
     /// Standard app padding
     static let appStandard = EdgeInsets(
-        top: AppConstants.UserInterface.Spacing.md,
-        leading: AppConstants.UserInterface.Spacing.md,
-        bottom: AppConstants.UserInterface.Spacing.md,
-        trailing: AppConstants.UserInterface.Spacing.md
+        top: AppConstants.UserInterface.spacingMD,
+        leading: AppConstants.UserInterface.spacingMD,
+        bottom: AppConstants.UserInterface.spacingMD,
+        trailing: AppConstants.UserInterface.spacingMD
     )
 
     /// Compact padding for dense layouts
     static let appCompact = EdgeInsets(
-        top: AppConstants.UserInterface.Spacing.sm,
-        leading: AppConstants.UserInterface.Spacing.sm,
-        bottom: AppConstants.UserInterface.Spacing.sm,
-        trailing: AppConstants.UserInterface.Spacing.sm
+        top: AppConstants.UserInterface.spacingSM,
+        leading: AppConstants.UserInterface.spacingSM,
+        bottom: AppConstants.UserInterface.spacingSM,
+        trailing: AppConstants.UserInterface.spacingSM
     )
 }
