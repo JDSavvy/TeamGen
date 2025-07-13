@@ -149,7 +149,7 @@ struct SkillPicker: View {
             .font(DesignSystem.Typography.caption1)
             .fontWeight(.medium)
             .foregroundStyle(DesignSystem.Colors.secondaryText)
-            .frame(minWidth: 20)
+            .frame(minWidth: DesignSystem.ComponentSize.minRowHeight)
     }
 
     private var valueMarkers: some View {
@@ -157,7 +157,7 @@ struct SkillPicker: View {
             ForEach(range, id: \.self) { markerValue in
                 Circle()
                     .fill(markerValue <= value ? skillColor : DesignSystem.Colors.separatorColor)
-                    .frame(width: 6, height: 6)
+                    .frame(width: DesignSystem.ComponentSize.smallIndicator, height: DesignSystem.ComponentSize.smallIndicator)
                     .scaleEffect(markerValue == value ? 1.5 : 1.0)
                     .animation(
                         DesignSystem.Animation.accessible(
@@ -177,7 +177,7 @@ struct SkillPicker: View {
             ForEach(1 ... 5, id: \.self) { level in
                 Circle()
                     .fill(level <= skillLevel ? skillColor : DesignSystem.Colors.fillSecondary)
-                    .frame(width: 8, height: 8)
+                    .frame(width: DesignSystem.ComponentSize.standardIndicator, height: DesignSystem.ComponentSize.standardIndicator)
                     .scaleEffect(level == skillLevel ? 1.2 : 1.0)
                     .animation(
                         DesignSystem.Animation.accessible(
@@ -210,22 +210,22 @@ struct SkillPicker: View {
 
     private var skillLevelText: String {
         switch value {
-        case 1 ... 2: "Beginner"
-        case 3 ... 4: "Novice"
-        case 5 ... 6: "Intermediate"
-        case 7 ... 8: "Advanced"
-        case 9 ... 10: "Expert"
-        default: "Unknown"
+        case 1 ... 2: String(localized: "Beginner")
+        case 3 ... 4: String(localized: "Novice")
+        case 5 ... 6: String(localized: "Intermediate")
+        case 7 ... 8: String(localized: "Advanced")
+        case 9 ... 10: String(localized: "Expert")
+        default: String(localized: "Unknown")
         }
     }
 
     private var skillDescription: String {
         switch value {
-        case 1 ... 2: "Just starting out, learning the basics"
-        case 3 ... 4: "Getting comfortable with fundamentals"
-        case 5 ... 6: "Solid foundation, developing consistency"
-        case 7 ... 8: "Strong skills, ready for challenges"
-        case 9 ... 10: "Exceptional ability, natural talent"
+        case 1 ... 2: String(localized: "Just starting out, learning the basics")
+        case 3 ... 4: String(localized: "Getting comfortable with fundamentals")
+        case 5 ... 6: String(localized: "Solid foundation, developing consistency")
+        case 7 ... 8: String(localized: "Strong skills, ready for challenges")
+        case 9 ... 10: String(localized: "Exceptional ability, natural talent")
         default: ""
         }
     }
@@ -335,7 +335,7 @@ struct MultiSkillPicker: View {
             ForEach(1 ... 10, id: \.self) { level in
                 Circle()
                     .fill(Double(level) <= overallRating ? overallRatingColor : DesignSystem.Colors.fillSecondary)
-                    .frame(width: 6, height: 6)
+                    .frame(width: DesignSystem.ComponentSize.smallIndicator, height: DesignSystem.ComponentSize.smallIndicator)
                     .scaleEffect(Double(level) <= overallRating ? 1.2 : 1.0)
                     .animation(
                         DesignSystem.Animation.accessible(
@@ -355,29 +355,29 @@ struct MultiSkillPicker: View {
                 // Background track
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                     .fill(DesignSystem.Colors.fillSecondary)
-                    .frame(height: 8)
+                    .frame(height: DesignSystem.ComponentSize.progressBarStandard)
 
                 // Progress fill
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                     .fill(overallRatingColor.gradient)
                     .frame(
                         width: geometry.size.width * (overallRating / 10.0),
-                        height: 8
+                        height: DesignSystem.ComponentSize.progressBarStandard
                     )
                     .animation(DesignSystem.Animation.spring, value: overallRating)
             }
         }
-        .frame(height: 8)
+        .frame(height: DesignSystem.ComponentSize.progressBarStandard)
     }
 
     // MARK: - Skill Pickers Section
 
     private var skillPickersSection: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            SkillPicker(title: "Technical", value: $technicalSkill)
-            SkillPicker(title: "Agility", value: $agilityLevel)
-            SkillPicker(title: "Endurance", value: $enduranceLevel)
-            SkillPicker(title: "Teamwork", value: $teamworkRating)
+            SkillPicker(title: String(localized: "Technical"), value: $technicalSkill)
+            SkillPicker(title: String(localized: "Agility"), value: $agilityLevel)
+            SkillPicker(title: String(localized: "Endurance"), value: $enduranceLevel)
+            SkillPicker(title: String(localized: "Teamwork"), value: $teamworkRating)
         }
     }
 
@@ -389,11 +389,11 @@ struct MultiSkillPicker: View {
 
     private var overallSkillLevelText: String {
         switch overallRating {
-        case 1.0 ..< 2.5: "Beginner"
-        case 2.5 ..< 5.0: "Novice"
-        case 5.0 ..< 7.5: "Intermediate"
-        case 7.5 ..< 9.0: "Advanced"
-        default: "Expert"
+        case 1.0 ..< 2.5: String(localized: "Beginner")
+        case 2.5 ..< 5.0: String(localized: "Novice")
+        case 5.0 ..< 7.5: String(localized: "Intermediate")
+        case 7.5 ..< 9.0: String(localized: "Advanced")
+        default: String(localized: "Expert")
         }
     }
 }

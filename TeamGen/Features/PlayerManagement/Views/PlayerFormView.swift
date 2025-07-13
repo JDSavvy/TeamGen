@@ -198,9 +198,9 @@ private struct PlayerFormSection: View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             // Section header with icon
             sectionHeader(
-                title: "Player Information",
+                title: String(localized: "Player Information"),
                 icon: "person.fill",
-                description: "Basic player details and identification"
+                description: String(localized: "Basic player details and identification")
             )
 
             // Enhanced text field container
@@ -238,7 +238,7 @@ private struct PlayerFormSection: View {
                         .accessibilityLabel("Player name input field")
                         .accessibilityHint("Enter the player's name")
                 }
-                .frame(height: 44) // Standard iOS touch target
+                .frame(height: DesignSystem.ButtonStyles.secondaryHeight)
                 .animation(
                     DesignSystem.Animation.accessible(DesignSystem.Animation.spring, reduceMotion: reduceMotion),
                     value: formModel.name.isEmpty
@@ -248,7 +248,7 @@ private struct PlayerFormSection: View {
                 if !formModel.name.isEmpty {
                     HStack {
                         Spacer()
-                        Text("\(formModel.name.count) characters")
+                        Text("\(formModel.name.count) \(String(localized: "characters"))")
                             .font(DesignSystem.Typography.caption1)
                             .foregroundStyle(DesignSystem.Colors.tertiaryText)
                             .transition(.opacity)
@@ -285,9 +285,9 @@ private struct PlayerFormSection: View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             // Enhanced skills header
             sectionHeader(
-                title: "Player Skills",
+                title: String(localized: "Player Skills"),
                 icon: "star.circle.fill",
-                description: "Rate the player's abilities across different areas"
+                description: String(localized: "Rate the player's abilities across different areas")
             )
 
             // Skills picker with enhanced spacing
@@ -435,7 +435,7 @@ private struct PlayerStatisticsSection: View {
         HStack(spacing: DesignSystem.Spacing.lg) {
             // Games played stat
             modernStatCard(
-                title: "Games Played",
+                title: String(localized: "Games Played"),
                 value: "\(player.statistics.gamesPlayed)",
                 icon: "gamecontroller.fill",
                 color: DesignSystem.Colors.primary
@@ -445,7 +445,7 @@ private struct PlayerStatisticsSection: View {
 
             // Teams joined stat
             modernStatCard(
-                title: "Teams Joined",
+                title: String(localized: "Teams Joined"),
                 value: "\(player.statistics.teamsJoined)",
                 icon: "person.2.fill",
                 color: DesignSystem.Colors.accent
@@ -459,7 +459,7 @@ private struct PlayerStatisticsSection: View {
             ZStack {
                 Circle()
                     .fill(color.opacity(0.15))
-                    .frame(width: 40, height: 40)
+                    .frame(width: DesignSystem.ComponentSize.profileImage, height: DesignSystem.ComponentSize.profileImage)
 
                 Image(systemName: icon)
                     .font(DesignSystem.Typography.callout)

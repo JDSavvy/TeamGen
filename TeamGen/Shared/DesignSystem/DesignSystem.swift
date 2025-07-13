@@ -334,6 +334,8 @@ public enum DesignSystem {
         public static let largeIcon: CGFloat = 32
         /// Extra large icons (40x40)
         public static let extraLargeIcon: CGFloat = 40
+        /// Profile image size (40x40)
+        public static let profileImage: CGFloat = 40
         /// Touch targets (44x44)
         public static let touchTarget: CGFloat = 44
         /// Large touch targets (56x56)

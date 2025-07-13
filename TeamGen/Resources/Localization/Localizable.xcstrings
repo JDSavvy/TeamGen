@@ -105,6 +105,16 @@
         }
       }
     },
+    "%lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@"
+          }
+        }
+      }
+    },
     "%lld balanced teams • %lld players" : {
       "localizations" : {
         "en" : {
@@ -114,9 +124,6 @@
           }
         }
       }
-    },
-    "%lld characters" : {
-
     },
     "%lld of %lld players" : {
       "localizations" : {
@@ -385,6 +392,9 @@
     "Add Your First Player" : {
 
     },
+    "Add your first player to start creating balanced teams.\nYou can manage their skills and track their performance." : {
+
+    },
     "Add your first player to start creating balanced teams. You can add players with different skill levels to ensure fair team distribution." : {
       "comment" : "Empty state description for adding first player",
       "localizations" : {
@@ -404,6 +414,7 @@
     },
     "Add your first player to start creating balanced teams. You can manage their skills and track their performance." : {
       "comment" : "Alternative empty state description",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -450,6 +461,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adjust skill level from 1 to 10"
+          }
+        }
+      }
+    },
+    "Advanced" : {
+      "comment" : "Skill level for advanced players",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfahren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        }
+      }
+    },
+    "Agility" : {
+      "comment" : "Agility skill category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beweglichkeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agility"
           }
         }
       }
@@ -525,6 +570,40 @@
         }
       }
     },
+    "Basic player details and identification" : {
+      "comment" : "Player information section description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grundlegende Spielerinformationen und Identifikation"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basic player details and identification"
+          }
+        }
+      }
+    },
+    "Beginner" : {
+      "comment" : "Skill level for beginners",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfänger"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginner"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button text",
       "localizations" : {
@@ -538,6 +617,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "characters" : {
+      "comment" : "Character count indicator suffix",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeichen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "characters"
           }
         }
       }
@@ -814,6 +910,23 @@
         }
       }
     },
+    "Endurance" : {
+      "comment" : "Endurance skill category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausdauer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endurance"
+          }
+        }
+      }
+    },
     "Enter player name" : {
       "comment" : "Player name input placeholder",
       "localizations" : {
@@ -852,8 +965,42 @@
         }
       }
     },
+    "Exceptional ability, natural talent" : {
+      "comment" : "Expert skill description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Außergewöhnliche Fähigkeiten, natürliches Talent"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exceptional ability, natural talent"
+          }
+        }
+      }
+    },
     "Expand players list" : {
 
+    },
+    "Expert" : {
+      "comment" : "Skill level for expert players",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Experte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expert"
+          }
+        }
+      }
     },
     "Fair" : {
       "comment" : "Fair team generation mode",
@@ -889,6 +1036,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filtered from %lld total"
+          }
+        }
+      }
+    },
+    "Games Played" : {
+      "comment" : "Statistics label for games played",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespielte Spiele"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Games Played"
           }
         }
       }
@@ -970,6 +1134,23 @@
         }
       }
     },
+    "Getting comfortable with fundamentals" : {
+      "comment" : "Novice skill description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird vertraut mit den Grundlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getting comfortable with fundamentals"
+          }
+        }
+      }
+    },
     "GitHub" : {
       "comment" : "GitHub link title",
       "localizations" : {
@@ -1047,6 +1228,23 @@
     "Initializing..." : {
 
     },
+    "Intermediate" : {
+      "comment" : "Skill level for intermediate players",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortgeschritten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intermediate"
+          }
+        }
+      }
+    },
     "Jorge Savvidis" : {
       "comment" : "Developer name",
       "localizations" : {
@@ -1060,6 +1258,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jorge Savvidis"
+          }
+        }
+      }
+    },
+    "Just starting out, learning the basics" : {
+      "comment" : "Beginner skill description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfänger, lernt die Grundlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Just starting out, learning the basics"
           }
         }
       }
@@ -1278,6 +1493,23 @@
         }
       }
     },
+    "Novice" : {
+      "comment" : "Skill level for novices",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuling"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novice"
+          }
+        }
+      }
+    },
     "OK" : {
       "comment" : "OK button text",
       "localizations" : {
@@ -1373,7 +1605,6 @@
 
     },
     "Player Information" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1415,7 +1646,6 @@
     },
     "Player Skills" : {
       "comment" : "Player skills section title",
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1501,6 +1731,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Random"
+          }
+        }
+      }
+    },
+    "Rate the player's abilities across different areas" : {
+      "comment" : "Player skills section description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewerte die Fähigkeiten des Spielers in verschiedenen Bereichen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate the player's abilities across different areas"
           }
         }
       }
@@ -1817,6 +2064,23 @@
         }
       }
     },
+    "Solid foundation, developing consistency" : {
+      "comment" : "Intermediate skill description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solide Grundlage, entwickelt Beständigkeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solid foundation, developing consistency"
+          }
+        }
+      }
+    },
     "Something Went Wrong" : {
       "comment" : "Generic error message title",
       "localizations" : {
@@ -1885,6 +2149,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Statistics"
+          }
+        }
+      }
+    },
+    "Strong skills, ready for challenges" : {
+      "comment" : "Advanced skill description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starke Fähigkeiten, bereit für Herausforderungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strong skills, ready for challenges"
           }
         }
       }
@@ -1984,7 +2265,7 @@
         }
       }
     },
-    "TeamGen helps create balanced teams for sports and recreational activities. Thank you for using our app!" : {
+    "TeamGen helps create balanced teams for sports and recreational activities.\nThank you for using our app!" : {
 
     },
     "Teams" : {
@@ -1999,6 +2280,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teams"
+          }
+        }
+      }
+    },
+    "Teams Joined" : {
+      "comment" : "Statistics label for teams joined",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teams beigetreten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teams Joined"
+          }
+        }
+      }
+    },
+    "Teamwork" : {
+      "comment" : "Teamwork skill category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teamwork"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teamwork"
+          }
+        }
+      }
+    },
+    "Technical" : {
+      "comment" : "Technical skill category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Technik"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Technical"
           }
         }
       }
@@ -2084,6 +2416,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unable to load your players. Please check your connection and try again."
+          }
+        }
+      }
+    },
+    "Unknown" : {
+      "comment" : "Unknown skill level",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbekannt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
           }
         }
       }
